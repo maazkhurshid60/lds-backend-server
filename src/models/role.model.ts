@@ -1,6 +1,12 @@
 import mongoose, {Schema} from "mongoose";
 
-const roleSchema = new Schema(
+export interface IRoleDocument extends mongoose.Document {
+    name: string,
+    description: string,
+    isActive: boolean
+}
+
+const roleSchema: Schema<IRoleDocument> = new Schema(
     {
         name : {
             type: String,
@@ -22,4 +28,4 @@ const roleSchema = new Schema(
 );
 
 
-export const Role = mongoose.model("Role", roleSchema);
+export const Role = mongoose.model<IRoleDocument>("Role", roleSchema);

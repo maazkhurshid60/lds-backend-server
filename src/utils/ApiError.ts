@@ -3,7 +3,7 @@ class ApiError extends Error {
     statusCode: number
     data: null
     success: boolean
-    errors: never[]
+    errors: string[]
     constructor(
         statusCode: number,
         message = "Something Went Wrong",
