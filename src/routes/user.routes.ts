@@ -2,6 +2,7 @@ import { Router } from "express";
 
 //Importing all the controller functions
 import {
+    healthCheck,
     registerNewUser,
     loginUser,
     logoutUser,
@@ -24,6 +25,9 @@ import { userRegistrationSchema, userLoginSchema } from "../schemas/user.schema"
 
 //Defining Router Object
 const router = Router();
+
+//Health Check Route
+router.route('/health').get(healthCheck);
 
 //Open Routes
 router.route('/register').post(validateData(userRegistrationSchema), registerNewUser);

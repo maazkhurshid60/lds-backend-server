@@ -31,6 +31,16 @@ const generateAccessTokens = async(userId: any) => {
     }
 }
 
+const healthCheck = asyncHandler( async (req: Request, res: Response) => {
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200, {}, "Everthing is working fine !!!!")
+    );
+
+});
+
 const registerNewUser = asyncHandler( async (req: Request, res: Response) => {
 
     const { userName, firstName, lastName, email, password, roles }: IRegisterUser = req.body;
@@ -374,6 +384,7 @@ const searchUser = asyncHandler( async (req: Request, res: Response) => {
 
 
 export {
+    healthCheck,
     registerNewUser,
     loginUser,
     logoutUser,
