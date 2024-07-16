@@ -108,34 +108,36 @@ const deleteDevice = asyncHandler( async (req: Request, res: Response) => {
 
 const getAllDevices = asyncHandler( async (req: Request, res: Response) => {
 
-    const { noOfDocsEachPage, currentPageNumber } : IPagination = req.body;
+    // const { noOfDocsEachPage, currentPageNumber } : IPagination = req.body;
 
-    if(noOfDocsEachPage === undefined || currentPageNumber === undefined) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
-    }
+    // if(noOfDocsEachPage === undefined || currentPageNumber === undefined) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
+    // }
 
-    if(typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data provided."); 
-    }
+    // if(typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data provided."); 
+    // }
 
-    const totalDevices: number = await Device.find({}).countDocuments() as number;
+    // const totalDevices: number = await Device.find({}).countDocuments() as number;
 
-    const allDevices: IDeviceDocument[] = await Device.find({})
-    .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
-    .limit(noOfDocsEachPage) as IDeviceDocument[];
+    const totalDevices: IDeviceDocument[] = await Device.find({}) as IDeviceDocument[];
 
-    const data : {
-        totalNoOfDocuments : number,
-        devices: IDeviceDocument[] 
-    } = {
-        "totalNoOfDocuments" : totalDevices,
-        "devices" : allDevices
-    };
+    // const allDevices: IDeviceDocument[] = await Device.find({})
+    // .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
+    // .limit(noOfDocsEachPage) as IDeviceDocument[];
+
+    // const data : {
+    //     totalNoOfDocuments : number,
+    //     devices: IDeviceDocument[] 
+    // } = {
+    //     "totalNoOfDocuments" : totalDevices,
+    //     "devices" : allDevices
+    // };
 
     return res
     .status(StatusCodes.OK)
     .json(
-        new ApiResponse(StatusCodes.OK, data, "Fetched all devices successfully.")
+        new ApiResponse(StatusCodes.OK, totalDevices, "Fetched all devices successfully.")
     );
 
 });

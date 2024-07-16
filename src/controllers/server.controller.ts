@@ -151,35 +151,37 @@ const deleteServer = asyncHandler( async (req: Request, res: Response) => {
 
 const getAllServers = asyncHandler( async(req: Request, res: Response) => {
 
-    const { noOfDocsEachPage, currentPageNumber } : IPagination = req.body
+    // const { noOfDocsEachPage, currentPageNumber } : IPagination = req.body
     
-    if(noOfDocsEachPage === undefined || currentPageNumber === undefined) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
-    }
+    // if(noOfDocsEachPage === undefined || currentPageNumber === undefined) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
+    // }
 
-    if(typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data provided."); 
-    }
+    // if(typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data provided."); 
+    // }
 
-    const totalServers: number = await Server.find({}).countDocuments() as number;
+    // const totalServers: number = await Server.find({}).countDocuments() as number;
 
-    const allServers: IServerDocument[] = await Server.find({})
-    .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
-    .limit(noOfDocsEachPage) as IServerDocument[];
+    const totalServers: IServerDocument[] = await Server.find({}) as IServerDocument[];
 
-    const data : {
-        totalNoOfDocuments : number,
-        servers: IServerDocument[] 
-    } = {
-        "totalNoOfDocuments" : totalServers,
-        "servers" : allServers
-    };
+    // const allServers: IServerDocument[] = await Server.find({})
+    // .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
+    // .limit(noOfDocsEachPage) as IServerDocument[];
+
+    // const data : {
+    //     totalNoOfDocuments : number,
+    //     servers: IServerDocument[] 
+    // } = {
+    //     "totalNoOfDocuments" : totalServers,
+    //     "servers" : allServers
+    // };
 
 
     return res
     .status(StatusCodes.OK)
     .json(
-        new ApiResponse(StatusCodes.OK, data, "Fetched all servers successfully.")
+        new ApiResponse(StatusCodes.OK, totalServers, "Fetched all servers successfully.")
     );
     
 });

@@ -161,34 +161,36 @@ const deleteClient = asyncHandler( async (req: Request, res: Response) => {
 
 const getAllClients = asyncHandler( async (req: Request, res: Response) => {
 
-    const { currentPageNumber, noOfDocsEachPage } : IPagination = req.body;
+    // const { currentPageNumber, noOfDocsEachPage } : IPagination = req.body;
 
-    if(noOfDocsEachPage === undefined || currentPageNumber === undefined) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
-    }
+    // if(noOfDocsEachPage === undefined || currentPageNumber === undefined) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
+    // }
 
-    if(typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data provided."); 
-    }
+    // if(typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data provided."); 
+    // }
 
-    const totalClients: number = await Client.find({}).countDocuments() as number;
+    // const totalClients: number = await Client.find({}).countDocuments() as number;
 
-    const allClients: IClientDocument[] = await Client.find({})
-    .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
-    .limit(noOfDocsEachPage) as IClientDocument[];
+    const totalClients: IClientDocument[] = await Client.find({}) as IClientDocument[];
 
-    const data : {
-        totalNoOfDocuments : number,
-        clients: IClientDocument[] 
-    } = {
-        "totalNoOfDocuments" : totalClients,
-        "clients" : allClients
-    };
+    // const allClients: IClientDocument[] = await Client.find({})
+    // .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
+    // .limit(noOfDocsEachPage) as IClientDocument[];
+
+    // const data : {
+    //     totalNoOfDocuments : number,
+    //     clients: IClientDocument[] 
+    // } = {
+    //     "totalNoOfDocuments" : totalClients,
+    //     "clients" : allClients
+    // };
 
     return res
     .status(StatusCodes.OK)
     .json(
-        new ApiResponse(StatusCodes.OK, data, "Fetched all clients successfully.")
+        new ApiResponse(StatusCodes.OK, totalClients, "Fetched all clients successfully.")
     );
 
 });
