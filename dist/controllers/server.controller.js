@@ -83,24 +83,28 @@ const deleteServer = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
 });
 exports.deleteServer = deleteServer;
 const getAllServers = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
-    const { noOfDocsEachPage, currentPageNumber } = req.body;
-    if (noOfDocsEachPage === undefined || currentPageNumber === undefined) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
-    }
-    if (typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid data provided.");
-    }
-    const totalServers = await server_model_1.Server.find({}).countDocuments();
-    const allServers = await server_model_1.Server.find({})
-        .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
-        .limit(noOfDocsEachPage);
-    const data = {
-        "totalNoOfDocuments": totalServers,
-        "servers": allServers
-    };
+    // const { noOfDocsEachPage, currentPageNumber } : IPagination = req.body
+    // if(noOfDocsEachPage === undefined || currentPageNumber === undefined) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
+    // }
+    // if(typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data provided."); 
+    // }
+    // const totalServers: number = await Server.find({}).countDocuments() as number;
+    const totalServers = await server_model_1.Server.find({});
+    // const allServers: IServerDocument[] = await Server.find({})
+    // .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
+    // .limit(noOfDocsEachPage) as IServerDocument[];
+    // const data : {
+    //     totalNoOfDocuments : number,
+    //     servers: IServerDocument[] 
+    // } = {
+    //     "totalNoOfDocuments" : totalServers,
+    //     "servers" : allServers
+    // };
     return res
         .status(http_status_codes_1.StatusCodes.OK)
-        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, data, "Fetched all servers successfully."));
+        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, totalServers, "Fetched all servers successfully."));
 });
 exports.getAllServers = getAllServers;
 const searchServer = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {

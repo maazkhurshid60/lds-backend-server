@@ -70,24 +70,28 @@ const deleteDevice = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
 });
 exports.deleteDevice = deleteDevice;
 const getAllDevices = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
-    const { noOfDocsEachPage, currentPageNumber } = req.body;
-    if (noOfDocsEachPage === undefined || currentPageNumber === undefined) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
-    }
-    if (typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid data provided.");
-    }
-    const totalDevices = await device_model_1.Device.find({}).countDocuments();
-    const allDevices = await device_model_1.Device.find({})
-        .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
-        .limit(noOfDocsEachPage);
-    const data = {
-        "totalNoOfDocuments": totalDevices,
-        "devices": allDevices
-    };
+    // const { noOfDocsEachPage, currentPageNumber } : IPagination = req.body;
+    // if(noOfDocsEachPage === undefined || currentPageNumber === undefined) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
+    // }
+    // if(typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data provided."); 
+    // }
+    // const totalDevices: number = await Device.find({}).countDocuments() as number;
+    const totalDevices = await device_model_1.Device.find({});
+    // const allDevices: IDeviceDocument[] = await Device.find({})
+    // .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
+    // .limit(noOfDocsEachPage) as IDeviceDocument[];
+    // const data : {
+    //     totalNoOfDocuments : number,
+    //     devices: IDeviceDocument[] 
+    // } = {
+    //     "totalNoOfDocuments" : totalDevices,
+    //     "devices" : allDevices
+    // };
     return res
         .status(http_status_codes_1.StatusCodes.OK)
-        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, data, "Fetched all devices successfully."));
+        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, totalDevices, "Fetched all devices successfully."));
 });
 exports.getAllDevices = getAllDevices;
 const searchDevice = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {

@@ -99,24 +99,28 @@ const deleteClient = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
 });
 exports.deleteClient = deleteClient;
 const getAllClients = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
-    const { currentPageNumber, noOfDocsEachPage } = req.body;
-    if (noOfDocsEachPage === undefined || currentPageNumber === undefined) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
-    }
-    if (typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid data provided.");
-    }
-    const totalClients = await client_model_1.Client.find({}).countDocuments();
-    const allClients = await client_model_1.Client.find({})
-        .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
-        .limit(noOfDocsEachPage);
-    const data = {
-        "totalNoOfDocuments": totalClients,
-        "clients": allClients
-    };
+    // const { currentPageNumber, noOfDocsEachPage } : IPagination = req.body;
+    // if(noOfDocsEachPage === undefined || currentPageNumber === undefined) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
+    // }
+    // if(typeof noOfDocsEachPage !== "number" || typeof currentPageNumber !== "number") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data provided."); 
+    // }
+    // const totalClients: number = await Client.find({}).countDocuments() as number;
+    const totalClients = await client_model_1.Client.find({});
+    // const allClients: IClientDocument[] = await Client.find({})
+    // .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
+    // .limit(noOfDocsEachPage) as IClientDocument[];
+    // const data : {
+    //     totalNoOfDocuments : number,
+    //     clients: IClientDocument[] 
+    // } = {
+    //     "totalNoOfDocuments" : totalClients,
+    //     "clients" : allClients
+    // };
     return res
         .status(http_status_codes_1.StatusCodes.OK)
-        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, data, "Fetched all clients successfully."));
+        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, totalClients, "Fetched all clients successfully."));
 });
 exports.getAllClients = getAllClients;
 const searchClient = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
