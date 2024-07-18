@@ -126,34 +126,33 @@ const getSingleServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
 exports.getSingleServiceForm = getSingleServiceForm;
 const getAllServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { jobNo, inputDate, clientId, serviceType, } = req.body;
-    if (!jobNo || !inputDate || !clientId || !serviceType) {
-        const allServiceForms = await serviceForm_model_1.ServiceForm.find({
-            $or: [
-                { jobNo: {
-                        $regex: jobNo
-                    } },
-                { inputDate: {
-                        $regex: inputDate
-                    } },
-                { clientId: {
-                        $regex: clientId
-                    } },
-                { jobNo: {
-                        $regex: jobNo
-                    } },
-                { serviceType: {
-                        $regex: serviceType
-                    } },
-            ]
-        })
-            .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy']);
-        if (!allServiceForms) {
-            throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
-        }
-        return res
-            .status(http_status_codes_1.StatusCodes.OK)
-            .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, allServiceForms, "All service forms fetched successfully."));
-    }
+    // if(jobNo !== 0 || !inputDate || !clientId || !serviceType) {
+    //     const allServiceForms: IServiceFormDocument[] = await ServiceForm.find({
+    //         $or: [
+    //             {
+    //                 jobNo: jobNo
+    //             },
+    //             {inputDate: {
+    //                 $regex: inputDate
+    //             }},
+    //             {clientId: {
+    //                 $regex: clientId
+    //             }},
+    //             {serviceType: {
+    //                 $regex: serviceType
+    //             }},
+    //         ]
+    //     })
+    //     .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy']) as IServiceFormDocument[];
+    //     if(!allServiceForms) {
+    //         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
+    //     }
+    //     return res
+    //     .status(StatusCodes.OK)
+    //     .json(
+    //         new ApiResponse(StatusCodes.OK, allServiceForms, "All service forms fetched successfully (Searched).")
+    //     );
+    // } 
     const allServiceForms = await serviceForm_model_1.ServiceForm.find({})
         .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy']);
     if (!allServiceForms) {

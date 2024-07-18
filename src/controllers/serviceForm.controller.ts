@@ -217,41 +217,38 @@ const getAllServiceForm = asyncHandler( async (req: Request, res: Response) => {
         serviceType: string
     } = req.body;
 
-    if(!jobNo || !inputDate || !clientId || !serviceType) {
+    // if(jobNo !== 0 || !inputDate || !clientId || !serviceType) {
 
-        const allServiceForms: IServiceFormDocument[] = await ServiceForm.find({
-            $or: [
-                {jobNo: {
-                    $regex: jobNo
-                }},
-                {inputDate: {
-                    $regex: inputDate
-                }},
-                {clientId: {
-                    $regex: clientId
-                }},
-                {jobNo: {
-                    $regex: jobNo
-                }},
-                {serviceType: {
-                    $regex: serviceType
-                }},
-            ]
-        })
-        .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy']) as IServiceFormDocument[];
+    //     const allServiceForms: IServiceFormDocument[] = await ServiceForm.find({
+    //         $or: [
+    //             {
+    //                 jobNo: jobNo
+    //             },
+    //             {inputDate: {
+    //                 $regex: inputDate
+    //             }},
+    //             {clientId: {
+    //                 $regex: clientId
+    //             }},
+    //             {serviceType: {
+    //                 $regex: serviceType
+    //             }},
+    //         ]
+    //     })
+    //     .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy']) as IServiceFormDocument[];
 
-        if(!allServiceForms) {
-            throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
-        }
+    //     if(!allServiceForms) {
+    //         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
+    //     }
     
-        return res
-        .status(StatusCodes.OK)
-        .json(
-            new ApiResponse(StatusCodes.OK, allServiceForms, "All service forms fetched successfully.")
-        );
+    //     return res
+    //     .status(StatusCodes.OK)
+    //     .json(
+    //         new ApiResponse(StatusCodes.OK, allServiceForms, "All service forms fetched successfully (Searched).")
+    //     );
     
 
-    } 
+    // } 
 
     const allServiceForms: IServiceFormDocument[] = await ServiceForm.find({})
     .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy']) as IServiceFormDocument[];
