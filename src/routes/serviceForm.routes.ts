@@ -20,9 +20,9 @@ import { createServiceFormSchema } from "../schemas/serviceForm.schema";
 const router = Router();
 
 //Authenticated + Authorized Routes
-router.route('/create').post(verifyJWT, checkRoles(['Admin']), validateData(createServiceFormSchema), createNewServiceForm);
-router.route('/update').patch(verifyJWT, checkRoles(['Admin']), updateServiceForm);
-router.route('/delete').delete(verifyJWT, checkRoles(['Admin']), deleteServiceForm);
+router.route('/create').post(verifyJWT, checkRoles(['Admin', 'User']), validateData(createServiceFormSchema), createNewServiceForm);
+router.route('/update').patch(verifyJWT, checkRoles(['Admin', 'User']), updateServiceForm);
+router.route('/delete').delete(verifyJWT, checkRoles(['Admin','User']), deleteServiceForm);
 router.route('/all-service-forms').get(verifyJWT, checkRoles(['Admin', 'User']), getAllServiceForm);
 
 export default router;

@@ -10,7 +10,7 @@ export interface ICreateServiceForm {
     otherLTServiceTypeData?: any,
     lTServiceDetail?: any,
     noOfAddLMailings?: number,
-    mailingAddresses?: string[],
+    mailingAddresses?: any,
     standardServiceType?: string,
     otherStandardServiceTypeData?: any,
     standardServiceDetail?: any,

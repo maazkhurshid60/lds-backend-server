@@ -20,9 +20,9 @@ import { createResultFormSchema } from "../schemas/resultForm.schema";
 const router = Router();
 
 //Authenticated + Authorized Routes
-router.route('/create').post(verifyJWT, checkRoles(['Admin']), validateData(createResultFormSchema), createNewResultForm);
-router.route('/update').patch(verifyJWT, checkRoles(['Admin']), updateResultForm);
-router.route('/delete').delete(verifyJWT, checkRoles(['Admin']), deleteResultForm);
+router.route('/create').post(verifyJWT, checkRoles(['Admin', 'User']), validateData(createResultFormSchema), createNewResultForm);
+router.route('/update').patch(verifyJWT, checkRoles(['Admin', 'User']), updateResultForm);
+router.route('/delete').delete(verifyJWT, checkRoles(['Admin', 'User']), deleteResultForm);
 router.route('/all-result-forms').get(verifyJWT, checkRoles(['Admin', 'User']), getAllResultForm);
 
 export default router;
