@@ -127,39 +127,39 @@ const getAllResultForm = asyncHandler( async (req: Request, res: Response) => {
         serviceResults: any
     } = req.body;
 
-    if(!queryInformationLT || !queryInformationStandard || !serviceResults) {
+    // if(!queryInformationLT || !queryInformationStandard || !serviceResults) {
 
-        const allResultForms: IResultFormDocument[] = await ResultForm.find({
-            $or: [
-                {
-                    queryInformationLT: {
-                        $regex: queryInformationLT
-                    }
-                },
-                {
-                    queryInformationStandard: {
-                        $regex: queryInformationStandard
-                    }
-                },
-                {
-                    serviceResults: {
-                        $regex: serviceResults
-                    }
-                },
-            ]
-        }) as IResultFormDocument[];
+    //     const allResultForms: IResultFormDocument[] = await ResultForm.find({
+    //         $or: [
+    //             {
+    //                 queryInformationLT: {
+    //                     $regex: queryInformationLT
+    //                 }
+    //             },
+    //             {
+    //                 queryInformationStandard: {
+    //                     $regex: queryInformationStandard
+    //                 }
+    //             },
+    //             {
+    //                 serviceResults: {
+    //                     $regex: serviceResults
+    //                 }
+    //             },
+    //         ]
+    //     }) as IResultFormDocument[];
 
-        if(!allResultForms) {
-            throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetchin all result forms")
-        }
+    //     if(!allResultForms) {
+    //         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetchin all result forms")
+    //     }
 
-        return res
-        .status(StatusCodes.OK)
-        .json(
-            new ApiResponse(StatusCodes.OK, allResultForms, "All results forms fetched successfully")
-        );
+    //     return res
+    //     .status(StatusCodes.OK)
+    //     .json(
+    //         new ApiResponse(StatusCodes.OK, allResultForms, "All results forms fetched successfully")
+    //     );
 
-    }
+    // }
 
     const allResultForms: IResultFormDocument[] = await ResultForm.find({}) as IResultFormDocument[];
 

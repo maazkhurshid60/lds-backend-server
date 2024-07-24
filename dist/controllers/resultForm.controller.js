@@ -82,33 +82,35 @@ const getSingleResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =>
 exports.getSingleResultForm = getSingleResultForm;
 const getAllResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { queryInformationLT, queryInformationStandard, serviceResults } = req.body;
-    if (!queryInformationLT || !queryInformationStandard || !serviceResults) {
-        const allResultForms = await resultForm_model_1.ResultForm.find({
-            $or: [
-                {
-                    queryInformationLT: {
-                        $regex: queryInformationLT
-                    }
-                },
-                {
-                    queryInformationStandard: {
-                        $regex: queryInformationStandard
-                    }
-                },
-                {
-                    serviceResults: {
-                        $regex: serviceResults
-                    }
-                },
-            ]
-        });
-        if (!allResultForms) {
-            throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetchin all result forms");
-        }
-        return res
-            .status(http_status_codes_1.StatusCodes.OK)
-            .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, allResultForms, "All results forms fetched successfully"));
-    }
+    // if(!queryInformationLT || !queryInformationStandard || !serviceResults) {
+    //     const allResultForms: IResultFormDocument[] = await ResultForm.find({
+    //         $or: [
+    //             {
+    //                 queryInformationLT: {
+    //                     $regex: queryInformationLT
+    //                 }
+    //             },
+    //             {
+    //                 queryInformationStandard: {
+    //                     $regex: queryInformationStandard
+    //                 }
+    //             },
+    //             {
+    //                 serviceResults: {
+    //                     $regex: serviceResults
+    //                 }
+    //             },
+    //         ]
+    //     }) as IResultFormDocument[];
+    //     if(!allResultForms) {
+    //         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetchin all result forms")
+    //     }
+    //     return res
+    //     .status(StatusCodes.OK)
+    //     .json(
+    //         new ApiResponse(StatusCodes.OK, allResultForms, "All results forms fetched successfully")
+    //     );
+    // }
     const allResultForms = await resultForm_model_1.ResultForm.find({});
     if (!allResultForms) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetchin all result forms");
