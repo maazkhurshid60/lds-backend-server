@@ -8,13 +8,36 @@ export interface IServiceFormDocument extends mongoose.Document {
     caseNo: number,
     caption: string,
     lTServiceType: any,
-    otherLTServiceTypeData: any,
-    lTServiceDetail: any,
+    // otherLTServiceTypeData: any,
+    oLTIndexNo: number,
+    oLTDescription: string,
+    // lTServiceDetail: any,
+    lTSFirstName: string,
+    lTSBusinessName: string,
+    lTSZip: string,
+    lTSState: string,
+    lTSCity: string,
+    lTSApt: string,
+    lTSAddress: string,
+    lTSDescription: string,
     noOfAddLMailings: number,
     mailingAddresses: any,
     standardServiceType: any,
-    otherStandardServiceTypeData: any,
-    standardServiceDetail: any,
+    // otherStandardServiceTypeData: any,
+    oSSTIndexNo: number,
+    oSSTDescription: string,
+    // standardServiceDetail: any,
+    sSDCourt: string,
+    sSDDefendants: string,
+    sSDPlaintiff: string,
+    sSDCountry: string,
+    //Serve to
+    firstNameServe: string,
+    addressServe: string,
+    cityServe: string,
+    stateServe: string,
+    aptServe: string,
+    zipServe: string
     serviceFormCreatedBy: any,
     lastUpdatedBy:any
 }
@@ -49,11 +72,41 @@ const serviceFormSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "LTServiceType"
         },
-        otherLTServiceTypeData: {
-            type: Schema.Types.Map
+        // otherLTServiceTypeData: {
+        //     type: Schema.Types.Map
+        // },
+        oLTIndexNo: {
+            type: Schema.Types.Number,
         },
-        lTServiceDetail: {
-            type: Schema.Types.Map
+        oLTDescription: {
+            type: Schema.Types.String
+        },
+        // lTServiceDetail: {
+        //     type: Schema.Types.Map
+        // },
+        lTSFirstName: {
+            type: Schema.Types.String
+        },
+        lTSBusinessName: {
+            type: Schema.Types.String
+        },
+        lTSZip: {
+            type: Schema.Types.String
+        },
+        lTSState: {
+            type: Schema.Types.String
+        },
+        lTSCity: {
+            type: Schema.Types.String
+        },
+        lTSApt: {
+            type: Schema.Types.String
+        },
+        lTSAddress: {
+            type: Schema.Types.String
+        },
+        lTSDescription: {
+            type: Schema.Types.String
         },
         noOfAddLMailings: {
             type: Number,
@@ -67,11 +120,47 @@ const serviceFormSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "StandardServiceType"
         },
-        otherStandardServiceTypeData: {
-            type: Schema.Types.Map
+        // otherStandardServiceTypeData: {
+        //     type: Schema.Types.Map
+        // },
+        oSSTIndexNo: {
+            type: Schema.Types.Number,
         },
-        standardServiceDetail: {
-            type: Schema.Types.Map
+        oSSTDescription: {
+            type: Schema.Types.String
+        },
+        // standardServiceDetail: {
+        //     type: Schema.Types.Map
+        // },
+        sSDCourt: {
+            type: Schema.Types.String
+        },
+        sSDDefendants: {
+            type: Schema.Types.String
+        },
+        sSDPlaintiff: {
+            type: Schema.Types.String
+        },
+        sSDCountry: {
+            type: Schema.Types.String
+        },
+        firstNameServe: {
+            type: Schema.Types.String
+        },
+        addressServe: {
+            type: Schema.Types.String
+        },
+        cityServe: {
+            type: Schema.Types.String
+        },
+        stateServe: {
+            type: Schema.Types.String
+        },
+        aptServe: {
+            type: Schema.Types.String
+        },
+        zipServe: {
+            type: Schema.Types.String
         },
         serviceFormCreatedBy: {
             type: Schema.Types.ObjectId,

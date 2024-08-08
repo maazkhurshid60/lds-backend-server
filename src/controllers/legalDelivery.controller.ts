@@ -5,6 +5,7 @@ import { ResultForm } from "../models/resultForm.model";
 import { ApiError } from "../utils/ApiError";
 import { StatusCodes } from "http-status-codes";
 import { ApiResponse } from "../utils/ApiResponse";
+import { Schema } from "mongoose";
 
 export interface ISearchService {
     dateCreated?: string | undefined | null,
@@ -120,16 +121,16 @@ const searchInService = async (data: ISearchService) => {
     //             valArray.push(v[1]);
     //         }
 
-    //         const obj = {
-    //             'full-name': data.fullName ? data.fullName : valArray[0] ?? '',
-    //             'business-name': data.businessName ? data.businessName : valArray[1] ?? '',
-    //             'address' : data.address ? data.address : valArray[2] ?? '',
-    //             'apt' : data.apt ? data.apt : valArray[3] ?? '',
-    //             'state': data.state ? data.state : valArray[4] ?? '',
-    //             'city' : data.city ? data.city : valArray[5] ?? '',
-    //             'zip' : data.zip ? data.zip : valArray[6] ?? '',
-    //             'description': data.commercialDescription ? data.commercialDescription : valArray[7] ?? ''
-    //         };
+    //         const obj: Schema.Types.Map = {
+    //             fullName: data.fullName ? data.fullName : valArray[0] ?? '',
+    //             businessName: data.businessName ? data.businessName : valArray[1] ?? '',
+    //             address: data.address ? data.address : valArray[2] ?? '',
+    //             apt: data.apt ? data.apt : valArray[3] ?? '',
+    //             state: data.state ? data.state : valArray[4] ?? '',
+    //             city: data.city ? data.city : valArray[5] ?? '',
+    //             zip: data.zip ? data.zip : valArray[6] ?? '',
+    //             description: data.commercialDescription ? data.commercialDescription : valArray[7] ?? ''
+    //         } as unknown as Schema.Types.Map;
     //         // console.log('Form: ', formObj);
     //         console.log('Object: ', obj);
 
