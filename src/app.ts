@@ -32,7 +32,8 @@ import clientRouter from "./routes/client.routes";
 import lTServiceTypeRouter from "./routes/lTServiceType.routes";
 import standardServiceTypeRouter from "./routes/standardServiceType.routes";
 import serviceFormRouter from "./routes/serviceForm.routes";
-import resultFormRouter from "./routes/resultForm.routes"
+import resultFormRouter from "./routes/resultForm.routes";
+import legalDeliveryRouter from "./routes/legalDelivery.routes";
 
 app.use(`${baseURL}/user`, userRouter);
 app.use(`${baseURL}/role`, roleRouter);
@@ -48,5 +49,6 @@ app.use(`${baseURL}/ltservice-type`, lTServiceTypeRouter);
 app.use(`${baseURL}/standard-service-type`, standardServiceTypeRouter);
 app.use(`${baseURL}/service-form`, serviceFormRouter);
 app.use(`${baseURL}/result-form`, resultFormRouter);
+app.use(`${baseURL}/legal-delivery`, legalDeliveryRouter);
 
 export { app };
