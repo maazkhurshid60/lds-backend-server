@@ -3,26 +3,101 @@ import { asyncHandler } from "../utils/AsyncHandler";
 import { ICreateResultForm, IUpdateResultForm } from "../interfaces/resultForm.interface";
 import { ApiError } from "../utils/ApiError";
 import { StatusCodes } from "http-status-codes";
-import { IResultFormDocument, ResultForm } from "../models/resultForm.model";
+import { IResultFormDocument, ResultForm, } from "../models/resultForm.model";
 import { ApiResponse } from "../utils/ApiResponse";
 
 
 const createNewResultForm = asyncHandler( async (req: Request, res: Response,) => {
 
-    const { queryInformationLT, queryInformationStandard, serviceResults } : ICreateResultForm = req.body;
+    const { queryInformationLTFullName,
+        queryInformationLTIndexNo,
+        queryInformationLTAddress ,
+        queryInformationLTBusinessName ,
+        queryInformationLTInputDate ,
+        queryInformationStandardServeTo ,
+        queryInformationStandardDefendants ,
+        serviceResultInputDate ,
+        serviceResultScvType ,
+        serviceResultClientId ,
+        serviceResultJobNo ,
+        serviceResultServerId ,
+        serviceResultResults ,
+        serviceResultDateOfService ,
+        serviceResultFirstTimeOfService , 
+        serviceResultFirstAttemptDate ,
+        serviceResultSecondTimeOfService , 
+        serviceResultSecondAttemptDate ,  
+        serviceResultThirdTimeOfService , 
+        serviceResultThirdAttemptDate ,
+        serviceResultlTServed ,
+        serviceResultlTNotServed ,
+        serviceResultRecipientTitle ,
+        serviceResultDoor ,
+        serviceResultDoorLocks ,
+        serviceResultEntry ,
+        serviceResultWall ,
+        serviceResultFloor ,
+        serviceResultLock ,
+        serviceResultOtherDescription ,
+        serviceResultSex ,
+        serviceResultSkinColor ,
+        serviceResultHair ,
+        serviceResultAge ,
+        serviceResultHeight ,
+        serviceResultWeight ,
+        serviceResultOtherFeatures ,
+        serviceResultDateOfMailing ,
+        serviceResultDateOfNotary ,
+     } : ICreateResultForm = req.body;
 
-    if(!queryInformationLT || !queryInformationStandard || !serviceResults) {
+    if(!queryInformationLTFullName || !queryInformationLTIndexNo || !queryInformationLTAddress) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Missing required fields");
     }
 
-    if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
-    }
+    // if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
+    // }
 
     const createNewResultForm: IResultFormDocument = await ResultForm.create({
-        queryInformationLT,
-        queryInformationStandard,
-        serviceResults
+        queryInformationLTFullName,
+        queryInformationLTIndexNo,
+        queryInformationLTAddress ,
+        queryInformationLTBusinessName ,
+        queryInformationLTInputDate ,
+        queryInformationStandardServeTo ,
+        queryInformationStandardDefendants ,
+        serviceResultInputDate ,
+        serviceResultScvType ,
+        serviceResultClientId ,
+        serviceResultJobNo ,
+        serviceResultServerId ,
+        serviceResultResults ,
+        serviceResultDateOfService ,
+        serviceResultFirstTimeOfService , 
+        serviceResultFirstAttemptDate ,
+        serviceResultSecondTimeOfService , 
+        serviceResultSecondAttemptDate ,  
+        serviceResultThirdTimeOfService , 
+        serviceResultThirdAttemptDate ,
+        serviceResultlTServed ,
+        serviceResultlTNotServed ,
+        serviceResultRecipientTitle ,
+        serviceResultDoor ,
+        serviceResultDoorLocks ,
+        serviceResultEntry ,
+        serviceResultWall ,
+        serviceResultFloor ,
+        serviceResultLock ,
+        serviceResultOtherDescription ,
+        serviceResultSex ,
+        serviceResultSkinColor ,
+        serviceResultHair ,
+        serviceResultAge ,
+        serviceResultHeight ,
+        serviceResultWeight ,
+        serviceResultOtherFeatures ,
+        serviceResultDateOfMailing ,
+        serviceResultDateOfNotary ,
     }) as IResultFormDocument;
 
     if(!createNewResultForm) {
@@ -39,27 +114,101 @@ const createNewResultForm = asyncHandler( async (req: Request, res: Response,) =
 
 const updateResultForm = asyncHandler( async (req: Request, res: Response) => {
 
-    const { resultFormId, queryInformationLT, queryInformationStandard, serviceResults } : IUpdateResultForm = req.body;
+    const { resultFormId, queryInformationLTFullName,
+        queryInformationLTIndexNo,
+        queryInformationLTAddress ,
+        queryInformationLTBusinessName ,
+        queryInformationLTInputDate ,
+        queryInformationStandardServeTo ,
+        queryInformationStandardDefendants ,
+        serviceResultInputDate ,
+        serviceResultScvType ,
+        serviceResultClientId ,
+        serviceResultJobNo ,
+        serviceResultServerId ,
+        serviceResultResults ,
+        serviceResultDateOfService ,
+        serviceResultFirstTimeOfService , 
+        serviceResultFirstAttemptDate ,
+        serviceResultSecondTimeOfService , 
+        serviceResultSecondAttemptDate ,  
+        serviceResultThirdTimeOfService , 
+        serviceResultThirdAttemptDate ,
+        serviceResultlTServed ,
+        serviceResultlTNotServed ,
+        serviceResultRecipientTitle ,
+        serviceResultDoor ,
+        serviceResultDoorLocks ,
+        serviceResultEntry ,
+        serviceResultWall ,
+        serviceResultFloor ,
+        serviceResultLock ,
+        serviceResultOtherDescription ,
+        serviceResultSex ,
+        serviceResultSkinColor ,
+        serviceResultHair ,
+        serviceResultAge ,
+        serviceResultHeight ,
+        serviceResultWeight ,
+        serviceResultOtherFeatures ,
+        serviceResultDateOfMailing ,
+        serviceResultDateOfNotary , } : IUpdateResultForm = req.body;
 
     if(!resultFormId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Result form Id is required");
     }
 
-    if(!queryInformationLT || !queryInformationStandard || !serviceResults) {
+    if(!queryInformationLTFullName || !queryInformationLTIndexNo || !queryInformationLTAddress) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Missing required fields");
     }
 
-    if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
-    }
+    // if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
+    // }
 
     const updatedResultForm: IResultFormDocument = await ResultForm.findByIdAndUpdate(
         resultFormId,
         {
             $set: {
-                queryInformationLT,
-                queryInformationStandard,
-                serviceResults
+                queryInformationLTFullName,
+                queryInformationLTIndexNo,
+                queryInformationLTAddress ,
+                queryInformationLTBusinessName ,
+                queryInformationLTInputDate ,
+                queryInformationStandardServeTo ,
+                queryInformationStandardDefendants ,
+                serviceResultInputDate ,
+                serviceResultScvType ,
+                serviceResultClientId ,
+                serviceResultJobNo ,
+                serviceResultServerId ,
+                serviceResultResults ,
+                serviceResultDateOfService ,
+                serviceResultFirstTimeOfService , 
+                serviceResultFirstAttemptDate ,
+                serviceResultSecondTimeOfService , 
+                serviceResultSecondAttemptDate ,  
+                serviceResultThirdTimeOfService , 
+                serviceResultThirdAttemptDate ,
+                serviceResultlTServed ,
+                serviceResultlTNotServed ,
+                serviceResultRecipientTitle ,
+                serviceResultDoor ,
+                serviceResultDoorLocks ,
+                serviceResultEntry ,
+                serviceResultWall ,
+                serviceResultFloor ,
+                serviceResultLock ,
+                serviceResultOtherDescription ,
+                serviceResultSex ,
+                serviceResultSkinColor ,
+                serviceResultHair ,
+                serviceResultAge ,
+                serviceResultHeight ,
+                serviceResultWeight ,
+                serviceResultOtherFeatures ,
+                serviceResultDateOfMailing ,
+                serviceResultDateOfNotary 
             }
         },
         {
@@ -120,11 +269,85 @@ const getSingleResultForm = asyncHandler( async (req: Request, res: Response) =>
 
 const getAllResultForm = asyncHandler( async (req: Request, res: Response) => {
 
-    const { queryInformationLT, queryInformationStandard, serviceResults } : 
+    const { queryInformationLTFullName,
+        queryInformationLTIndexNo,
+        queryInformationLTAddress,
+        queryInformationLTBusinessName,
+        queryInformationLTInputDate,
+        queryInformationStandardServeTo,
+        queryInformationStandardDefendants,
+        serviceResultInputDate,
+        serviceResultScvType,
+        serviceResultClientId,
+        serviceResultJobNo,
+        serviceResultServerId,
+        serviceResultResults,
+        serviceResultDateOfService,
+        serviceResultFirstTimeOfService, 
+        serviceResultFirstAttemptDate,
+        serviceResultSecondTimeOfService, 
+        serviceResultSecondAttemptDate,  
+        serviceResultThirdTimeOfService, 
+        serviceResultThirdAttemptDate,
+        serviceResultlTServed,
+        serviceResultlTNotServed,
+        serviceResultRecipientTitle,
+        serviceResultDoor,
+        serviceResultDoorLocks,
+        serviceResultEntry,
+        serviceResultWall,
+        serviceResultFloor,
+        serviceResultLock,
+        serviceResultOtherDescription,
+        serviceResultSex,
+        serviceResultSkinColor,
+        serviceResultHair,
+        serviceResultAge,
+        serviceResultHeight,
+        serviceResultWeight,
+        serviceResultOtherFeatures,
+        serviceResultDateOfMailing,
+        serviceResultDateOfNotary, } : 
     { 
-        queryInformationLT: any,
-        queryInformationStandard: any,
-        serviceResults: any
+        queryInformationLTFullName:string,
+        queryInformationLTIndexNo:string,
+        queryInformationLTAddress:string,
+        queryInformationLTBusinessName:string,
+        queryInformationLTInputDate:string,
+        queryInformationStandardServeTo:string,
+        queryInformationStandardDefendants:string,
+        serviceResultInputDate:string,
+        serviceResultScvType:string,
+        serviceResultClientId:string,
+        serviceResultJobNo:string,
+        serviceResultServerId:string,
+        serviceResultResults:string,
+        serviceResultDateOfService:string,
+        serviceResultFirstTimeOfService:string, 
+        serviceResultFirstAttemptDate:string,
+        serviceResultSecondTimeOfService:string, 
+        serviceResultSecondAttemptDate:string,  
+        serviceResultThirdTimeOfService:string, 
+        serviceResultThirdAttemptDate:string,
+        serviceResultlTServed:string,
+        serviceResultlTNotServed:string,
+        serviceResultRecipientTitle:string,
+        serviceResultDoor:string,
+        serviceResultDoorLocks:string,
+        serviceResultEntry:string,
+        serviceResultWall:string,
+        serviceResultFloor:string,
+        serviceResultLock:string,
+        serviceResultOtherDescription:string,
+        serviceResultSex:string,
+        serviceResultSkinColor:string,
+        serviceResultHair:string,
+        serviceResultAge:string,
+        serviceResultHeight:string,
+        serviceResultWeight:string,
+        serviceResultOtherFeatures:string,
+        serviceResultDateOfMailing:string,
+        serviceResultDateOfNotary:string,
     } = req.body;
 
     // if(!queryInformationLT || !queryInformationStandard || !serviceResults) {
