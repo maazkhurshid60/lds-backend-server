@@ -36,6 +36,7 @@ const lTServiceType_routes_1 = __importDefault(require("./routes/lTServiceType.r
 const standardServiceType_routes_1 = __importDefault(require("./routes/standardServiceType.routes"));
 const serviceForm_routes_1 = __importDefault(require("./routes/serviceForm.routes"));
 const resultForm_routes_1 = __importDefault(require("./routes/resultForm.routes"));
+const legalDelivery_routes_1 = __importDefault(require("./routes/legalDelivery.routes"));
 app.use(`${Constants_1.baseURL}/user`, user_routes_1.default);
 app.use(`${Constants_1.baseURL}/role`, role_routes_1.default);
 app.use(`${Constants_1.baseURL}/service-result`, serviceResult_routes_1.default);
@@ -50,3 +51,4 @@ app.use(`${Constants_1.baseURL}/ltservice-type`, lTServiceType_routes_1.default)
 app.use(`${Constants_1.baseURL}/standard-service-type`, standardServiceType_routes_1.default);
 app.use(`${Constants_1.baseURL}/service-form`, serviceForm_routes_1.default);
 app.use(`${Constants_1.baseURL}/result-form`, resultForm_routes_1.default);
+app.use(`${Constants_1.baseURL}/legal-delivery`, legalDelivery_routes_1.default);

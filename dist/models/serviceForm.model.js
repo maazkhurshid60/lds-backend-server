@@ -54,11 +54,41 @@ const serviceFormSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "LTServiceType"
     },
-    otherLTServiceTypeData: {
-        type: mongoose_1.Schema.Types.Map
+    // otherLTServiceTypeData: {
+    //     type: Schema.Types.Map
+    // },
+    oLTIndexNo: {
+        type: mongoose_1.Schema.Types.Number,
     },
-    lTServiceDetail: {
-        type: mongoose_1.Schema.Types.Map
+    oLTDescription: {
+        type: mongoose_1.Schema.Types.String
+    },
+    // lTServiceDetail: {
+    //     type: Schema.Types.Map
+    // },
+    lTSFirstName: {
+        type: mongoose_1.Schema.Types.String
+    },
+    lTSBusinessName: {
+        type: mongoose_1.Schema.Types.String
+    },
+    lTSZip: {
+        type: mongoose_1.Schema.Types.String
+    },
+    lTSState: {
+        type: mongoose_1.Schema.Types.String
+    },
+    lTSCity: {
+        type: mongoose_1.Schema.Types.String
+    },
+    lTSApt: {
+        type: mongoose_1.Schema.Types.String
+    },
+    lTSAddress: {
+        type: mongoose_1.Schema.Types.String
+    },
+    lTSDescription: {
+        type: mongoose_1.Schema.Types.String
     },
     noOfAddLMailings: {
         type: Number,
@@ -72,11 +102,47 @@ const serviceFormSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "StandardServiceType"
     },
-    otherStandardServiceTypeData: {
-        type: mongoose_1.Schema.Types.Map
+    // otherStandardServiceTypeData: {
+    //     type: Schema.Types.Map
+    // },
+    oSSTIndexNo: {
+        type: mongoose_1.Schema.Types.Number,
     },
-    standardServiceDetail: {
-        type: mongoose_1.Schema.Types.Map
+    oSSTDescription: {
+        type: mongoose_1.Schema.Types.String
+    },
+    // standardServiceDetail: {
+    //     type: Schema.Types.Map
+    // },
+    sSDCourt: {
+        type: mongoose_1.Schema.Types.String
+    },
+    sSDDefendants: {
+        type: mongoose_1.Schema.Types.String
+    },
+    sSDPlaintiff: {
+        type: mongoose_1.Schema.Types.String
+    },
+    sSDCountry: {
+        type: mongoose_1.Schema.Types.String
+    },
+    firstNameServe: {
+        type: mongoose_1.Schema.Types.String
+    },
+    addressServe: {
+        type: mongoose_1.Schema.Types.String
+    },
+    cityServe: {
+        type: mongoose_1.Schema.Types.String
+    },
+    stateServe: {
+        type: mongoose_1.Schema.Types.String
+    },
+    aptServe: {
+        type: mongoose_1.Schema.Types.String
+    },
+    zipServe: {
+        type: mongoose_1.Schema.Types.String
     },
     serviceFormCreatedBy: {
         type: mongoose_1.Schema.Types.ObjectId,

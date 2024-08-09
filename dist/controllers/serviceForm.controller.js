@@ -12,7 +12,15 @@ const standardServiceType_model_1 = require("../models/standardServiceType.model
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const user = req.user;
-    const { jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, otherLTServiceTypeData, lTServiceDetail, noOfAddLMailings, mailingAddresses, standardServiceType, otherStandardServiceTypeData, standardServiceDetail, } = req.body;
+    const { jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, 
+    // otherLTServiceTypeData,
+    oLTIndexNo, oLTDescription, 
+    // lTServiceDetail,
+    lTSFirstName, lTSBusinessName, lTSZip, lTSState, lTSCity, lTSApt, lTSAddress, lTSDescription, noOfAddLMailings, mailingAddresses, standardServiceType, 
+    // otherStandardServiceTypeData,
+    oSSTIndexNo, oSSTDescription, 
+    // standardServiceDetail,
+    sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry, firstNameServe, addressServe, cityServe, stateServe, aptServe, zipServe } = req.body;
     if (!jobNo || !inputDate || !clientId) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Required fields are missing");
     }
@@ -35,13 +43,35 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
         caseNo,
         caption,
         lTServiceType: ltServiceTypeDoc._id,
-        otherLTServiceTypeData,
-        lTServiceDetail,
+        // otherLTServiceTypeData,
+        oLTIndexNo,
+        oLTDescription,
+        // lTServiceDetail,
+        lTSFirstName,
+        lTSBusinessName,
+        lTSZip,
+        lTSState,
+        lTSCity,
+        lTSApt,
+        lTSAddress,
+        lTSDescription,
         noOfAddLMailings,
         mailingAddresses,
         standardServiceType: standardServiceTypeDoc._id,
-        otherStandardServiceTypeData,
-        standardServiceDetail,
+        // otherStandardServiceTypeData,
+        oSSTIndexNo,
+        oSSTDescription,
+        // standardServiceDetail,
+        sSDCourt,
+        sSDDefendants,
+        sSDPlaintiff,
+        sSDCountry,
+        firstNameServe,
+        addressServe,
+        cityServe,
+        stateServe,
+        aptServe,
+        zipServe,
         serviceFormCreatedBy: user._id,
         lastUpdatedBy: user._id
     });
@@ -55,7 +85,15 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
 exports.createNewServiceForm = createNewServiceForm;
 const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const user = req.user;
-    const { serviceFormId, jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, otherLTServiceTypeData, lTServiceDetail, noOfAddLMailings, mailingAddresses, standardServiceType, otherStandardServiceTypeData, standardServiceDetail, } = req.body;
+    const { serviceFormId, jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, 
+    // otherLTServiceTypeData,
+    oLTIndexNo, oLTDescription, 
+    // lTServiceDetail,
+    lTSFirstName, lTSBusinessName, lTSZip, lTSState, lTSCity, lTSApt, lTSAddress, lTSDescription, noOfAddLMailings, mailingAddresses, standardServiceType, 
+    // otherStandardServiceTypeData,
+    oSSTIndexNo, oSSTDescription, 
+    // standardServiceDetail,
+    sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry, firstNameServe, addressServe, cityServe, stateServe, aptServe, zipServe } = req.body;
     if (!serviceFormId) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Service form id is required.");
     }
@@ -78,13 +116,35 @@ const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
             caseNo,
             caption,
             lTServiceType: ltServiceTypeDoc._id,
-            otherLTServiceTypeData,
-            lTServiceDetail,
+            // otherLTServiceTypeData,
+            oLTIndexNo,
+            oLTDescription,
+            // lTServiceDetail,
+            lTSFirstName,
+            lTSBusinessName,
+            lTSZip,
+            lTSState,
+            lTSCity,
+            lTSApt,
+            lTSAddress,
+            lTSDescription,
             noOfAddLMailings,
             mailingAddresses,
             standardServiceType: standardServiceTypeDoc._id,
-            otherStandardServiceTypeData,
-            standardServiceDetail,
+            // otherStandardServiceTypeData,
+            oSSTIndexNo,
+            oSSTDescription,
+            // standardServiceDetail,
+            sSDCourt,
+            sSDDefendants,
+            sSDPlaintiff,
+            sSDCountry,
+            firstNameServe,
+            addressServe,
+            cityServe,
+            stateServe,
+            aptServe,
+            zipServe,
             serviceFormCreatedBy: user._id,
             lastUpdatedBy: user._id
         }
