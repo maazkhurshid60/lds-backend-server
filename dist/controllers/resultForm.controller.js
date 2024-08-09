@@ -7,17 +7,53 @@ const http_status_codes_1 = require("http-status-codes");
 const resultForm_model_1 = require("../models/resultForm.model");
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createNewResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
-    const { queryInformationLT, queryInformationStandard, serviceResults } = req.body;
-    if (!queryInformationLT || !queryInformationStandard || !serviceResults) {
+    const { queryInformationLTFullName, queryInformationLTIndexNo, queryInformationLTAddress, queryInformationLTBusinessName, queryInformationLTInputDate, queryInformationStandardServeTo, queryInformationStandardDefendants, serviceResultInputDate, serviceResultScvType, serviceResultClientId, serviceResultJobNo, serviceResultServerId, serviceResultResults, serviceResultDateOfService, serviceResultFirstTimeOfService, serviceResultFirstAttemptDate, serviceResultSecondTimeOfService, serviceResultSecondAttemptDate, serviceResultThirdTimeOfService, serviceResultThirdAttemptDate, serviceResultlTServed, serviceResultlTNotServed, serviceResultRecipientTitle, serviceResultDoor, serviceResultDoorLocks, serviceResultEntry, serviceResultWall, serviceResultFloor, serviceResultLock, serviceResultOtherDescription, serviceResultSex, serviceResultSkinColor, serviceResultHair, serviceResultAge, serviceResultHeight, serviceResultWeight, serviceResultOtherFeatures, serviceResultDateOfMailing, serviceResultDateOfNotary, } = req.body;
+    if (!queryInformationLTFullName || !queryInformationLTIndexNo || !queryInformationLTAddress) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Missing required fields");
     }
-    if (typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid data types");
-    }
+    // if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
+    // }
     const createNewResultForm = await resultForm_model_1.ResultForm.create({
-        queryInformationLT,
-        queryInformationStandard,
-        serviceResults
+        queryInformationLTFullName,
+        queryInformationLTIndexNo,
+        queryInformationLTAddress,
+        queryInformationLTBusinessName,
+        queryInformationLTInputDate,
+        queryInformationStandardServeTo,
+        queryInformationStandardDefendants,
+        serviceResultInputDate,
+        serviceResultScvType,
+        serviceResultClientId,
+        serviceResultJobNo,
+        serviceResultServerId,
+        serviceResultResults,
+        serviceResultDateOfService,
+        serviceResultFirstTimeOfService,
+        serviceResultFirstAttemptDate,
+        serviceResultSecondTimeOfService,
+        serviceResultSecondAttemptDate,
+        serviceResultThirdTimeOfService,
+        serviceResultThirdAttemptDate,
+        serviceResultlTServed,
+        serviceResultlTNotServed,
+        serviceResultRecipientTitle,
+        serviceResultDoor,
+        serviceResultDoorLocks,
+        serviceResultEntry,
+        serviceResultWall,
+        serviceResultFloor,
+        serviceResultLock,
+        serviceResultOtherDescription,
+        serviceResultSex,
+        serviceResultSkinColor,
+        serviceResultHair,
+        serviceResultAge,
+        serviceResultHeight,
+        serviceResultWeight,
+        serviceResultOtherFeatures,
+        serviceResultDateOfMailing,
+        serviceResultDateOfNotary,
     });
     if (!createNewResultForm) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating a new result form");
@@ -28,21 +64,57 @@ const createNewResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =>
 });
 exports.createNewResultForm = createNewResultForm;
 const updateResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
-    const { resultFormId, queryInformationLT, queryInformationStandard, serviceResults } = req.body;
+    const { resultFormId, queryInformationLTFullName, queryInformationLTIndexNo, queryInformationLTAddress, queryInformationLTBusinessName, queryInformationLTInputDate, queryInformationStandardServeTo, queryInformationStandardDefendants, serviceResultInputDate, serviceResultScvType, serviceResultClientId, serviceResultJobNo, serviceResultServerId, serviceResultResults, serviceResultDateOfService, serviceResultFirstTimeOfService, serviceResultFirstAttemptDate, serviceResultSecondTimeOfService, serviceResultSecondAttemptDate, serviceResultThirdTimeOfService, serviceResultThirdAttemptDate, serviceResultlTServed, serviceResultlTNotServed, serviceResultRecipientTitle, serviceResultDoor, serviceResultDoorLocks, serviceResultEntry, serviceResultWall, serviceResultFloor, serviceResultLock, serviceResultOtherDescription, serviceResultSex, serviceResultSkinColor, serviceResultHair, serviceResultAge, serviceResultHeight, serviceResultWeight, serviceResultOtherFeatures, serviceResultDateOfMailing, serviceResultDateOfNotary, } = req.body;
     if (!resultFormId) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Result form Id is required");
     }
-    if (!queryInformationLT || !queryInformationStandard || !serviceResults) {
+    if (!queryInformationLTFullName || !queryInformationLTIndexNo || !queryInformationLTAddress) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Missing required fields");
     }
-    if (typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid data types");
-    }
+    // if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
+    // }
     const updatedResultForm = await resultForm_model_1.ResultForm.findByIdAndUpdate(resultFormId, {
         $set: {
-            queryInformationLT,
-            queryInformationStandard,
-            serviceResults
+            queryInformationLTFullName,
+            queryInformationLTIndexNo,
+            queryInformationLTAddress,
+            queryInformationLTBusinessName,
+            queryInformationLTInputDate,
+            queryInformationStandardServeTo,
+            queryInformationStandardDefendants,
+            serviceResultInputDate,
+            serviceResultScvType,
+            serviceResultClientId,
+            serviceResultJobNo,
+            serviceResultServerId,
+            serviceResultResults,
+            serviceResultDateOfService,
+            serviceResultFirstTimeOfService,
+            serviceResultFirstAttemptDate,
+            serviceResultSecondTimeOfService,
+            serviceResultSecondAttemptDate,
+            serviceResultThirdTimeOfService,
+            serviceResultThirdAttemptDate,
+            serviceResultlTServed,
+            serviceResultlTNotServed,
+            serviceResultRecipientTitle,
+            serviceResultDoor,
+            serviceResultDoorLocks,
+            serviceResultEntry,
+            serviceResultWall,
+            serviceResultFloor,
+            serviceResultLock,
+            serviceResultOtherDescription,
+            serviceResultSex,
+            serviceResultSkinColor,
+            serviceResultHair,
+            serviceResultAge,
+            serviceResultHeight,
+            serviceResultWeight,
+            serviceResultOtherFeatures,
+            serviceResultDateOfMailing,
+            serviceResultDateOfNotary
         }
     }, {
         new: true
@@ -81,7 +153,7 @@ const getSingleResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =>
 });
 exports.getSingleResultForm = getSingleResultForm;
 const getAllResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
-    const { queryInformationLT, queryInformationStandard, serviceResults } = req.body;
+    const { queryInformationLTFullName, queryInformationLTIndexNo, queryInformationLTAddress, queryInformationLTBusinessName, queryInformationLTInputDate, queryInformationStandardServeTo, queryInformationStandardDefendants, serviceResultInputDate, serviceResultScvType, serviceResultClientId, serviceResultJobNo, serviceResultServerId, serviceResultResults, serviceResultDateOfService, serviceResultFirstTimeOfService, serviceResultFirstAttemptDate, serviceResultSecondTimeOfService, serviceResultSecondAttemptDate, serviceResultThirdTimeOfService, serviceResultThirdAttemptDate, serviceResultlTServed, serviceResultlTNotServed, serviceResultRecipientTitle, serviceResultDoor, serviceResultDoorLocks, serviceResultEntry, serviceResultWall, serviceResultFloor, serviceResultLock, serviceResultOtherDescription, serviceResultSex, serviceResultSkinColor, serviceResultHair, serviceResultAge, serviceResultHeight, serviceResultWeight, serviceResultOtherFeatures, serviceResultDateOfMailing, serviceResultDateOfNotary, } = req.body;
     // if(!queryInformationLT || !queryInformationStandard || !serviceResults) {
     //     const allResultForms: IResultFormDocument[] = await ResultForm.find({
     //         $or: [
