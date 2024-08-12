@@ -11,9 +11,6 @@ const createNewResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =>
     if (!queryInformationLTFullName || !queryInformationLTIndexNo || !queryInformationLTAddress) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Missing required fields");
     }
-    // if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
-    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
-    // }
     const createNewResultForm = await resultForm_model_1.ResultForm.create({
         queryInformationLTFullName,
         queryInformationLTIndexNo,

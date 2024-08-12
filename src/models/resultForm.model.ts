@@ -33,7 +33,7 @@ export interface IResultFormDocument extends mongoose.Document {
     serviceResultWall: number,
     serviceResultFloor: number,
     serviceResultLock: number,
-    serviceResultOtherDescription: string,
+    serviceResultOtherDescription: boolean,
     serviceResultSex: string,
     serviceResultSkinColor: string,
     serviceResultHair: string,
@@ -58,7 +58,7 @@ const resultFormSchema: Schema<IResultFormDocument> = new Schema(
 
         queryInformationLTAddress: {
             type: Schema.Types.String,
-            required: [true, "Index no is required"],
+            required: [true, "Address is required"],
         },
         queryInformationLTBusinessName: {
             type: Schema.Types.String,
@@ -127,7 +127,7 @@ const resultFormSchema: Schema<IResultFormDocument> = new Schema(
             type: Schema.Types.String,
         },
         serviceResultOtherDescription: {
-            type: Schema.Types.String,
+            type: Schema.Types.Boolean,
         },
         serviceResultOtherFeatures: {
             type: Schema.Types.String,

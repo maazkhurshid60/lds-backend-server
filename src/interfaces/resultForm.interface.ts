@@ -30,7 +30,7 @@ export interface ICreateResultForm {
     serviceResultWall?:number | null ,
     serviceResultFloor?:number | null ,
     serviceResultLock?:number | null ,
-    serviceResultOtherDescription?:string | null ,
+    serviceResultOtherDescription?:boolean | null ,
     serviceResultSex?:string | null ,
     serviceResultSkinColor?:string | null ,
     serviceResultHair?:string | null ,

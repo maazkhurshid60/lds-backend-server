@@ -36,7 +36,7 @@ const resultFormSchema = new mongoose_1.Schema({
     },
     queryInformationLTAddress: {
         type: mongoose_1.Schema.Types.String,
-        required: [true, "Index no is required"],
+        required: [true, "Address is required"],
     },
     queryInformationLTBusinessName: {
         type: mongoose_1.Schema.Types.String,
@@ -105,7 +105,7 @@ const resultFormSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.String,
     },
     serviceResultOtherDescription: {
-        type: mongoose_1.Schema.Types.String,
+        type: mongoose_1.Schema.Types.Boolean,
     },
     serviceResultOtherFeatures: {
         type: mongoose_1.Schema.Types.String,

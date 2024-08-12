@@ -6,7 +6,6 @@ import { StatusCodes } from "http-status-codes";
 import { IResultFormDocument, ResultForm, } from "../models/resultForm.model";
 import { ApiResponse } from "../utils/ApiResponse";
 
-
 const createNewResultForm = asyncHandler( async (req: Request, res: Response,) => {
 
     const { queryInformationLTFullName,
@@ -53,10 +52,6 @@ const createNewResultForm = asyncHandler( async (req: Request, res: Response,) =
     if(!queryInformationLTFullName || !queryInformationLTIndexNo || !queryInformationLTAddress) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Missing required fields");
     }
-
-    // if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
-    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
-    // }
 
     const createNewResultForm: IResultFormDocument = await ResultForm.create({
         queryInformationLTFullName,
@@ -114,7 +109,8 @@ const createNewResultForm = asyncHandler( async (req: Request, res: Response,) =
 
 const updateResultForm = asyncHandler( async (req: Request, res: Response) => {
 
-    const { resultFormId, queryInformationLTFullName,
+    const { 
+        resultFormId, queryInformationLTFullName,
         queryInformationLTIndexNo,
         queryInformationLTAddress ,
         queryInformationLTBusinessName ,
@@ -152,7 +148,8 @@ const updateResultForm = asyncHandler( async (req: Request, res: Response) => {
         serviceResultWeight ,
         serviceResultOtherFeatures ,
         serviceResultDateOfMailing ,
-        serviceResultDateOfNotary , } : IUpdateResultForm = req.body;
+        serviceResultDateOfNotary , 
+    } : IUpdateResultForm = req.body;
 
     if(!resultFormId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Result form Id is required");
