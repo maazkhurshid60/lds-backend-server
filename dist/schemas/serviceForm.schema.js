@@ -2,14 +2,27 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createServiceFormSchema = void 0;
 const zod_1 = require("zod");
+const mailingAddressSchema = zod_1.z.object({
+    address: zod_1.z.string().optional(),
+    apt: zod_1.z.string().optional(),
+    city: zod_1.z.string().optional(),
+    createdAt: zod_1.z.string().optional(),
+    firstName: zod_1.z.string().optional(),
+    rRR: zod_1.z.boolean().optional(),
+    state: zod_1.z.string().optional(),
+    updatedAt: zod_1.z.string().optional(),
+    zip: zod_1.z.any().optional(),
+    __v: zod_1.z.any().optional(),
+    _id: zod_1.z.any().optional(),
+});
 exports.createServiceFormSchema = zod_1.z.object({
     jobNo: zod_1.z.number().optional(),
     inputDate: zod_1.z.string().optional(),
-    clientId: zod_1.z.number().optional(),
-    serviceType: zod_1.z.number().optional(),
+    clientId: zod_1.z.any().optional(),
+    serviceType: zod_1.z.any().optional(),
     caseNo: zod_1.z.number().optional(),
     caption: zod_1.z.string().optional(),
-    lTServiceType: zod_1.z.number().optional(),
+    lTServiceType: zod_1.z.any().optional(),
     // otherLTServiceTypeData: z.number().optional(),
     oLTIndexNo: zod_1.z.number().optional(),
     oLTDescription: zod_1.z.string().optional(),
@@ -23,7 +36,7 @@ exports.createServiceFormSchema = zod_1.z.object({
     lTSAddress: zod_1.z.string().optional(),
     lTSDescription: zod_1.z.string().optional(),
     noOfAddLMailings: zod_1.z.number().optional(),
-    mailingAddresses: zod_1.z.string().optional(),
+    mailingAddresses: zod_1.z.array(mailingAddressSchema).optional(),
     standardServiceType: zod_1.z.string().optional(),
     // otherStandardServiceTypeData: z.number().optional(),
     oSSTIndexNo: zod_1.z.number().optional(),

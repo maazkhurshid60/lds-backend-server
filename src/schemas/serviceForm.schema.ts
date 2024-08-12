@@ -1,13 +1,27 @@
 import { z } from "zod";
 
+const mailingAddressSchema = z.object({
+    address:z.string().optional(),
+    apt:z.string().optional(),
+    city:z.string().optional(),
+    createdAt:z.string().optional(),
+    firstName:z.string().optional(),
+    rRR:z.boolean().optional(),
+    state:z.string().optional(),
+    updatedAt:z.string().optional(),
+    zip:z.any().optional(),
+    __v:z.any().optional(),
+    _id:z.any().optional(),
+  });
+
 export const createServiceFormSchema = z.object({
     jobNo: z.number().optional(),
     inputDate: z.string().optional(),
-    clientId: z.number().optional(),
-    serviceType: z.number().optional(),
+    clientId: z.any().optional(),
+    serviceType: z.any().optional(),
     caseNo: z.number().optional(),
     caption: z.string().optional(),
-    lTServiceType: z.number().optional(),
+    lTServiceType: z.any().optional(),
     // otherLTServiceTypeData: z.number().optional(),
     oLTIndexNo: z.number().optional(),
     oLTDescription: z.string().optional(),
@@ -21,7 +35,7 @@ export const createServiceFormSchema = z.object({
     lTSAddress: z.string().optional(),
     lTSDescription: z.string().optional(),
     noOfAddLMailings: z.number().optional(),
-    mailingAddresses: z.string().optional(),
+    mailingAddresses:z.array(mailingAddressSchema).optional(),
     standardServiceType: z.string().optional(),
     // otherStandardServiceTypeData: z.number().optional(),
     oSSTIndexNo: z.number().optional(),
