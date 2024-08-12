@@ -21,8 +21,8 @@ export const createServiceFormSchema = z.object({
     lTSAddress: z.string().optional(),
     lTSDescription: z.string().optional(),
     noOfAddLMailings: z.number().optional(),
-    mailingAddresses: z.number().optional(),
-    standardServiceType: z.number().optional(),
+    mailingAddresses: z.string().optional(),
+    standardServiceType: z.string().optional(),
     // otherStandardServiceTypeData: z.number().optional(),
     oSSTIndexNo: z.number().optional(),
     oSSTDescription: z.string().optional(),
@@ -38,6 +38,6 @@ export const createServiceFormSchema = z.object({
     stateServe: z.string().optional(),
     aptServe: z.string().optional(),
     zipServe: z.string().optional(),
-    serviceFormCreatedBy: z.number().optional(),
-    lastUpdatedBy:z.number().optional()
+    serviceFormCreatedBy: z.string().optional(),
+    lastUpdatedBy:z.string().optional()
 });

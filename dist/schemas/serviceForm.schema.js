@@ -23,8 +23,8 @@ exports.createServiceFormSchema = zod_1.z.object({
     lTSAddress: zod_1.z.string().optional(),
     lTSDescription: zod_1.z.string().optional(),
     noOfAddLMailings: zod_1.z.number().optional(),
-    mailingAddresses: zod_1.z.number().optional(),
-    standardServiceType: zod_1.z.number().optional(),
+    mailingAddresses: zod_1.z.string().optional(),
+    standardServiceType: zod_1.z.string().optional(),
     // otherStandardServiceTypeData: z.number().optional(),
     oSSTIndexNo: zod_1.z.number().optional(),
     oSSTDescription: zod_1.z.string().optional(),
@@ -40,6 +40,6 @@ exports.createServiceFormSchema = zod_1.z.object({
     stateServe: zod_1.z.string().optional(),
     aptServe: zod_1.z.string().optional(),
     zipServe: zod_1.z.string().optional(),
-    serviceFormCreatedBy: zod_1.z.number().optional(),
-    lastUpdatedBy: zod_1.z.number().optional()
+    serviceFormCreatedBy: zod_1.z.string().optional(),
+    lastUpdatedBy: zod_1.z.string().optional()
 });
