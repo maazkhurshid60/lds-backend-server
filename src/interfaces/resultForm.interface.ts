@@ -24,6 +24,7 @@ export interface ICreateResultForm {
     serviceResultlTServed?:string | null | undefined ,
     serviceResultlTNotServed?:string | null | undefined ,
     serviceResultRecipientTitle?:string | null | undefined ,
+    serviceResultRecipient?:string | null | undefined ,
     serviceResultDoor?:number | null | undefined ,
     serviceResultDoorLocks?:number | null | undefined ,
     serviceResultEntry?:number | null | undefined ,

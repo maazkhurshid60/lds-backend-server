@@ -27,6 +27,7 @@ export interface IResultFormDocument extends mongoose.Document {
     serviceResultlTServed: string,
     serviceResultlTNotServed: string,
     serviceResultRecipientTitle: string,
+    serviceResultRecipient: string,
     serviceResultDoor: number,
     serviceResultDoorLocks: number,
     serviceResultEntry: number,

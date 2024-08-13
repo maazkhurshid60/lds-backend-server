@@ -29,6 +29,7 @@ export const createResultFormSchema = z.object({
     serviceResultlTServed: z.string().optional(),
     serviceResultlTNotServed: z.string().optional(),
     serviceResultRecipientTitle: z.string().optional(),
+    serviceResultRecipient: z.string().optional(),
     serviceResultDoor: z.number().optional().nullable(),
     serviceResultDoorLocks: z.number().optional().nullable(),
     serviceResultEntry: z.number().optional().nullable(),

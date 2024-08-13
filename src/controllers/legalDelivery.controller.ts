@@ -1,65 +1,49 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../utils/AsyncHandler";
 import { IServiceFormDocument, ServiceForm } from "../models/serviceForm.model";
-import { ResultForm } from "../models/resultForm.model";
+import { IResultFormDocument, ResultForm } from "../models/resultForm.model";
 import { ApiError } from "../utils/ApiError";
 import { StatusCodes } from "http-status-codes";
 import { ApiResponse } from "../utils/ApiResponse";
 import { Schema } from "mongoose";
-
-export interface ISearchService {
-    dateCreated?: string | undefined | null,
-    jobNo?: number | undefined | null,
-    clientId?: any | undefined | null,
-    serviceType?: any | undefined | null,
-    caseNo?: number | undefined | null,
-    fullName?: string | undefined | null,
-    businessName?: string | undefined | null,
-    address?: string | undefined | null,
-    apt?: string | undefined | null,
-    city?: string | undefined | null,
-    state?: string | undefined | null,
-    zip?: string | undefined | null,
-    commercialDescription?: string | undefined | null,
-    otherLTDescription?: string | undefined | null,
-    otherOptions?: any[] | undefined | null,
-    lTServiceTypes?: any[] | undefined | null 
-}
+import { ISearchResult, ISearchService } from "../interfaces/legalDelivery.interface";
 
 
-const search = asyncHandler( async (req: Request, res: Response) => {
 
-    const { searchIn, data } : { searchIn : string, data: any } = req.body;
+const search = asyncHandler(async (req: Request, res: Response) => {
+
+    const { searchIn, data }: { searchIn: string, data: any } = req.body;
     let result: any;
 
-    if( !searchIn || typeof searchIn === 'undefined' ) {
+    if (!searchIn || typeof searchIn === 'undefined') {
         return new ApiError(StatusCodes.BAD_REQUEST, "SearchIn is missing");
     }
 
     try {
 
-        if(searchIn === 'service') {
+        if (searchIn === 'service') {
 
             result = await searchInService(data);
 
         } else if (searchIn === 'result') {
-    
+            result=await searchInResult(data)
+
         } else if (searchIn === 'standard') {
-    
+
         }
 
         return res
-        .status(StatusCodes.OK)
-        .json(
-            new ApiResponse(StatusCodes.OK, result, "Service forms fetched successfully")
-        );
-    
-        
+            .status(StatusCodes.OK)
+            .json(
+                new ApiResponse(StatusCodes.OK, result, "Service forms fetched successfully")
+            );
+
+
     } catch (error) {
         throw error;
     }
-    
-} );
+
+});
 
 const searchInService = async (data: ISearchService) => {
 
@@ -73,7 +57,7 @@ const searchInService = async (data: ISearchService) => {
     console.log('Date Transformed: ', dateTranformed);
 
     const serviceForms: IServiceFormDocument[] = await ServiceForm.find({
-        
+
         $or: [
             {
                 inputDate: dateTranformed ? dateTranformed : null,
@@ -91,8 +75,40 @@ const searchInService = async (data: ISearchService) => {
                 caseNo: data.caseNo ? data.caseNo : null
             },
             {
-                lTServiceType: data.lTServiceTypes ? data.lTServiceTypes.forEach((lt: string) => lt) : null 
+                fullName: data.fullName ? data.fullName : null
+
+            },
+            {
+                commercialDescription: data?.commercialDescription ? data?.commercialDescription : null,
+            },
+            {
+                zip: data?.zip ? data?.zip : null,
+            },
+            {
+                state: data?.state ? data?.state : null,
+            },
+            {
+                city: data?.city ? data?.city : null,
+            },
+            {
+                apt: data?.apt ? data?.apt : null,
             }
+            ,
+            {
+                address: data?.address ? data?.address : null,
+            }
+            ,
+            {
+                businessName: data?.businessName ? data?.businessName : null,
+            },
+            {
+                otherLTDescription: data?.businessName ? data?.businessName : null,
+            }
+            
+
+            // {
+            //     lTServiceType: data.lTServiceTypes ? data.lTServiceTypes.forEach((lt: string) => lt) : null 
+            // },
             // {
             //     // lTServiceDetail: checkltServiceDetail(data) ? { 
             //     //     'full-name': data.fullName ? data.fullName : null,
@@ -135,7 +151,7 @@ const searchInService = async (data: ISearchService) => {
     //         console.log('Object: ', obj);
 
     //         console.log(form.lTServiceDetail == obj);
-            
+
 
     //         return form.lTServiceDetail == obj;
 
@@ -144,20 +160,53 @@ const searchInService = async (data: ISearchService) => {
     //     console.log('Filtered: ', filtered);
     // }
 
-    if(serviceForms.length === 0 || !serviceForms) {
-        throw new ApiError(StatusCodes.NOT_FOUND, "Service forms not found")
+    if (serviceForms.length === 0 || !serviceForms) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Service form is not found")
     }
 
     return serviceForms;
 
 }
 
-const searchInResult = async () => {}
+const searchInResult = async (data: ISearchResult) => {
+    if (!data) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, "Search data is missing");
+    }
+    let dateEnteredTransformed=data.dateEntered ? data.dateEntered.split('/').join('-') : null;
+    let dateServiceTransformed=data?.dateService? data?.dateService.split("/").join("-") : null;
+    let dateFirstAttemptTransformed=data?.date1Attepmt? data?.date1Attepmt.split("/").join("-"):null;
+    let dateSecondAttepmtTransformed=data?.date2Attepmt? data?.date2Attepmt.split("/").join("-"):null;
+    let dateThirdAttepmtTransformed=data?.date3Attepmt? data?.dateEntered?.split("/").join("-"):null;
+    let dateMailingTransformed=data?.dateMailing ? data?.dateMailing?.split("/").join("-") :null;
+    let populateData = ['resultOptions', 'serviceTypeOptions', 'substituteDeliveredTo'];
+    const resultForms: IResultFormDocument[] = await ResultForm.find({
+        $or: [
+            {queryInformationLTInputDate:dateEnteredTransformed? dateEnteredTransformed : null},
+            {serviceResultDateOfService:dateServiceTransformed? dateServiceTransformed : null},
+            {serviceResultFirstAttemptDate:dateFirstAttemptTransformed? dateFirstAttemptTransformed : null},
+            {serviceResultSecondAttemptDate:dateSecondAttepmtTransformed? dateSecondAttepmtTransformed : null},
+            {serviceResultThirdAttemptDate:dateThirdAttepmtTransformed? dateThirdAttepmtTransformed : null},
+            {serviceResultDateOfMailing:dateMailingTransformed? dateMailingTransformed : null},
+            {serviceResultResults:data?.resultOptions ? data?.resultOptions : null},
+            {serviceResultScvType:data?.serviceTypeOptions ? data?.serviceTypeOptions : null},
+            {substituteDeliveredTo:data?.substituteDeliveredTo ? data?.substituteDeliveredTo : null},
+            {serviceResultRecipient:data?.corpRecipient ? data?.corpRecipient : null},
+            {serviceResultRecipientTitle:data?.corpRecipientTitle ? data?.corpRecipientTitle : null},         
+        ]
+    }).populate(populateData) as IResultFormDocument[];
+    
+    if (resultForms.length === 0 || !resultForms) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Result form is not found")
+    }
 
-const searchInStandard = async () => {}
+    return resultForms;
+ }
+
+
+const searchInStandard = async () => { }
 
 const checkltServiceDetail = (data: ISearchService) => {
-    if(data.fullName || data.businessName || data.address || data.apt || data.city || data.zip || data.commercialDescription) {
+    if (data.fullName || data.businessName || data.address || data.apt || data.city || data.zip || data.commercialDescription) {
         return true;
     }
 

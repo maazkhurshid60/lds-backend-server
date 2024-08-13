@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.search = void 0;
 const AsyncHandler_1 = require("../utils/AsyncHandler");
 const serviceForm_model_1 = require("../models/serviceForm.model");
+const resultForm_model_1 = require("../models/resultForm.model");
 const ApiError_1 = require("../utils/ApiError");
 const http_status_codes_1 = require("http-status-codes");
 const ApiResponse_1 = require("../utils/ApiResponse");
@@ -17,6 +18,7 @@ const search = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
             result = await searchInService(data);
         }
         else if (searchIn === 'result') {
+            result = await searchInResult(data);
         }
         else if (searchIn === 'standard') {
         }
@@ -54,8 +56,35 @@ const searchInService = async (data) => {
                 caseNo: data.caseNo ? data.caseNo : null
             },
             {
-                lTServiceType: data.lTServiceTypes ? data.lTServiceTypes.forEach((lt) => lt) : null
+                fullName: data.fullName ? data.fullName : null
+            },
+            {
+                commercialDescription: data?.commercialDescription ? data?.commercialDescription : null,
+            },
+            {
+                zip: data?.zip ? data?.zip : null,
+            },
+            {
+                state: data?.state ? data?.state : null,
+            },
+            {
+                city: data?.city ? data?.city : null,
+            },
+            {
+                apt: data?.apt ? data?.apt : null,
+            },
+            {
+                address: data?.address ? data?.address : null,
+            },
+            {
+                businessName: data?.businessName ? data?.businessName : null,
+            },
+            {
+                otherLTDescription: data?.businessName ? data?.businessName : null,
             }
+            // {
+            //     lTServiceType: data.lTServiceTypes ? data.lTServiceTypes.forEach((lt: string) => lt) : null 
+            // },
             // {
             //     // lTServiceDetail: checkltServiceDetail(data) ? { 
             //     //     'full-name': data.fullName ? data.fullName : null,
@@ -96,11 +125,41 @@ const searchInService = async (data) => {
     //     console.log('Filtered: ', filtered);
     // }
     if (serviceForms.length === 0 || !serviceForms) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.NOT_FOUND, "Service forms not found");
+        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.NOT_FOUND, "Service form is not found");
     }
     return serviceForms;
 };
-const searchInResult = async () => { };
+const searchInResult = async (data) => {
+    if (!data) {
+        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Search data is missing");
+    }
+    let dateEnteredTransformed = data.dateEntered ? data.dateEntered.split('/').join('-') : null;
+    let dateServiceTransformed = data?.dateService ? data?.dateService.split("/").join("-") : null;
+    let dateFirstAttemptTransformed = data?.date1Attepmt ? data?.date1Attepmt.split("/").join("-") : null;
+    let dateSecondAttepmtTransformed = data?.date2Attepmt ? data?.date2Attepmt.split("/").join("-") : null;
+    let dateThirdAttepmtTransformed = data?.date3Attepmt ? data?.dateEntered?.split("/").join("-") : null;
+    let dateMailingTransformed = data?.dateMailing ? data?.dateMailing?.split("/").join("-") : null;
+    let populateData = ['resultOptions', 'serviceTypeOptions', 'substituteDeliveredTo'];
+    const resultForms = await resultForm_model_1.ResultForm.find({
+        $or: [
+            { queryInformationLTInputDate: dateEnteredTransformed ? dateEnteredTransformed : null },
+            { serviceResultDateOfService: dateServiceTransformed ? dateServiceTransformed : null },
+            { serviceResultFirstAttemptDate: dateFirstAttemptTransformed ? dateFirstAttemptTransformed : null },
+            { serviceResultSecondAttemptDate: dateSecondAttepmtTransformed ? dateSecondAttepmtTransformed : null },
+            { serviceResultThirdAttemptDate: dateThirdAttepmtTransformed ? dateThirdAttepmtTransformed : null },
+            { serviceResultDateOfMailing: dateMailingTransformed ? dateMailingTransformed : null },
+            { serviceResultResults: data?.resultOptions ? data?.resultOptions : null },
+            { serviceResultScvType: data?.serviceTypeOptions ? data?.serviceTypeOptions : null },
+            { substituteDeliveredTo: data?.substituteDeliveredTo ? data?.substituteDeliveredTo : null },
+            { serviceResultRecipient: data?.corpRecipient ? data?.corpRecipient : null },
+            { serviceResultRecipientTitle: data?.corpRecipientTitle ? data?.corpRecipientTitle : null },
+        ]
+    }).populate(populateData);
+    if (resultForms.length === 0 || !resultForms) {
+        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.NOT_FOUND, "Result form is not found");
+    }
+    return resultForms;
+};
 const searchInStandard = async () => { };
 const checkltServiceDetail = (data) => {
     if (data.fullName || data.businessName || data.address || data.apt || data.city || data.zip || data.commercialDescription) {

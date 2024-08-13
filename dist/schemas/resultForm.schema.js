@@ -31,6 +31,7 @@ exports.createResultFormSchema = zod_1.z.object({
     serviceResultlTServed: zod_1.z.string().optional(),
     serviceResultlTNotServed: zod_1.z.string().optional(),
     serviceResultRecipientTitle: zod_1.z.string().optional(),
+    serviceResultRecipient: zod_1.z.string().optional(),
     serviceResultDoor: zod_1.z.number().optional().nullable(),
     serviceResultDoorLocks: zod_1.z.number().optional().nullable(),
     serviceResultEntry: zod_1.z.number().optional().nullable(),

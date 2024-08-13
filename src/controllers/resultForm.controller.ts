@@ -47,6 +47,7 @@ const createNewResultForm = asyncHandler( async (req: Request, res: Response,) =
         serviceResultOtherFeatures ,
         serviceResultDateOfMailing ,
         serviceResultDateOfNotary ,
+        serviceResultRecipient
      } : ICreateResultForm = req.body;
 
     if(!queryInformationLTFullName || !queryInformationLTIndexNo || !queryInformationLTAddress) {
@@ -77,6 +78,7 @@ const createNewResultForm = asyncHandler( async (req: Request, res: Response,) =
         serviceResultlTServed ,
         serviceResultlTNotServed ,
         serviceResultRecipientTitle ,
+        serviceResultRecipient,
         serviceResultDoor ,
         serviceResultDoorLocks ,
         serviceResultEntry ,
@@ -93,6 +95,7 @@ const createNewResultForm = asyncHandler( async (req: Request, res: Response,) =
         serviceResultOtherFeatures ,
         serviceResultDateOfMailing ,
         serviceResultDateOfNotary ,
+        
     }) as IResultFormDocument;
 
     if(!createNewResultForm) {
@@ -149,6 +152,7 @@ const updateResultForm = asyncHandler( async (req: Request, res: Response) => {
         serviceResultOtherFeatures ,
         serviceResultDateOfMailing ,
         serviceResultDateOfNotary , 
+        serviceResultRecipient
     } : IUpdateResultForm = req.body;
 
     if(!resultFormId) {
