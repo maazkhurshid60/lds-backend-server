@@ -70,9 +70,9 @@ const createNewServiceForm = asyncHandler( async (req: Request, res: Response) =
     const ltServiceTypeDoc: ILTServiceTypeDocument = await LTServiceType.findById(lTServiceType) as ILTServiceTypeDocument;
     const standardServiceTypeDoc: IStandardServiceDocument = await StandardServiceType.findById(standardServiceType) as IStandardServiceDocument;
 
-    if(!client || !serviceTypeDoc || !ltServiceTypeDoc || !standardServiceTypeDoc) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data has passed.");
-    }
+    // if(!client || !serviceTypeDoc || !ltServiceTypeDoc || !standardServiceTypeDoc) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data has passed.");
+    // }
 
     const newServiceForm: IServiceFormDocument = await ServiceForm.create({
         jobNo,
