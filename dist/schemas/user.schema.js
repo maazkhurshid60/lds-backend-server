@@ -4,8 +4,8 @@ exports.userLoginSchema = exports.userRegistrationSchema = void 0;
 const zod_1 = require("zod");
 exports.userRegistrationSchema = zod_1.z.object({
     userName: zod_1.z.string(),
-    firstName: zod_1.z.string(),
-    lastName: zod_1.z.string(),
+    firstName: zod_1.z.string().optional(),
+    lastName: zod_1.z.string().optional(),
     email: zod_1.z.string().email(),
     password: zod_1.z.string(),
 });

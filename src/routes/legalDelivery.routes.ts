@@ -13,6 +13,6 @@ import { checkRoles } from "../middlewares/roleChecker.middleware";
 const router = Router();
 
 //Authenticated + Authorized Routes
-router.route('/search').get(search);
+router.route('/search').post(search);
 
 export default router;

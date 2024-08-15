@@ -30,7 +30,7 @@ const healthCheck = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
 exports.healthCheck = healthCheck;
 const registerNewUser = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { userName, firstName, lastName, email, password, roles } = req.body;
-    if ([userName, firstName, lastName, email, password].some((field) => field?.trim() === "")) {
+    if ([userName, email, password].some((field) => field?.trim() === "")) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
     }
     ;

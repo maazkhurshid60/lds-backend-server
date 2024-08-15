@@ -6,5 +6,5 @@ const legalDelivery_controller_1 = require("../controllers/legalDelivery.control
 //Defining Router Object
 const router = (0, express_1.Router)();
 //Authenticated + Authorized Routes
-router.route('/search').get(legalDelivery_controller_1.search);
+router.route('/search').post(legalDelivery_controller_1.search);
 exports.default = router;
