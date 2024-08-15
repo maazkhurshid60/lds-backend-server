@@ -29,7 +29,7 @@ const search = asyncHandler(async (req: Request, res: Response) => {
             result=await searchInResult(data)
 
         } else if (searchIn === 'standard') {
-
+            result=await searchInStandard(data)
         }
 
         return res
@@ -203,18 +203,6 @@ const searchInStandard = async (data:ISearchStandard) => {
         throw new ApiError(StatusCodes.NOT_FOUND, "Standard Service form is not found")
     }
     return serviceForms;
-
-    // let filteredSFs: IServiceFormDocument[] | null ;
-    // filteredSFs = serviceForms.filter((sf) => {
-    //     if (
-    //         sf.oSSTDescription === data.otherStdDescription ||
-
-    //     ) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // });
  }
 
 const checkltServiceDetail = (data: ISearchService) => {

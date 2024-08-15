@@ -21,6 +21,7 @@ const search = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
             result = await searchInResult(data);
         }
         else if (searchIn === 'standard') {
+            result = await searchInStandard(data);
         }
         return res
             .status(http_status_codes_1.StatusCodes.OK)
@@ -170,16 +171,6 @@ const searchInStandard = async (data) => {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.NOT_FOUND, "Standard Service form is not found");
     }
     return serviceForms;
-    // let filteredSFs: IServiceFormDocument[] | null ;
-    // filteredSFs = serviceForms.filter((sf) => {
-    //     if (
-    //         sf.oSSTDescription === data.otherStdDescription ||
-    //     ) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // });
 };
 exports.searchInStandard = searchInStandard;
 const checkltServiceDetail = (data) => {
