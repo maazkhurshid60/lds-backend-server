@@ -6,7 +6,7 @@ import { ApiError } from "../utils/ApiError";
 import { StatusCodes } from "http-status-codes";
 import { ApiResponse } from "../utils/ApiResponse";
 import { Schema } from "mongoose";
-import { ISearchResult, ISearchService } from "../interfaces/legalDelivery.interface";
+import { ISearchResult, ISearchService ,ISearchStandard} from "../interfaces/legalDelivery.interface";
 
 
 
@@ -109,56 +109,9 @@ const searchInService = async (data: ISearchService) => {
             // {
             //     lTServiceType: data.lTServiceTypes ? data.lTServiceTypes.forEach((lt: string) => lt) : null 
             // },
-            // {
-            //     // lTServiceDetail: checkltServiceDetail(data) ? { 
-            //     //     'full-name': data.fullName ? data.fullName : null,
-            //     //     'business-name': data.businessName ? data.businessName : null,
-            //     //     'address' : data.address ? data.address : null,
-            //     //     'apt' : data.apt ? data.apt : null,
-            //     //     'state': data.state ? data.state : null,
-            //     //     'city' : data.city ? data.city : null,
-            //     //     'zip' : data.zip ? data.zip : null,
-            //     //     'description': data.commercialDescription ? data.commercialDescription : null
-            //     // } : null                
-            // }
         ]
     }).populate(populateData) as IServiceFormDocument[];
 
-    // if(checkltServiceDetail(data)) {
-    //     const serviceForms: IServiceFormDocument[] = await ServiceForm.find({}) as IServiceFormDocument[];
-
-    //     const filtered = serviceForms.find((form, index) => {
-
-    //         const formObj = form.lTServiceDetail;
-
-    //         const valArray: string[] = [];
-
-    //         for (let v of formObj){
-    //             valArray.push(v[1]);
-    //         }
-
-    //         const obj: Schema.Types.Map = {
-    //             fullName: data.fullName ? data.fullName : valArray[0] ?? '',
-    //             businessName: data.businessName ? data.businessName : valArray[1] ?? '',
-    //             address: data.address ? data.address : valArray[2] ?? '',
-    //             apt: data.apt ? data.apt : valArray[3] ?? '',
-    //             state: data.state ? data.state : valArray[4] ?? '',
-    //             city: data.city ? data.city : valArray[5] ?? '',
-    //             zip: data.zip ? data.zip : valArray[6] ?? '',
-    //             description: data.commercialDescription ? data.commercialDescription : valArray[7] ?? ''
-    //         } as unknown as Schema.Types.Map;
-    //         // console.log('Form: ', formObj);
-    //         console.log('Object: ', obj);
-
-    //         console.log(form.lTServiceDetail == obj);
-
-
-    //         return form.lTServiceDetail == obj;
-
-    //     });
-
-    //     console.log('Filtered: ', filtered);
-    // }
 
     if (serviceForms.length === 0 || !serviceForms) {
         throw new ApiError(StatusCodes.NOT_FOUND, "Service form is not found")
@@ -203,7 +156,66 @@ const searchInResult = async (data: ISearchResult) => {
  }
 
 
-const searchInStandard = async () => { }
+const searchInStandard = async (data:ISearchStandard) => {
+    if (!data) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, "Search data is missing");
+    }
+
+    const serviceForms: IServiceFormDocument[] = await ServiceForm.find({
+        $or: [
+            {
+                oSSTDescription: data?.otherStdDescription ? data?.otherStdDescription : null
+            },
+            {
+                oSSTIndexNo: data?.indexNumber ? data?.indexNumber : null
+            },
+            {
+                sSDCourt: data?.court ? data?.court : null
+            },
+            {
+                cityServe: data?.city ? data?.city : null
+            },
+            {
+                sSDCountry: data?.country ? data?.country : null
+            },
+            {
+                sSDPlaintiff: data?.plaintiff ? data?.plaintiff : null
+            },
+            {
+                sSDDefendants: data?.defendant ? data?.defendant : null
+            },
+            {
+                firstNameServe: data?.fullName ? data?.fullName : null
+            },
+            {
+                addressServe: data?.address ? data?.address : null
+            },
+            {
+                aptServe: data?.apt ? data?.apt : null
+            },
+            {
+                zipServe: data?.zip ? data?.zip : null
+            },
+        ]
+    });
+
+    if (serviceForms.length === 0 || !serviceForms) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Standard Service form is not found")
+    }
+    return serviceForms;
+
+    // let filteredSFs: IServiceFormDocument[] | null ;
+    // filteredSFs = serviceForms.filter((sf) => {
+    //     if (
+    //         sf.oSSTDescription === data.otherStdDescription ||
+
+    //     ) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // });
+ }
 
 const checkltServiceDetail = (data: ISearchService) => {
     if (data.fullName || data.businessName || data.address || data.apt || data.city || data.zip || data.commercialDescription) {
@@ -214,5 +226,5 @@ const checkltServiceDetail = (data: ISearchService) => {
 }
 
 export {
-    search
+    search,searchInService,searchInStandard,searchInResult
 } 
