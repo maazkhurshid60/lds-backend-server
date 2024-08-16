@@ -188,7 +188,7 @@ const updateUserDetails = asyncHandler( async (req: Request, res:Response) => {
     const { userId, userName, firstName, lastName, email }: IUpdateUserDetails = req.body;    
     
     if(
-        [userId, userName, firstName, lastName, email].some((field) => field?.trim() === "")
+        [userId, userName,  email].some((field) => field?.trim() === "")
     ) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
     }

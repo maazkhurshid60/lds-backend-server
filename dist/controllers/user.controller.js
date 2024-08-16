@@ -124,7 +124,7 @@ const logoutUser = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
 exports.logoutUser = logoutUser;
 const updateUserDetails = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { userId, userName, firstName, lastName, email } = req.body;
-    if ([userId, userName, firstName, lastName, email].some((field) => field?.trim() === "")) {
+    if ([userId, userName, email].some((field) => field?.trim() === "")) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
     }
     const updatedUser = await user_model_1.User.findByIdAndUpdate(userId, {
