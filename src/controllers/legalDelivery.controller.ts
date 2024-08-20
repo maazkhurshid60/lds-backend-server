@@ -115,6 +115,7 @@ const searchInResult = async (data: ISearchResult) => {
     // Logging the query for debugging
     console.log('Query Object:', query);
 
+
     // Executing the query
     const resultForms: IResultFormDocument[] = await ResultForm.find(query) as IResultFormDocument[];
 
@@ -132,6 +133,7 @@ const searchInResult = async (data: ISearchResult) => {
     if (!data) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Search data is missing");
     }
+    let populateData = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy'];
 
     // Dynamically building the query object
     const query: any = {};
@@ -152,7 +154,9 @@ const searchInResult = async (data: ISearchResult) => {
     console.log('Query Object:', query);
 
     // Executing the query
-    const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query);
+    const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query).populate(populateData) as IServiceFormDocument[];
+
+    // const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query).populate(populateData);
 
     // Handling no results found
     if (serviceForms.length === 0) {

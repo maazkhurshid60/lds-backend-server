@@ -126,6 +126,7 @@ const searchInStandard = async (data) => {
     if (!data) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Search data is missing");
     }
+    let populateData = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy'];
     // Dynamically building the query object
     const query = {};
     if (data.otherStdDescription)
@@ -153,7 +154,8 @@ const searchInStandard = async (data) => {
     // Logging the query for debugging
     console.log('Query Object:', query);
     // Executing the query
-    const serviceForms = await serviceForm_model_1.ServiceForm.find(query);
+    const serviceForms = await serviceForm_model_1.ServiceForm.find(query).populate(populateData);
+    // const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query).populate(populateData);
     // Handling no results found
     if (serviceForms.length === 0) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.NOT_FOUND, "Standard Service form is not found");
