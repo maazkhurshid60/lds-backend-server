@@ -118,6 +118,7 @@ const searchInResult = async (data: ISearchResult) => {
     const dateSecondAttemptTransformed = data.date2Attepmt ? data.date2Attepmt.split("/").join("-") : null;
     const dateThirdAttemptTransformed = data.date3Attepmt ? data.date3Attepmt.split("/").join("-") : null;
     const dateMailingTransformed = data.dateMailing ? data.dateMailing.split("/").join("-") : null;
+    let populateData = ['serviceFormId', 'serviceResultClientId', 'serviceResultServerId'];
 
     // Dynamically building the query object
     const query: any = {};
@@ -138,7 +139,7 @@ const searchInResult = async (data: ISearchResult) => {
 
 
     // Executing the query
-    const resultForms: IResultFormDocument[] = await ResultForm.find(query) as IResultFormDocument[];
+    const resultForms: IResultFormDocument[] = await ResultForm.find(query).populate(populateData) as IResultFormDocument[];
 
     // Handling no results found
     if (resultForms.length === 0) {
