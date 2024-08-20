@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSingleResultForm = exports.getAllResultForm = exports.deleteResultForm = exports.updateResultForm = exports.createNewResultForm = void 0;
+exports.searchInResult = exports.getSingleResultForm = exports.getAllResultForm = exports.deleteResultForm = exports.updateResultForm = exports.createNewResultForm = void 0;
 const AsyncHandler_1 = require("../utils/AsyncHandler");
 const ApiError_1 = require("../utils/ApiError");
 const http_status_codes_1 = require("http-status-codes");
@@ -190,3 +190,53 @@ const getAllResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
         .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, allResultForms, "All results forms fetched successfully"));
 });
 exports.getAllResultForm = getAllResultForm;
+// const searchInResult = async (data: IResultFormDocument) => {
+const searchInResult = async (req, res) => {
+    try {
+        const { queryInformationLTFullName, queryInformationLTIndexNo, queryInformationLTAddress, queryInformationLTBusinessName, queryInformationLTInputDate } = req.body;
+        console.log("Received data:", queryInformationLTFullName, queryInformationLTIndexNo, queryInformationLTAddress, queryInformationLTBusinessName, queryInformationLTInputDate);
+        if (!queryInformationLTFullName &&
+            !queryInformationLTIndexNo &&
+            !queryInformationLTAddress &&
+            !queryInformationLTBusinessName &&
+            !queryInformationLTInputDate) {
+            throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Search data is missing");
+        }
+        // Transforming date fields
+        const inputEnteredTransformed = queryInformationLTInputDate
+            ? queryInformationLTInputDate.split('/').join('-')
+            : null;
+        // Dynamically building the query object
+        const query = {};
+        if (queryInformationLTFullName)
+            query.queryInformationLTFullName = queryInformationLTFullName;
+        if (queryInformationLTIndexNo)
+            query.queryInformationLTIndexNo = queryInformationLTIndexNo;
+        if (queryInformationLTAddress)
+            query.queryInformationLTAddress = queryInformationLTAddress;
+        if (queryInformationLTBusinessName)
+            query.queryInformationLTBusinessName = queryInformationLTBusinessName;
+        if (inputEnteredTransformed)
+            query.queryInformationLTInputDate = inputEnteredTransformed;
+        // Logging the query for debugging
+        console.log('Query Object:', query);
+        // Executing the query
+        const resultForms = await resultForm_model_1.ResultForm.find(query);
+        // Handling no results found
+        if (resultForms.length === 0) {
+            throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.NOT_FOUND, "Result form is not found");
+        }
+        // Returning the results
+        res.status(http_status_codes_1.StatusCodes.OK).json(resultForms);
+    }
+    catch (error) {
+        // Error handling
+        if (error instanceof ApiError_1.ApiError) {
+            res.status(error.statusCode).json({ message: error.message });
+        }
+        else {
+            res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "An unexpected error occurred" });
+        }
+    }
+};
+exports.searchInResult = searchInResult;

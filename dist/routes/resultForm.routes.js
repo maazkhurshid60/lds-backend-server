@@ -16,4 +16,5 @@ router.route('/create').post(auth_middleware_1.verifyJWT, (0, roleChecker_middle
 router.route('/update').patch(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin', 'User']), resultForm_controller_1.updateResultForm);
 router.route('/delete').delete(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin', 'User']), resultForm_controller_1.deleteResultForm);
 router.route('/all-result-forms').get(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin', 'User']), resultForm_controller_1.getAllResultForm);
+router.route('/search-result-forms').post(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin', 'User']), resultForm_controller_1.searchInResult);
 exports.default = router;
