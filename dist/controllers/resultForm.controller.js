@@ -64,6 +64,21 @@ const createNewResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =>
                 resultFormId: createNewResultForm._id
             }
         });
+        if (createNewResultForm) {
+            console.log('====> Inside Attaching Result Service Form');
+            try {
+                await resultForm_model_1.ResultForm.findOneAndUpdate({
+                    _id: createNewResultForm._id
+                }, {
+                    $set: {
+                        serviceFormId: isServiceExistsByJobNo._id
+                    }
+                });
+            }
+            catch (error) {
+                console.log('==>Error: ', error);
+            }
+        }
     }
     if (!createNewResultForm) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating a new result form");

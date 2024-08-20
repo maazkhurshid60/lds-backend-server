@@ -102,7 +102,7 @@ const createNewResultForm = asyncHandler(async (req: Request, res: Response,) =>
 
 
     const isServiceExistsByJobNo: IServiceFormDocument = await ServiceForm.findOne({ jobNo: serviceResultJobNo }) as IServiceFormDocument;
-console.log("isServiceExistsByJobNo",isServiceExistsByJobNo)
+    console.log("isServiceExistsByJobNo",isServiceExistsByJobNo)
     if(isServiceExistsByJobNo) {
 
         await ServiceForm.findOneAndUpdate(
@@ -115,6 +115,26 @@ console.log("isServiceExistsByJobNo",isServiceExistsByJobNo)
                 }
             }
         )
+
+        if(createNewResultForm){
+            console.log('====> Inside Attaching Result Service Form');
+            try {
+                await ResultForm.findOneAndUpdate(
+                    {
+                        _id: createNewResultForm._id
+                    },
+                    {
+                        $set: {
+                            serviceFormId: isServiceExistsByJobNo._id
+                        }
+                    }
+                );
+                
+            } catch (error) {
+                console.log('==>Error: ',error);
+                
+            }
+        }
 
     }
 

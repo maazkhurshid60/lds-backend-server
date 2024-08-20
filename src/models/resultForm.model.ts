@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 export interface IResultFormDocument extends mongoose.Document {
+    serviceFormId?: string,
     // queryInformationLT: any,
     queryInformationLTFullName: string,
     queryInformationLTIndexNo: number,
@@ -169,6 +170,11 @@ const resultFormSchema: Schema<IResultFormDocument> = new Schema(
         serviceResultWeight: {
             type: Schema.Types.Number,
         },
+        serviceFormId: {
+            type: Schema.Types.ObjectId,
+            ref: "ServiceForm",
+            required: false
+        }
     },
     {
         timestamps: true
@@ -176,4 +182,4 @@ const resultFormSchema: Schema<IResultFormDocument> = new Schema(
 );
 
 
-export const ResultForm = mongoose.model<IResultFormDocument>("ResultForm", resultFormSchema);
+export const ResultForm = mongoose.model("ResultForm", resultFormSchema);

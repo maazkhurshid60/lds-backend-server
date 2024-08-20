@@ -146,6 +146,11 @@ const resultFormSchema = new mongoose_1.Schema({
     serviceResultWeight: {
         type: mongoose_1.Schema.Types.Number,
     },
+    serviceFormId: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "ServiceForm",
+        required: false
+    }
 }, {
     timestamps: true
 });
