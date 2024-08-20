@@ -38,39 +38,22 @@ const searchInService = async (data) => {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Search data is missing");
     }
     let dateTranformed = data.dateCreated ? data.dateCreated.split('/').join('-') : null;
-    let populateData = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy'];
+    let populateData = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'resultFormId'];
     console.log('Date Transformed: ', dateTranformed);
     // Create a dynamic query object
     let query = {};
-    // if (dateTranformed) query.inputDate = dateTranformed;
-    // if (data.jobNo) query.jobNo = data.jobNo;
-    // if (data.clientId) query.clientId = data.clientId;
-    // if (data.serviceType) query.serviceType = data.serviceType;
-    // if (data.caseNo) query.caseNo = data.caseNo;
-    // if (data.fullName) query.fullName = data.fullName;
-    // if (data.commercialDescription) query.commercialDescription = data.commercialDescription;
-    // if (data.zip) query.zip = data.zip;
-    // if (data.state) query.state = data.state;
-    // if (data.city) query.city = data.city;
-    // if (data.apt) query.apt = data.apt;
-    // if (data.address) query.address = data.address;
-    // if (data.businessName) query.businessName = data.businessName;
-    // if (data.otherLTDescription) query.otherLTDescription = data.otherLTDescription;
-    // console.log("query>>>>>>>>>>>>>>>>>>>>>>>>>>>>",query)
-    // // const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query).populate(populateData) as IServiceFormDocument[];
-    // const resultForms: IResultFormDocument[] = await ResultForm.find(query) as IResultFormDocument[];
     if (dateTranformed)
-        query.queryInformationLTInputDate = dateTranformed;
+        query.inputDate = dateTranformed;
     if (data.jobNo)
-        query.serviceResultJobNo = data.jobNo;
+        query.jobNo = data.jobNo;
     if (data.clientId)
-        query.serviceResultClientId = data.clientId;
+        query.clientId = data.clientId;
     if (data.serviceType)
-        query.serviceResultScvType = data.serviceType;
+        query.serviceType = data.serviceType;
     if (data.caseNo)
         query.caseNo = data.caseNo;
     if (data.fullName)
-        query.queryInformationLTFullName = data.fullName;
+        query.fullName = data.fullName;
     if (data.commercialDescription)
         query.commercialDescription = data.commercialDescription;
     if (data.zip)
@@ -82,19 +65,36 @@ const searchInService = async (data) => {
     if (data.apt)
         query.apt = data.apt;
     if (data.address)
-        query.queryInformationLTAddress = data.address;
+        query.address = data.address;
     if (data.businessName)
-        query.queryInformationLTBusinessName = data.businessName;
+        query.businessName = data.businessName;
     if (data.otherLTDescription)
         query.otherLTDescription = data.otherLTDescription;
     console.log("query>>>>>>>>>>>>>>>>>>>>>>>>>>>>", query);
+    const serviceForms = await serviceForm_model_1.ServiceForm.find(query).populate(populateData);
+    // const resultForms: IResultFormDocument[] = await ResultForm.find(query) as IResultFormDocument[];
+    // if (dateTranformed) query.queryInformationLTInputDate = dateTranformed;
+    // if (data.jobNo) query.serviceResultJobNo = data.jobNo;
+    // if (data.clientId) query.serviceResultClientId = data.clientId;
+    // if (data.serviceType) query.serviceResultScvType = data.serviceType;
+    // if (data.caseNo) query.caseNo = data.caseNo;
+    // if (data.fullName) query.queryInformationLTFullName = data.fullName;
+    // if (data.commercialDescription) query.commercialDescription = data.commercialDescription;
+    // if (data.zip) query.zip = data.zip;
+    // if (data.state) query.state = data.state;
+    // if (data.city) query.city = data.city;
+    // if (data.apt) query.apt = data.apt;
+    // if (data.address) query.queryInformationLTAddress = data.address;
+    // if (data.businessName) query.queryInformationLTBusinessName = data.businessName;
+    // if (data.otherLTDescription) query.otherLTDescription = data.otherLTDescription;
+    console.log("query>>>>>>>>>>>>>>>>>>>>>>>>>>>>", query);
     // const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query).populate(populateData) as IServiceFormDocument[];
-    const resultForms = await resultForm_model_1.ResultForm.find(query);
-    console.log("resultForms>>>>>>>>>>>>>>>>>>>>>>>>>>>>", resultForms);
-    if (resultForms.length === 0) {
+    // const resultForms: IResultFormDocument[] = await ResultForm.find(query).populate(populateData) as IResultFormDocument[];
+    console.log("resultForms>>>>>>>>>>>>>>>>>>>>>>>>>>>>", serviceForms);
+    if (serviceForms.length === 0) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.NOT_FOUND, "result form is not found");
     }
-    return resultForms;
+    return serviceForms;
 };
 exports.searchInService = searchInService;
 const searchInResult = async (data) => {
@@ -145,7 +145,7 @@ const searchInStandard = async (data) => {
     if (!data) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Search data is missing");
     }
-    let populateData = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy'];
+    let populateData = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'resultFormId'];
     // Dynamically building the query object
     const query = {};
     if (data.otherStdDescription)

@@ -6,6 +6,7 @@ const ApiError_1 = require("../utils/ApiError");
 const http_status_codes_1 = require("http-status-codes");
 const resultForm_model_1 = require("../models/resultForm.model");
 const ApiResponse_1 = require("../utils/ApiResponse");
+const serviceForm_model_1 = require("../models/serviceForm.model");
 const createNewResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { queryInformationLTFullName, queryInformationLTIndexNo, queryInformationLTAddress, queryInformationLTBusinessName, queryInformationLTInputDate, queryInformationStandardServeTo, queryInformationStandardDefendants, serviceResultInputDate, serviceResultScvType, serviceResultClientId, serviceResultJobNo, serviceResultServerId, serviceResultResults, serviceResultDateOfService, serviceResultFirstTimeOfService, serviceResultFirstAttemptDate, serviceResultSecondTimeOfService, serviceResultSecondAttemptDate, serviceResultThirdTimeOfService, serviceResultThirdAttemptDate, serviceResultlTServed, serviceResultlTNotServed, serviceResultRecipientTitle, serviceResultDoor, serviceResultDoorLocks, serviceResultEntry, serviceResultWall, serviceResultFloor, serviceResultLock, serviceResultOtherDescription, serviceResultSex, serviceResultSkinColor, serviceResultHair, serviceResultAge, serviceResultHeight, serviceResultWeight, serviceResultOtherFeatures, serviceResultDateOfMailing, serviceResultDateOfNotary, serviceResultRecipient } = req.body;
     if (!queryInformationLTFullName || !queryInformationLTIndexNo || !queryInformationLTAddress) {
@@ -53,6 +54,17 @@ const createNewResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =>
         serviceResultDateOfMailing,
         serviceResultDateOfNotary,
     });
+    const isServiceExistsByJobNo = await serviceForm_model_1.ServiceForm.findOne({ jobNo: serviceResultJobNo });
+    console.log("isServiceExistsByJobNo", isServiceExistsByJobNo);
+    if (isServiceExistsByJobNo) {
+        await serviceForm_model_1.ServiceForm.findOneAndUpdate({
+            jobNo: serviceResultJobNo
+        }, {
+            $set: {
+                resultFormId: createNewResultForm._id
+            }
+        });
+    }
     if (!createNewResultForm) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating a new result form");
     }

@@ -151,6 +151,11 @@ const serviceFormSchema = new mongoose_1.Schema({
     lastUpdatedBy: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "User"
+    },
+    resultFormId: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "ResultForm",
+        required: false,
     }
 }, {
     timestamps: true

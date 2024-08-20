@@ -37,9 +37,10 @@ export interface IServiceFormDocument extends mongoose.Document {
     cityServe: string,
     stateServe: string,
     aptServe: string,
-    zipServe: string
+    zipServe: string,
     serviceFormCreatedBy: any,
-    lastUpdatedBy:any
+    lastUpdatedBy:any,
+    resultFormId?: string,
 }
 
 const serviceFormSchema = new Schema(
@@ -169,6 +170,11 @@ const serviceFormSchema = new Schema(
         lastUpdatedBy: {
             type: Schema.Types.ObjectId,
             ref: "User"
+        },
+        resultFormId: {
+            type: Schema.Types.ObjectId,
+            ref: "ResultForm",
+            required: false,
         }
     },
     

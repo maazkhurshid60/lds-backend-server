@@ -6,6 +6,7 @@ import { StatusCodes } from "http-status-codes";
 import { IResultFormDocument, ResultForm, } from "../models/resultForm.model";
 import { ApiResponse } from "../utils/ApiResponse";
 import { ISearchResult } from "../interfaces/legalDelivery.interface";
+import { IServiceFormDocument, ServiceForm } from "../models/serviceForm.model";
 
 const createNewResultForm = asyncHandler(async (req: Request, res: Response,) => {
 
@@ -98,6 +99,25 @@ const createNewResultForm = asyncHandler(async (req: Request, res: Response,) =>
         serviceResultDateOfNotary,
 
     }) as IResultFormDocument;
+
+
+    const isServiceExistsByJobNo: IServiceFormDocument = await ServiceForm.findOne({ jobNo: serviceResultJobNo }) as IServiceFormDocument;
+console.log("isServiceExistsByJobNo",isServiceExistsByJobNo)
+    if(isServiceExistsByJobNo) {
+
+        await ServiceForm.findOneAndUpdate(
+            {
+                jobNo: serviceResultJobNo
+            },
+            {
+                $set: {
+                    resultFormId: createNewResultForm._id
+                }
+            }
+        )
+
+    }
+
 
     if (!createNewResultForm) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating a new result form");
