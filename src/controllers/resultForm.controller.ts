@@ -386,7 +386,7 @@ const getAllResultForm = asyncHandler(async (req: Request, res: Response) => {
 
     // }
 
-    const allResultForms: IResultFormDocument[] = await ResultForm.find({}) as IResultFormDocument[];
+    const allResultForms: IResultFormDocument[] = await ResultForm.find({}).populate(['serviceResultServerId']) as IResultFormDocument[];
 
     if (!allResultForms) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetchin all result forms")

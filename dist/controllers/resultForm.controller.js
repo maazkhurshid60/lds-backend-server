@@ -181,7 +181,7 @@ const getAllResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     //         new ApiResponse(StatusCodes.OK, allResultForms, "All results forms fetched successfully")
     //     );
     // }
-    const allResultForms = await resultForm_model_1.ResultForm.find({});
+    const allResultForms = await resultForm_model_1.ResultForm.find({}).populate(['serviceResultServerId']);
     if (!allResultForms) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetchin all result forms");
     }
