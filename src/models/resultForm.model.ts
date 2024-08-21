@@ -14,9 +14,9 @@ export interface IResultFormDocument extends mongoose.Document {
     // serviceResults: any
     serviceResultInputDate: string,
     serviceResultScvType: string,
-    serviceResultClientId: string,
+    serviceResultClientId: any,
     serviceResultJobNo: number,
-    serviceResultServerId: string,
+    serviceResultServerId: any,
     serviceResultResults: string,
     serviceResultDateOfService: string,
     serviceResultFirstTimeOfService: string,
@@ -81,7 +81,11 @@ const resultFormSchema: Schema<IResultFormDocument> = new Schema(
             type: Schema.Types.Number, // Needs to be Number
         },
         serviceResultClientId: {
-            type: Schema.Types.String,
+            // type: Schema.Types.String,
+            type: Schema.Types.ObjectId,
+            ref: "Client",
+            required: false
+            
         },
         serviceResultDateOfMailing: {
             type: Schema.Types.String,
@@ -150,7 +154,10 @@ const resultFormSchema: Schema<IResultFormDocument> = new Schema(
             type: Schema.Types.String,
         },
         serviceResultServerId: {
-            type: Schema.Types.String,
+            // type: Schema.Types.String,
+            type: Schema.Types.ObjectId,
+            ref: "Server",
+            required: false
         },
         serviceResultSex: {
             type: Schema.Types.String,

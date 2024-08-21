@@ -57,7 +57,10 @@ const resultFormSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.Number, // Needs to be Number
     },
     serviceResultClientId: {
-        type: mongoose_1.Schema.Types.String,
+        // type: Schema.Types.String,
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Client",
+        required: false
     },
     serviceResultDateOfMailing: {
         type: mongoose_1.Schema.Types.String,
@@ -126,7 +129,10 @@ const resultFormSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.String,
     },
     serviceResultServerId: {
-        type: mongoose_1.Schema.Types.String,
+        // type: Schema.Types.String,
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Server",
+        required: false
     },
     serviceResultSex: {
         type: mongoose_1.Schema.Types.String,
