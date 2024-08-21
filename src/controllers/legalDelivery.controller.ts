@@ -122,7 +122,7 @@ const searchInResult = async (data: ISearchResult) => {
     const dateMailingTransformed = data.dateMailing ? data.dateMailing.split("/").join("-") : null;
     // let populateData = [...serviceFormPopulate, 'serviceFormId', 'serviceResultClientId', 'serviceResultServerId'];
      
-    let populateData = ['serviceFormId', 'serviceResultClientId', 'serviceResultServerId','clientId.someNestedField'];
+    let populateData = ['serviceFormId', 'serviceResultClientId', 'serviceResultServerId','serviceFormId.clientId'];
 
     // Dynamically building the query object
     const query: any = {};

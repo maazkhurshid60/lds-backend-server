@@ -110,7 +110,7 @@ const searchInResult = async (data) => {
     const dateThirdAttemptTransformed = data.date3Attepmt ? data.date3Attepmt.split("/").join("-") : null;
     const dateMailingTransformed = data.dateMailing ? data.dateMailing.split("/").join("-") : null;
     // let populateData = [...serviceFormPopulate, 'serviceFormId', 'serviceResultClientId', 'serviceResultServerId'];
-    let populateData = ['serviceFormId', 'serviceResultClientId', 'serviceResultServerId', 'clientId.someNestedField'];
+    let populateData = ['serviceFormId', 'serviceResultClientId', 'serviceResultServerId', 'serviceFormId.clientId'];
     // Dynamically building the query object
     const query = {};
     if (dateEnteredTransformed)
