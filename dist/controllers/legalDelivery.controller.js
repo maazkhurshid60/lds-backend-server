@@ -32,13 +32,14 @@ const search = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     }
 });
 exports.search = search;
+let serviceFormPopulate = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'resultFormId'];
 const searchInService = async (data) => {
     console.log("data>>>>>>>>>", data);
     if (Object.keys(data).length === 0 && data.constructor === Object) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Search data is missing");
     }
     let dateTranformed = data.dateCreated ? data.dateCreated.split('/').join('-') : null;
-    let populateData = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'resultFormId'];
+    // let populateData = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'resultFormId'];
     console.log('Date Transformed: ', dateTranformed);
     // Create a dynamic query object
     let query = {};
@@ -71,7 +72,7 @@ const searchInService = async (data) => {
     if (data.otherLTDescription)
         query.otherLTDescription = data.otherLTDescription;
     console.log("query>>>>>>>>>>>>>>>>>>>>>>>>>>>>", query);
-    const serviceForms = await serviceForm_model_1.ServiceForm.find(query).populate(populateData);
+    const serviceForms = await serviceForm_model_1.ServiceForm.find(query).populate(serviceFormPopulate);
     // const resultForms: IResultFormDocument[] = await ResultForm.find(query) as IResultFormDocument[];
     // if (dateTranformed) query.queryInformationLTInputDate = dateTranformed;
     // if (data.jobNo) query.serviceResultJobNo = data.jobNo;
@@ -108,7 +109,7 @@ const searchInResult = async (data) => {
     const dateSecondAttemptTransformed = data.date2Attepmt ? data.date2Attepmt.split("/").join("-") : null;
     const dateThirdAttemptTransformed = data.date3Attepmt ? data.date3Attepmt.split("/").join("-") : null;
     const dateMailingTransformed = data.dateMailing ? data.dateMailing.split("/").join("-") : null;
-    let populateData = ['serviceFormId', 'serviceResultClientId', 'serviceResultServerId'];
+    let populateData = [...serviceFormPopulate, 'serviceFormId', 'serviceResultClientId', 'serviceResultServerId'];
     // Dynamically building the query object
     const query = {};
     if (dateEnteredTransformed)
@@ -146,7 +147,7 @@ const searchInStandard = async (data) => {
     if (!data) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Search data is missing");
     }
-    let populateData = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'resultFormId'];
+    // let populateData = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy','resultFormId'];
     // Dynamically building the query object
     const query = {};
     if (data.otherStdDescription)
@@ -174,7 +175,7 @@ const searchInStandard = async (data) => {
     // Logging the query for debugging
     console.log('Query Object:', query);
     // Executing the query
-    const serviceForms = await serviceForm_model_1.ServiceForm.find(query).populate(populateData);
+    const serviceForms = await serviceForm_model_1.ServiceForm.find(query).populate(serviceFormPopulate);
     // const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query).populate(populateData);
     // Handling no results found
     if (serviceForms.length === 0) {
