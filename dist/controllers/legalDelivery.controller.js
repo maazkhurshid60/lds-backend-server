@@ -208,7 +208,20 @@ const searchInStandard = async (data) => {
     console.log('Query Object:', query);
     let serviceFormPopulate = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'resultFormId'];
     // Executing the query
-    const serviceForms = await serviceForm_model_1.ServiceForm.find(query).populate(serviceFormPopulate);
+    // const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query).populate(serviceFormPopulate) as IServiceFormDocument[];
+    const serviceForms = await serviceForm_model_1.ServiceForm.find(query)
+        .populate('clientId')
+        .populate('serviceType')
+        .populate('standardServiceType')
+        .populate('serviceFormCreatedBy')
+        .populate('lastUpdatedBy')
+        .populate({
+        path: 'resultFormId',
+        populate: [
+            { path: 'serviceResultClientId', model: 'Client' }, // Populate clientId
+            { path: 'serviceResultServerId', model: 'Server' }, // Populate serviceType
+        ]
+    });
     // const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query).populate(populateData);
     // Handling no results found
     if (serviceForms.length === 0) {
