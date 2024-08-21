@@ -122,7 +122,7 @@ const searchInResult = async (data: ISearchResult) => {
     const dateMailingTransformed = data.dateMailing ? data.dateMailing.split("/").join("-") : null;
     // let populateData = [...serviceFormPopulate, 'serviceFormId', 'serviceResultClientId', 'serviceResultServerId'];
      
-    let populateData = ['serviceFormId', 'serviceResultClientId', 'serviceResultServerId','serviceFormId.clientId'];
+    let populateData = [ 'serviceResultClientId', 'serviceResultServerId'];
 
     // Dynamically building the query object
     const query: any = {};
@@ -143,7 +143,11 @@ const searchInResult = async (data: ISearchResult) => {
 
 
     // Executing the query
-    const resultForms: IResultFormDocument[] = await ResultForm.find(query).populate(populateData) as IResultFormDocument[];
+    const resultForms: IResultFormDocument[] = await ResultForm.find(query).populate(populateData) .populate('serviceFormId') // Populates serviceFormId first
+    .populate({
+      path: 'serviceFormId.clientId', // Then populate the nested clientId
+      model: 'Client' // Ensure this references the correct model
+    }) as IResultFormDocument[];
 
     // Handling no results found
     if (resultForms.length === 0) {

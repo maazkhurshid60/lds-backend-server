@@ -110,7 +110,7 @@ const searchInResult = async (data) => {
     const dateThirdAttemptTransformed = data.date3Attepmt ? data.date3Attepmt.split("/").join("-") : null;
     const dateMailingTransformed = data.dateMailing ? data.dateMailing.split("/").join("-") : null;
     // let populateData = [...serviceFormPopulate, 'serviceFormId', 'serviceResultClientId', 'serviceResultServerId'];
-    let populateData = ['serviceFormId', 'serviceResultClientId', 'serviceResultServerId', 'serviceFormId.clientId'];
+    let populateData = ['serviceResultClientId', 'serviceResultServerId'];
     // Dynamically building the query object
     const query = {};
     if (dateEnteredTransformed)
@@ -136,7 +136,11 @@ const searchInResult = async (data) => {
     // Logging the query for debugging
     console.log('Query Object:', query);
     // Executing the query
-    const resultForms = await resultForm_model_1.ResultForm.find(query).populate(populateData);
+    const resultForms = await resultForm_model_1.ResultForm.find(query).populate(populateData).populate('serviceFormId') // Populates serviceFormId first
+        .populate({
+        path: 'serviceFormId.clientId', // Then populate the nested clientId
+        model: 'Client' // Ensure this references the correct model
+    });
     // Handling no results found
     if (resultForms.length === 0) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.NOT_FOUND, "Result form is not found");
