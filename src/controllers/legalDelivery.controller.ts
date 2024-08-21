@@ -45,7 +45,7 @@ const search = asyncHandler(async (req: Request, res: Response) => {
 
 });
 
-let serviceFormPopulate = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'resultFormId'];
+// let serviceFormPopulate = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'resultFormId'];
 
 const searchInService = async (data: ISearchService) => {
     console.log("data>>>>>>>>>", data);
@@ -77,7 +77,24 @@ const searchInService = async (data: ISearchService) => {
     if (data.otherLTDescription) query.otherLTDescription = data.otherLTDescription;
 
     console.log("query>>>>>>>>>>>>>>>>>>>>>>>>>>>>",query)
-    const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query).populate(serviceFormPopulate) as IServiceFormDocument[];
+let serviceFormPopulate = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'resultFormId'];
+
+    // const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query).populate(serviceFormPopulate) as IServiceFormDocument[];
+    
+    const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query)
+    .populate('clientId')
+    .populate('serviceType')
+    .populate('standardServiceType')
+    .populate('serviceFormCreatedBy')
+    .populate('lastUpdatedBy')
+    .populate({
+      path: 'resultFormId',
+      populate: [
+        { path: 'serviceResultClientId', model: 'Client' }, // Populate clientId
+        { path: 'serviceResultServerId', model: 'Server' }, // Populate serviceType
+      ]
+    }) as IServiceFormDocument[];
+    
     // const resultForms: IResultFormDocument[] = await ResultForm.find(query) as IResultFormDocument[];
 
     // if (dateTranformed) query.queryInformationLTInputDate = dateTranformed;
@@ -143,12 +160,27 @@ const searchInResult = async (data: ISearchResult) => {
 
 
     // Executing the query
-    const resultForms: IResultFormDocument[] = await ResultForm.find(query).populate(populateData) .populate('serviceFormId') // Populates serviceFormId first
-    .populate({
-      path: 'serviceFormId.clientId', // Then populate the nested clientId
-      model: 'Client' // Ensure this references the correct model
-    }) as IResultFormDocument[];
+    // const resultForms: IResultFormDocument[] = await ResultForm.find(query).populate(populateData).populate('serviceFormId') // Populates serviceFormId first
+    // .populate({
+    //   path: 'serviceFormId.clientId', // Then populate the nested clientId
+    //   model: 'Client' // Ensure this references the correct model
+    // }) as IResultFormDocument[];
 
+    // const resultForms: IResultFormDocument[] = await ResultForm.find(query).populate([ 'serviceResultClientId', 'serviceResultServerId', 'serviceFormId', 'clientId']).setOptions({ strictPopulate: false }) as IResultFormDocument[];
+    const resultForms: IResultFormDocument[] = await ResultForm.find(query)
+    .populate('serviceResultClientId')
+    .populate('serviceResultServerId')
+    .populate({
+      path: 'serviceFormId',
+      populate: [
+        { path: 'clientId', model: 'Client' }, // Populate clientId
+        { path: 'serviceType', model: 'ServiceType' }, // Populate serviceType
+        { path: 'lTServiceType', model: 'LTServiceType' }, // Populate lTServiceType
+        { path: 'standardServiceType', model: 'StandardServiceType' } // Populate standardServiceType
+      ]
+    }) as IResultFormDocument[];
+  
+  
     // Handling no results found
     if (resultForms.length === 0) {
         throw new ApiError(StatusCodes.NOT_FOUND, "Result form is not found");
@@ -182,6 +214,7 @@ const searchInResult = async (data: ISearchResult) => {
 
     // Logging the query for debugging
     console.log('Query Object:', query);
+    let serviceFormPopulate = ['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'resultFormId'];
 
     // Executing the query
     const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query).populate(serviceFormPopulate) as IServiceFormDocument[];
