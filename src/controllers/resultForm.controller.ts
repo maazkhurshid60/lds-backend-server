@@ -207,6 +207,22 @@ const updateResultForm = asyncHandler(async (req: Request, res: Response) => {
     // if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
     //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
     // }
+    
+    const isServiceExistsByJobNo: IServiceFormDocument = await ServiceForm.findOne({ jobNo: serviceResultJobNo }) as IServiceFormDocument;
+    console.log("isServiceExistsByJobNo",isServiceExistsByJobNo)
+    if(isServiceExistsByJobNo) {
+
+        await ServiceForm.findOneAndUpdate(
+            {
+                jobNo: serviceResultJobNo
+            },
+            {
+                $set: {
+                    resultFormId: resultFormId
+                }
+            }
+        )
+
 
     const updatedResultForm: IResultFormDocument = await ResultForm.findByIdAndUpdate(
         resultFormId,

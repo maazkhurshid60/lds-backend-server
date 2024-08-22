@@ -99,57 +99,68 @@ const updateResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     // if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
     //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
     // }
-    const updatedResultForm = await resultForm_model_1.ResultForm.findByIdAndUpdate(resultFormId, {
-        $set: {
-            queryInformationLTFullName,
-            queryInformationLTIndexNo,
-            queryInformationLTAddress,
-            queryInformationLTBusinessName,
-            queryInformationLTInputDate,
-            queryInformationStandardServeTo,
-            queryInformationStandardDefendants,
-            serviceResultInputDate,
-            serviceResultScvType,
-            serviceResultClientId,
-            serviceResultJobNo,
-            serviceResultServerId,
-            serviceResultResults,
-            serviceResultDateOfService,
-            serviceResultFirstTimeOfService,
-            serviceResultFirstAttemptDate,
-            serviceResultSecondTimeOfService,
-            serviceResultSecondAttemptDate,
-            serviceResultThirdTimeOfService,
-            serviceResultThirdAttemptDate,
-            serviceResultlTServed,
-            serviceResultlTNotServed,
-            serviceResultRecipientTitle,
-            serviceResultDoor,
-            serviceResultDoorLocks,
-            serviceResultEntry,
-            serviceResultWall,
-            serviceResultFloor,
-            serviceResultLock,
-            serviceResultOtherDescription,
-            serviceResultSex,
-            serviceResultSkinColor,
-            serviceResultHair,
-            serviceResultAge,
-            serviceResultHeight,
-            serviceResultWeight,
-            serviceResultOtherFeatures,
-            serviceResultDateOfMailing,
-            serviceResultDateOfNotary
+    const isServiceExistsByJobNo = await serviceForm_model_1.ServiceForm.findOne({ jobNo: serviceResultJobNo });
+    console.log("isServiceExistsByJobNo", isServiceExistsByJobNo);
+    if (isServiceExistsByJobNo) {
+        await serviceForm_model_1.ServiceForm.findOneAndUpdate({
+            jobNo: serviceResultJobNo
+        }, {
+            $set: {
+                resultFormId: resultFormId
+            }
+        });
+        const updatedResultForm = await resultForm_model_1.ResultForm.findByIdAndUpdate(resultFormId, {
+            $set: {
+                queryInformationLTFullName,
+                queryInformationLTIndexNo,
+                queryInformationLTAddress,
+                queryInformationLTBusinessName,
+                queryInformationLTInputDate,
+                queryInformationStandardServeTo,
+                queryInformationStandardDefendants,
+                serviceResultInputDate,
+                serviceResultScvType,
+                serviceResultClientId,
+                serviceResultJobNo,
+                serviceResultServerId,
+                serviceResultResults,
+                serviceResultDateOfService,
+                serviceResultFirstTimeOfService,
+                serviceResultFirstAttemptDate,
+                serviceResultSecondTimeOfService,
+                serviceResultSecondAttemptDate,
+                serviceResultThirdTimeOfService,
+                serviceResultThirdAttemptDate,
+                serviceResultlTServed,
+                serviceResultlTNotServed,
+                serviceResultRecipientTitle,
+                serviceResultDoor,
+                serviceResultDoorLocks,
+                serviceResultEntry,
+                serviceResultWall,
+                serviceResultFloor,
+                serviceResultLock,
+                serviceResultOtherDescription,
+                serviceResultSex,
+                serviceResultSkinColor,
+                serviceResultHair,
+                serviceResultAge,
+                serviceResultHeight,
+                serviceResultWeight,
+                serviceResultOtherFeatures,
+                serviceResultDateOfMailing,
+                serviceResultDateOfNotary
+            }
+        }, {
+            new: true
+        });
+        if (!updatedResultForm) {
+            throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while updating the result form");
         }
-    }, {
-        new: true
-    });
-    if (!updatedResultForm) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while updating the result form");
+        return res
+            .status(http_status_codes_1.StatusCodes.OK)
+            .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, updatedResultForm, "Result form has been updated"));
     }
-    return res
-        .status(http_status_codes_1.StatusCodes.OK)
-        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, updatedResultForm, "Result form has been updated"));
 });
 exports.updateResultForm = updateResultForm;
 const deleteResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {

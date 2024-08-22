@@ -221,6 +221,7 @@ const searchInResult = async (data: ISearchResult) => {
     const serviceForms: IServiceFormDocument[] = await ServiceForm.find(query)
     .populate('clientId')
     .populate('serviceType')
+    .populate('lTServiceType')
     .populate('standardServiceType')
     .populate('serviceFormCreatedBy')
     .populate('lastUpdatedBy')

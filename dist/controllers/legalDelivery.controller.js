@@ -212,6 +212,7 @@ const searchInStandard = async (data) => {
     const serviceForms = await serviceForm_model_1.ServiceForm.find(query)
         .populate('clientId')
         .populate('serviceType')
+        .populate('lTServiceType')
         .populate('standardServiceType')
         .populate('serviceFormCreatedBy')
         .populate('lastUpdatedBy')
