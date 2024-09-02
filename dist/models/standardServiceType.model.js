@@ -31,6 +31,10 @@ const standardServiceTypeSchema = new mongoose_1.Schema({
         required: [true, "Name is required"],
         trim: true,
     },
+    isActive: {
+        type: Boolean,
+        default: true,
+    },
 }, {
     timestamps: true
 });

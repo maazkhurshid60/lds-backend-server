@@ -90,79 +90,197 @@ const createNewResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =>
 exports.createNewResultForm = createNewResultForm;
 const updateResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { resultFormId, queryInformationLTFullName, queryInformationLTIndexNo, queryInformationLTAddress, queryInformationLTBusinessName, queryInformationLTInputDate, queryInformationStandardServeTo, queryInformationStandardDefendants, serviceResultInputDate, serviceResultScvType, serviceResultClientId, serviceResultJobNo, serviceResultServerId, serviceResultResults, serviceResultDateOfService, serviceResultFirstTimeOfService, serviceResultFirstAttemptDate, serviceResultSecondTimeOfService, serviceResultSecondAttemptDate, serviceResultThirdTimeOfService, serviceResultThirdAttemptDate, serviceResultlTServed, serviceResultlTNotServed, serviceResultRecipientTitle, serviceResultDoor, serviceResultDoorLocks, serviceResultEntry, serviceResultWall, serviceResultFloor, serviceResultLock, serviceResultOtherDescription, serviceResultSex, serviceResultSkinColor, serviceResultHair, serviceResultAge, serviceResultHeight, serviceResultWeight, serviceResultOtherFeatures, serviceResultDateOfMailing, serviceResultDateOfNotary, serviceResultRecipient } = req.body;
+    // Check if resultFormId is provided
     if (!resultFormId) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Result form Id is required");
     }
+    // Check if the required query information fields are provided
     if (!queryInformationLTFullName || !queryInformationLTIndexNo || !queryInformationLTAddress) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Missing required fields");
     }
-    // if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
-    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
-    // }
+    // Check if a service form exists with the given job number
     const isServiceExistsByJobNo = await serviceForm_model_1.ServiceForm.findOne({ jobNo: serviceResultJobNo });
     console.log("isServiceExistsByJobNo", isServiceExistsByJobNo);
     if (isServiceExistsByJobNo) {
-        await serviceForm_model_1.ServiceForm.findOneAndUpdate({
-            jobNo: serviceResultJobNo
-        }, {
-            $set: {
-                resultFormId: resultFormId
-            }
-        });
-        const updatedResultForm = await resultForm_model_1.ResultForm.findByIdAndUpdate(resultFormId, {
-            $set: {
-                queryInformationLTFullName,
-                queryInformationLTIndexNo,
-                queryInformationLTAddress,
-                queryInformationLTBusinessName,
-                queryInformationLTInputDate,
-                queryInformationStandardServeTo,
-                queryInformationStandardDefendants,
-                serviceResultInputDate,
-                serviceResultScvType,
-                serviceResultClientId,
-                serviceResultJobNo,
-                serviceResultServerId,
-                serviceResultResults,
-                serviceResultDateOfService,
-                serviceResultFirstTimeOfService,
-                serviceResultFirstAttemptDate,
-                serviceResultSecondTimeOfService,
-                serviceResultSecondAttemptDate,
-                serviceResultThirdTimeOfService,
-                serviceResultThirdAttemptDate,
-                serviceResultlTServed,
-                serviceResultlTNotServed,
-                serviceResultRecipientTitle,
-                serviceResultDoor,
-                serviceResultDoorLocks,
-                serviceResultEntry,
-                serviceResultWall,
-                serviceResultFloor,
-                serviceResultLock,
-                serviceResultOtherDescription,
-                serviceResultSex,
-                serviceResultSkinColor,
-                serviceResultHair,
-                serviceResultAge,
-                serviceResultHeight,
-                serviceResultWeight,
-                serviceResultOtherFeatures,
-                serviceResultDateOfMailing,
-                serviceResultDateOfNotary
-            }
-        }, {
-            new: true
-        });
-        if (!updatedResultForm) {
-            throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while updating the result form");
-        }
-        return res
-            .status(http_status_codes_1.StatusCodes.OK)
-            .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, updatedResultForm, "Result form has been updated"));
+        // Update the service form with the resultFormId
+        await serviceForm_model_1.ServiceForm.findOneAndUpdate({ jobNo: serviceResultJobNo }, { $set: { resultFormId: resultFormId } });
     }
+    // Update the result form with the provided data
+    const updatedResultForm = await resultForm_model_1.ResultForm.findByIdAndUpdate(resultFormId, {
+        $set: {
+            queryInformationLTFullName,
+            queryInformationLTIndexNo,
+            queryInformationLTAddress,
+            queryInformationLTBusinessName,
+            queryInformationLTInputDate,
+            queryInformationStandardServeTo,
+            queryInformationStandardDefendants,
+            serviceResultInputDate,
+            serviceResultScvType,
+            serviceResultClientId,
+            serviceResultJobNo,
+            serviceResultServerId,
+            serviceResultResults,
+            serviceResultDateOfService,
+            serviceResultFirstTimeOfService,
+            serviceResultFirstAttemptDate,
+            serviceResultSecondTimeOfService,
+            serviceResultSecondAttemptDate,
+            serviceResultThirdTimeOfService,
+            serviceResultThirdAttemptDate,
+            serviceResultlTServed,
+            serviceResultlTNotServed,
+            serviceResultRecipientTitle,
+            serviceResultDoor,
+            serviceResultDoorLocks,
+            serviceResultEntry,
+            serviceResultWall,
+            serviceResultFloor,
+            serviceResultLock,
+            serviceResultOtherDescription,
+            serviceResultSex,
+            serviceResultSkinColor,
+            serviceResultHair,
+            serviceResultAge,
+            serviceResultHeight,
+            serviceResultWeight,
+            serviceResultOtherFeatures,
+            serviceResultDateOfMailing,
+            serviceResultDateOfNotary,
+            serviceResultRecipient
+        }
+    }, { new: true });
+    if (!updatedResultForm) {
+        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while updating the result form");
+    }
+    return res
+        .status(http_status_codes_1.StatusCodes.OK)
+        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, updatedResultForm, "Result form has been updated"));
 });
 exports.updateResultForm = updateResultForm;
+// const updateResultForm = asyncHandler(async (req: Request, res: Response) => {
+//     const {
+//         resultFormId, queryInformationLTFullName,
+//         queryInformationLTIndexNo,
+//         queryInformationLTAddress,
+//         queryInformationLTBusinessName,
+//         queryInformationLTInputDate,
+//         queryInformationStandardServeTo,
+//         queryInformationStandardDefendants,
+//         serviceResultInputDate,
+//         serviceResultScvType,
+//         serviceResultClientId,
+//         serviceResultJobNo,
+//         serviceResultServerId,
+//         serviceResultResults,
+//         serviceResultDateOfService,
+//         serviceResultFirstTimeOfService,
+//         serviceResultFirstAttemptDate,
+//         serviceResultSecondTimeOfService,
+//         serviceResultSecondAttemptDate,
+//         serviceResultThirdTimeOfService,
+//         serviceResultThirdAttemptDate,
+//         serviceResultlTServed,
+//         serviceResultlTNotServed,
+//         serviceResultRecipientTitle,
+//         serviceResultDoor,
+//         serviceResultDoorLocks,
+//         serviceResultEntry,
+//         serviceResultWall,
+//         serviceResultFloor,
+//         serviceResultLock,
+//         serviceResultOtherDescription,
+//         serviceResultSex,
+//         serviceResultSkinColor,
+//         serviceResultHair,
+//         serviceResultAge,
+//         serviceResultHeight,
+//         serviceResultWeight,
+//         serviceResultOtherFeatures,
+//         serviceResultDateOfMailing,
+//         serviceResultDateOfNotary,
+//         serviceResultRecipient
+//     }: IUpdateResultForm = req.body;
+//     if (!resultFormId) {
+//         throw new ApiError(StatusCodes.BAD_REQUEST, "Result form Id is required");
+//     }
+//     if (!queryInformationLTFullName || !queryInformationLTIndexNo || !queryInformationLTAddress) {
+//         throw new ApiError(StatusCodes.BAD_REQUEST, "Missing required fields");
+//     }
+//     // if(typeof queryInformationLT !== "object" || typeof queryInformationStandard !== "object" || typeof serviceResults !== "object") {
+//     //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
+//     // }
+//     const isServiceExistsByJobNo: IServiceFormDocument = await ServiceForm.findOne({ jobNo: serviceResultJobNo }) as IServiceFormDocument;
+//     console.log("isServiceExistsByJobNo",isServiceExistsByJobNo)
+//     if(isServiceExistsByJobNo) {
+//         await ServiceForm.findOneAndUpdate(
+//             {
+//                 jobNo: serviceResultJobNo
+//             },
+//             {
+//                 $set: {
+//                     resultFormId: resultFormId
+//                 }
+//             }
+//         )
+//     const updatedResultForm: IResultFormDocument = await ResultForm.findByIdAndUpdate(
+//         resultFormId,
+//         {
+//             $set: {
+//                 queryInformationLTFullName,
+//                 queryInformationLTIndexNo,
+//                 queryInformationLTAddress,
+//                 queryInformationLTBusinessName,
+//                 queryInformationLTInputDate,
+//                 queryInformationStandardServeTo,
+//                 queryInformationStandardDefendants,
+//                 serviceResultInputDate,
+//                 serviceResultScvType,
+//                 serviceResultClientId,
+//                 serviceResultJobNo,
+//                 serviceResultServerId,
+//                 serviceResultResults,
+//                 serviceResultDateOfService,
+//                 serviceResultFirstTimeOfService,
+//                 serviceResultFirstAttemptDate,
+//                 serviceResultSecondTimeOfService,
+//                 serviceResultSecondAttemptDate,
+//                 serviceResultThirdTimeOfService,
+//                 serviceResultThirdAttemptDate,
+//                 serviceResultlTServed,
+//                 serviceResultlTNotServed,
+//                 serviceResultRecipientTitle,
+//                 serviceResultDoor,
+//                 serviceResultDoorLocks,
+//                 serviceResultEntry,
+//                 serviceResultWall,
+//                 serviceResultFloor,
+//                 serviceResultLock,
+//                 serviceResultOtherDescription,
+//                 serviceResultSex,
+//                 serviceResultSkinColor,
+//                 serviceResultHair,
+//                 serviceResultAge,
+//                 serviceResultHeight,
+//                 serviceResultWeight,
+//                 serviceResultOtherFeatures,
+//                 serviceResultDateOfMailing,
+//                 serviceResultDateOfNotary
+//             }
+//         },
+//         {
+//             new: true
+//         }
+//     ) as IResultFormDocument;
+//     if (!updatedResultForm) {
+//         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while updating the result form");
+//     }
+//     return res
+//         .status(StatusCodes.OK)
+//         .json(
+//             new ApiResponse(StatusCodes.OK, updatedResultForm, "Result form has been updated")
+//         );
+// });
 const deleteResultForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { resultFormId } = req.body;
     if (!resultFormId) {

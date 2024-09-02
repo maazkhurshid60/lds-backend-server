@@ -8,7 +8,7 @@ import { ApiResponse } from "../utils/ApiResponse";
 
 const createNewStandardServiceType = asyncHandler( async (req: Request, res: Response) => {
 
-    const { name }: ICreateStandardServiceType = req.body;
+    const { name,isActive }: ICreateStandardServiceType = req.body;
 
     if(!name || name?.trim() === "") {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Name is required");
@@ -21,7 +21,8 @@ const createNewStandardServiceType = asyncHandler( async (req: Request, res: Res
     }
 
     const newStandardServiceType: IStandardServiceDocument = await StandardServiceType.create({
-        name
+        name,
+        isActive
     }) as IStandardServiceDocument;
 
     if(!newStandardServiceType) {

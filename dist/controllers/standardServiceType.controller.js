@@ -7,7 +7,7 @@ const http_status_codes_1 = require("http-status-codes");
 const standardServiceType_model_1 = require("../models/standardServiceType.model");
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createNewStandardServiceType = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
-    const { name } = req.body;
+    const { name, isActive } = req.body;
     if (!name || name?.trim() === "") {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Name is required");
     }
@@ -16,7 +16,8 @@ const createNewStandardServiceType = (0, AsyncHandler_1.asyncHandler)(async (req
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, `This standard service type already exists`);
     }
     const newStandardServiceType = await standardServiceType_model_1.StandardServiceType.create({
-        name
+        name,
+        isActive
     });
     if (!newStandardServiceType) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating a new standard service type");
