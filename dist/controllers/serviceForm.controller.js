@@ -28,9 +28,9 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
     // aptServe,
     // zipServe
      } = req.body;
-    if (!jobNo || !inputDate || !clientId) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Required fields are missing");
-    }
+    // if(!jobNo || !inputDate || !clientId) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Required fields are missing")
+    // }
     const alreadyServiceExists = await serviceForm_model_1.ServiceForm.findOne({ jobNo });
     if (alreadyServiceExists) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, `Service Form with this Job no (${jobNo}) already exists`);

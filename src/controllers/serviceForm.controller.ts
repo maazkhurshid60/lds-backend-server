@@ -55,9 +55,9 @@ const createNewServiceForm = asyncHandler( async (req: Request, res: Response) =
         // zipServe
     }: ICreateServiceForm = req.body;
 
-    if(!jobNo || !inputDate || !clientId) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Required fields are missing")
-    }
+    // if(!jobNo || !inputDate || !clientId) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Required fields are missing")
+    // }
 
     const alreadyServiceExists: IServiceFormDocument = await ServiceForm.findOne({ jobNo }) as IServiceFormDocument;
 
