@@ -47,12 +47,12 @@ const createNewServiceForm = asyncHandler( async (req: Request, res: Response) =
         sSDDefendants,
         sSDPlaintiff,
         sSDCountry,
-        firstNameServe,
-        addressServe,
-        cityServe,
-        stateServe,
-        aptServe,
-        zipServe
+        // firstNameServe,
+        // addressServe,
+        // cityServe,
+        // stateServe,
+        // aptServe,
+        // zipServe
     }: ICreateServiceForm = req.body;
 
     if(!jobNo || !inputDate || !clientId) {
@@ -73,15 +73,20 @@ const createNewServiceForm = asyncHandler( async (req: Request, res: Response) =
     // if(!client || !serviceTypeDoc || !ltServiceTypeDoc || !standardServiceTypeDoc) {
     //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data has passed.");
     // }
+console.log("line passed 76",jobNo,
+    inputDate,
+client?._id
+ 
+     )
 
     const newServiceForm: IServiceFormDocument = await ServiceForm.create({
         jobNo,
         inputDate,
-        clientId: client._id ,
-        serviceType: serviceTypeDoc._id ,
+        clientId: client?._id ,
+        serviceType: serviceTypeDoc?._id ,
         caseNo,
         caption,
-        lTServiceType: ltServiceTypeDoc._id ,
+        lTServiceType: ltServiceTypeDoc?._id ,
         // otherLTServiceTypeData,
         oLTIndexNo,
         oLTDescription,
@@ -96,7 +101,7 @@ const createNewServiceForm = asyncHandler( async (req: Request, res: Response) =
         lTSDescription,
         noOfAddLMailings,
         mailingAddresses,
-        standardServiceType: standardServiceTypeDoc._id ,
+        standardServiceType: standardServiceTypeDoc?._id ,
         // otherStandardServiceTypeData,
         oSSTIndexNo,
         oSSTDescription,
@@ -105,15 +110,17 @@ const createNewServiceForm = asyncHandler( async (req: Request, res: Response) =
         sSDDefendants,
         sSDPlaintiff,
         sSDCountry,
-        firstNameServe,
-        addressServe,
-        cityServe,
-        stateServe,
-        aptServe,
-        zipServe,
+        // firstNameServe,
+        // addressServe,
+        // cityServe,
+        // stateServe,
+        // aptServe,
+        // zipServe,
         serviceFormCreatedBy: user._id ,
         lastUpdatedBy: user._id 
     }) as IServiceFormDocument;
+
+    console.log("line passed 118",newServiceForm)
 
     if(!newServiceForm) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating a new service form");
@@ -184,7 +191,7 @@ const updateServiceForm = asyncHandler( async (req: Request, res: Response) => {
     const ltServiceTypeDoc: ILTServiceTypeDocument = await LTServiceType.findById(lTServiceType) as ILTServiceTypeDocument;
     const standardServiceTypeDoc: IStandardServiceDocument = await StandardServiceType.findById(standardServiceType) as IStandardServiceDocument;
 
-    if(!client || !serviceTypeDoc || !ltServiceTypeDoc || !standardServiceTypeDoc) {
+    if(!client || !serviceTypeDoc || !ltServiceTypeDoc ) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data has passed.");
     }
 

@@ -46,12 +46,12 @@ export const createServiceFormSchema = z.object({
     sSDPlaintiff: z.string().optional(),
     sSDCountry: z.string().optional(),
     //Serve to
-    firstNameServe: z.string().optional(),
-    addressServe: z.string().optional(),
-    cityServe: z.string().optional(),
-    stateServe: z.string().optional(),
-    aptServe: z.string().optional(),
-    zipServe: z.string().optional(),
-    serviceFormCreatedBy: z.string().optional(),
-    lastUpdatedBy:z.string().optional()
+    // firstNameServe: z.string().optional(),
+    // addressServe: z.string().optional(),
+    // cityServe: z.string().optional(),
+    // stateServe: z.string().optional(),
+    // aptServe: z.string().optional(),
+    // zipServe: z.string().optional(),
+    // serviceFormCreatedBy: z.string().optional(),
+    // lastUpdatedBy:z.string().optional()
 });

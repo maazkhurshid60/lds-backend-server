@@ -47,12 +47,12 @@ exports.createServiceFormSchema = zod_1.z.object({
     sSDPlaintiff: zod_1.z.string().optional(),
     sSDCountry: zod_1.z.string().optional(),
     //Serve to
-    firstNameServe: zod_1.z.string().optional(),
-    addressServe: zod_1.z.string().optional(),
-    cityServe: zod_1.z.string().optional(),
-    stateServe: zod_1.z.string().optional(),
-    aptServe: zod_1.z.string().optional(),
-    zipServe: zod_1.z.string().optional(),
-    serviceFormCreatedBy: zod_1.z.string().optional(),
-    lastUpdatedBy: zod_1.z.string().optional()
+    // firstNameServe: z.string().optional(),
+    // addressServe: z.string().optional(),
+    // cityServe: z.string().optional(),
+    // stateServe: z.string().optional(),
+    // aptServe: z.string().optional(),
+    // zipServe: z.string().optional(),
+    // serviceFormCreatedBy: z.string().optional(),
+    // lastUpdatedBy:z.string().optional()
 });

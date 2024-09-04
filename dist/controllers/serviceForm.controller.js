@@ -20,7 +20,14 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
     // otherStandardServiceTypeData,
     oSSTIndexNo, oSSTDescription, 
     // standardServiceDetail,
-    sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry, firstNameServe, addressServe, cityServe, stateServe, aptServe, zipServe } = req.body;
+    sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry,
+    // firstNameServe,
+    // addressServe,
+    // cityServe,
+    // stateServe,
+    // aptServe,
+    // zipServe
+     } = req.body;
     if (!jobNo || !inputDate || !clientId) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Required fields are missing");
     }
@@ -35,14 +42,15 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
     // if(!client || !serviceTypeDoc || !ltServiceTypeDoc || !standardServiceTypeDoc) {
     //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data has passed.");
     // }
+    console.log("line passed 76", jobNo, inputDate, client?._id);
     const newServiceForm = await serviceForm_model_1.ServiceForm.create({
         jobNo,
         inputDate,
-        clientId: client._id,
-        serviceType: serviceTypeDoc._id,
+        clientId: client?._id,
+        serviceType: serviceTypeDoc?._id,
         caseNo,
         caption,
-        lTServiceType: ltServiceTypeDoc._id,
+        lTServiceType: ltServiceTypeDoc?._id,
         // otherLTServiceTypeData,
         oLTIndexNo,
         oLTDescription,
@@ -57,7 +65,7 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
         lTSDescription,
         noOfAddLMailings,
         mailingAddresses,
-        standardServiceType: standardServiceTypeDoc._id,
+        standardServiceType: standardServiceTypeDoc?._id,
         // otherStandardServiceTypeData,
         oSSTIndexNo,
         oSSTDescription,
@@ -66,15 +74,16 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
         sSDDefendants,
         sSDPlaintiff,
         sSDCountry,
-        firstNameServe,
-        addressServe,
-        cityServe,
-        stateServe,
-        aptServe,
-        zipServe,
+        // firstNameServe,
+        // addressServe,
+        // cityServe,
+        // stateServe,
+        // aptServe,
+        // zipServe,
         serviceFormCreatedBy: user._id,
         lastUpdatedBy: user._id
     });
+    console.log("line passed 118", newServiceForm);
     if (!newServiceForm) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating a new service form");
     }
@@ -104,7 +113,7 @@ const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const serviceTypeDoc = await serviceType_model_1.ServiceType.findById(serviceType);
     const ltServiceTypeDoc = await lTServiceType_model_1.LTServiceType.findById(lTServiceType);
     const standardServiceTypeDoc = await standardServiceType_model_1.StandardServiceType.findById(standardServiceType);
-    if (!client || !serviceTypeDoc || !ltServiceTypeDoc || !standardServiceTypeDoc) {
+    if (!client || !serviceTypeDoc || !ltServiceTypeDoc) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid data has passed.");
     }
     const updatedServiceForm = await serviceForm_model_1.ServiceForm.findByIdAndUpdate(serviceFormId, {
