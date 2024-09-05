@@ -113,9 +113,9 @@ const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const serviceTypeDoc = await serviceType_model_1.ServiceType.findById(serviceType);
     const ltServiceTypeDoc = await lTServiceType_model_1.LTServiceType.findById(lTServiceType);
     const standardServiceTypeDoc = await standardServiceType_model_1.StandardServiceType.findById(standardServiceType);
-    if (!client || !serviceTypeDoc || !ltServiceTypeDoc) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid data has passed.");
-    }
+    // if(!client || !serviceTypeDoc || !ltServiceTypeDoc ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data has passed.");
+    // }
     const updatedServiceForm = await serviceForm_model_1.ServiceForm.findByIdAndUpdate(serviceFormId, {
         $set: {
             jobNo,
