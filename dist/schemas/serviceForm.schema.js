@@ -39,7 +39,7 @@ exports.createServiceFormSchema = zod_1.z.object({
     mailingAddresses: zod_1.z.array(mailingAddressSchema).optional(),
     standardServiceType: zod_1.z.any().optional(),
     // otherStandardServiceTypeData: z.number().optional(),
-    oSSTIndexNo: zod_1.z.number().optional(),
+    oSSTIndexNo: zod_1.z.any().optional(),
     oSSTDescription: zod_1.z.string().optional(),
     // standardServiceDetail: z.number().optional(),
     sSDCourt: zod_1.z.string().optional(),

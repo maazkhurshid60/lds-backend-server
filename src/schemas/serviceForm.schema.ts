@@ -38,7 +38,7 @@ export const createServiceFormSchema = z.object({
     mailingAddresses:z.array(mailingAddressSchema).optional(),
     standardServiceType: z.any().optional(),
     // otherStandardServiceTypeData: z.number().optional(),
-    oSSTIndexNo: z.number().optional(),
+    oSSTIndexNo: z.any().optional(),
     oSSTDescription: z.string().optional(),
     // standardServiceDetail: z.number().optional(),
     sSDCourt: z.string().optional(),
