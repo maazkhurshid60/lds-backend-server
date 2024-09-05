@@ -220,7 +220,7 @@ const updateServiceForm = asyncHandler( async (req: Request, res: Response) => {
                 lTSDescription,
                 noOfAddLMailings,
                 mailingAddresses,
-                standardServiceType: standardServiceTypeDoc._id,
+                standardServiceType: standardServiceTypeDoc?._id,
                 // otherStandardServiceTypeData,
                 oSSTIndexNo,
                 oSSTDescription,
