@@ -48,4 +48,5 @@ exports.createResultFormSchema = zod_1.z.object({
     serviceResultOtherFeatures: zod_1.z.string().optional(),
     serviceResultDateOfMailing: zod_1.z.string().optional(),
     serviceResultDateOfNotary: zod_1.z.string().optional(),
+    serviceResultTimeOfService: zod_1.z.string().optional(),
 });

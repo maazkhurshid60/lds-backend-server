@@ -41,6 +41,7 @@ export interface ICreateResultForm {
     serviceResultOtherFeatures?:string | null | undefined ,
     serviceResultDateOfMailing?:string | null | undefined ,
     serviceResultDateOfNotary?:string | null | undefined ,
+    serviceResultTimeOfService?: string | null | undefined,
 }
 
 export interface IUpdateResultForm extends ICreateResultForm {

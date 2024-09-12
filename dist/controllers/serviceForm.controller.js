@@ -12,25 +12,7 @@ const standardServiceType_model_1 = require("../models/standardServiceType.model
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const user = req.user;
-    const { jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, 
-    // otherLTServiceTypeData,
-    oLTIndexNo, oLTDescription, 
-    // lTServiceDetail,
-    lTSFirstName, lTSBusinessName, lTSZip, lTSState, lTSCity, lTSApt, lTSAddress, lTSDescription, noOfAddLMailings, mailingAddresses, standardServiceType, 
-    // otherStandardServiceTypeData,
-    oSSTIndexNo, oSSTDescription, 
-    // standardServiceDetail,
-    sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry,
-    // firstNameServe,
-    // addressServe,
-    // cityServe,
-    // stateServe,
-    // aptServe,
-    // zipServe
-     } = req.body;
-    // if(!jobNo || !inputDate || !clientId) {
-    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Required fields are missing")
-    // }
+    const { jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, oLTIndexNo, oLTDescription, lTSFirstName, lTSBusinessName, lTSZip, lTSState, lTSCity, lTSApt, lTSAddress, lTSDescription, noOfAddLMailings, mailingAddresses, standardServiceType, oSSTIndexNo, oSSTDescription, sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry, } = req.body;
     const alreadyServiceExists = await serviceForm_model_1.ServiceForm.findOne({ jobNo });
     if (alreadyServiceExists) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, `Service Form with this Job no (${jobNo}) already exists`);
@@ -39,10 +21,6 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
     const serviceTypeDoc = await serviceType_model_1.ServiceType.findById(serviceType);
     const ltServiceTypeDoc = await lTServiceType_model_1.LTServiceType.findById(lTServiceType);
     const standardServiceTypeDoc = await standardServiceType_model_1.StandardServiceType.findById(standardServiceType);
-    // if(!client || !serviceTypeDoc || !ltServiceTypeDoc || !standardServiceTypeDoc) {
-    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data has passed.");
-    // }
-    console.log("line passed 76", jobNo, inputDate, client?._id);
     const newServiceForm = await serviceForm_model_1.ServiceForm.create({
         jobNo,
         inputDate,
@@ -51,10 +29,8 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
         caseNo,
         caption,
         lTServiceType: ltServiceTypeDoc?._id,
-        // otherLTServiceTypeData,
         oLTIndexNo,
         oLTDescription,
-        // lTServiceDetail,
         lTSFirstName,
         lTSBusinessName,
         lTSZip,
@@ -66,22 +42,14 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
         noOfAddLMailings,
         mailingAddresses,
         standardServiceType: standardServiceTypeDoc?._id,
-        // otherStandardServiceTypeData,
         oSSTIndexNo,
         oSSTDescription,
-        // standardServiceDetail,
         sSDCourt,
         sSDDefendants,
         sSDPlaintiff,
         sSDCountry,
-        // firstNameServe,
-        // addressServe,
-        // cityServe,
-        // stateServe,
-        // aptServe,
-        // zipServe,
         serviceFormCreatedBy: user._id,
-        lastUpdatedBy: user._id
+        lastUpdatedBy: user._id,
     });
     console.log("line passed 118", newServiceForm);
     if (!newServiceForm) {
@@ -94,15 +62,9 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
 exports.createNewServiceForm = createNewServiceForm;
 const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const user = req.user;
-    const { serviceFormId, jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, 
-    // otherLTServiceTypeData,
-    oLTIndexNo, oLTDescription, 
-    // lTServiceDetail,
-    lTSFirstName, lTSBusinessName, lTSZip, lTSState, lTSCity, lTSApt, lTSAddress, lTSDescription, noOfAddLMailings, mailingAddresses, standardServiceType, 
-    // otherStandardServiceTypeData,
-    oSSTIndexNo, oSSTDescription, 
-    // standardServiceDetail,
-    sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry, firstNameServe, addressServe, cityServe, stateServe, aptServe, zipServe } = req.body;
+    const { serviceFormId, jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, oLTIndexNo, oLTDescription, lTSFirstName, lTSBusinessName, lTSZip, lTSState, lTSCity, lTSApt, lTSAddress, lTSDescription, noOfAddLMailings, mailingAddresses, standardServiceType, oSSTIndexNo, oSSTDescription, sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry, 
+    //Result Form Attributes
+    queryInformationLTFullName, queryInformationLTIndexNo, queryInformationLTAddress, queryInformationLTBusinessName, queryInformationLTInputDate, queryInformationStandardServeTo, queryInformationStandardDefendants, serviceResultInputDate, serviceResultScvType, serviceResultClientId, serviceResultJobNo, serviceResultServerId, serviceResultResults, serviceResultDateOfService, serviceResultFirstTimeOfService, serviceResultFirstAttemptDate, serviceResultSecondTimeOfService, serviceResultSecondAttemptDate, serviceResultThirdTimeOfService, serviceResultThirdAttemptDate, serviceResultlTServed, serviceResultlTNotServed, serviceResultSubstitudeDeliveredTo, serviceResultRecipientTitle, serviceResultRecipient, serviceResultDoor, serviceResultDoorLocks, serviceResultEntry, serviceResultWall, serviceResultFloor, serviceResultLock, serviceResultOtherDescription, serviceResultSex, serviceResultSkinColor, serviceResultHair, serviceResultAge, serviceResultHeight, serviceResultWeight, serviceResultOtherFeatures, serviceResultDateOfMailing, serviceResultDateOfNotary, serviceResultTimeOfService } = req.body;
     if (!serviceFormId) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Service form id is required.");
     }
@@ -113,9 +75,6 @@ const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const serviceTypeDoc = await serviceType_model_1.ServiceType.findById(serviceType);
     const ltServiceTypeDoc = await lTServiceType_model_1.LTServiceType.findById(lTServiceType);
     const standardServiceTypeDoc = await standardServiceType_model_1.StandardServiceType.findById(standardServiceType);
-    // if(!client || !serviceTypeDoc || !ltServiceTypeDoc ) {
-    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data has passed.");
-    // }
     const updatedServiceForm = await serviceForm_model_1.ServiceForm.findByIdAndUpdate(serviceFormId, {
         $set: {
             jobNo,
@@ -125,10 +84,8 @@ const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
             caseNo,
             caption,
             lTServiceType: ltServiceTypeDoc?._id,
-            // otherLTServiceTypeData,
             oLTIndexNo,
             oLTDescription,
-            // lTServiceDetail,
             lTSFirstName,
             lTSBusinessName,
             lTSZip,
@@ -140,22 +97,57 @@ const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
             noOfAddLMailings,
             mailingAddresses,
             standardServiceType: standardServiceTypeDoc?._id,
-            // otherStandardServiceTypeData,
             oSSTIndexNo,
             oSSTDescription,
-            // standardServiceDetail,
             sSDCourt,
             sSDDefendants,
             sSDPlaintiff,
             sSDCountry,
-            firstNameServe,
-            addressServe,
-            cityServe,
-            stateServe,
-            aptServe,
-            zipServe,
             serviceFormCreatedBy: user._id,
-            lastUpdatedBy: user._id
+            lastUpdatedBy: user._id,
+            //Result Form Attributes
+            queryInformationLTFullName,
+            queryInformationLTIndexNo,
+            queryInformationLTAddress,
+            queryInformationLTBusinessName,
+            queryInformationLTInputDate,
+            queryInformationStandardServeTo,
+            queryInformationStandardDefendants,
+            serviceResultInputDate,
+            serviceResultScvType,
+            serviceResultClientId: client?._id,
+            serviceResultJobNo,
+            serviceResultServerId,
+            serviceResultResults,
+            serviceResultDateOfService,
+            serviceResultFirstTimeOfService,
+            serviceResultFirstAttemptDate,
+            serviceResultSecondTimeOfService,
+            serviceResultSecondAttemptDate,
+            serviceResultThirdTimeOfService,
+            serviceResultThirdAttemptDate,
+            serviceResultlTServed,
+            serviceResultlTNotServed,
+            serviceResultSubstitudeDeliveredTo,
+            serviceResultRecipientTitle,
+            serviceResultRecipient,
+            serviceResultDoor,
+            serviceResultDoorLocks,
+            serviceResultEntry,
+            serviceResultWall,
+            serviceResultFloor,
+            serviceResultLock,
+            serviceResultOtherDescription,
+            serviceResultSex,
+            serviceResultSkinColor,
+            serviceResultHair,
+            serviceResultAge,
+            serviceResultHeight,
+            serviceResultWeight,
+            serviceResultOtherFeatures,
+            serviceResultDateOfMailing,
+            serviceResultDateOfNotary,
+            serviceResultTimeOfService
         }
     }, {
         new: true

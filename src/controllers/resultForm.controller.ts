@@ -10,7 +10,8 @@ import { IServiceFormDocument, ServiceForm } from "../models/serviceForm.model";
 
 const createNewResultForm = asyncHandler(async (req: Request, res: Response,) => {
 
-    const { queryInformationLTFullName,
+    const { 
+        queryInformationLTFullName,
         queryInformationLTIndexNo,
         queryInformationLTAddress,
         queryInformationLTBusinessName,
@@ -49,7 +50,8 @@ const createNewResultForm = asyncHandler(async (req: Request, res: Response,) =>
         serviceResultOtherFeatures,
         serviceResultDateOfMailing,
         serviceResultDateOfNotary,
-        serviceResultRecipient
+        serviceResultRecipient,
+        serviceResultTimeOfService
     }: ICreateResultForm = req.body;
 
     if (!queryInformationLTFullName || !queryInformationLTIndexNo || !queryInformationLTAddress) {

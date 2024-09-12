@@ -54,18 +54,12 @@ const serviceFormSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "LTServiceType"
     },
-    // otherLTServiceTypeData: {
-    //     type: Schema.Types.Map
-    // },
     oLTIndexNo: {
-        type: mongoose_1.Schema.Types.Number,
+        type: mongoose_1.Schema.Types.String,
     },
     oLTDescription: {
         type: mongoose_1.Schema.Types.String
     },
-    // lTServiceDetail: {
-    //     type: Schema.Types.Map
-    // },
     lTSFirstName: {
         type: mongoose_1.Schema.Types.String
     },
@@ -102,18 +96,12 @@ const serviceFormSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "StandardServiceType"
     },
-    // otherStandardServiceTypeData: {
-    //     type: Schema.Types.Map
-    // },
     oSSTIndexNo: {
-        type: mongoose_1.Schema.Types.Number,
+        type: mongoose_1.Schema.Types.String,
     },
     oSSTDescription: {
         type: mongoose_1.Schema.Types.String
     },
-    // standardServiceDetail: {
-    //     type: Schema.Types.Map
-    // },
     sSDCourt: {
         type: mongoose_1.Schema.Types.String
     },
@@ -152,10 +140,139 @@ const serviceFormSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "User"
     },
-    resultFormId: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: "ResultForm",
+    //Result Form Attributes
+    queryInformationLTFullName: {
+        type: mongoose_1.Schema.Types.String,
         required: false,
+    },
+    queryInformationLTIndexNo: {
+        type: mongoose_1.Schema.Types.Number,
+        required: false,
+    },
+    queryInformationLTAddress: {
+        type: mongoose_1.Schema.Types.String,
+        required: false,
+    },
+    queryInformationLTBusinessName: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    queryInformationLTInputDate: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    queryInformationStandardServeTo: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    queryInformationStandardDefendants: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultInputDate: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultAge: {
+        type: mongoose_1.Schema.Types.Number,
+    },
+    serviceResultClientId: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Client",
+        required: false
+    },
+    serviceResultDateOfMailing: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultDateOfNotary: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultDateOfService: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultDoor: {
+        type: mongoose_1.Schema.Types.Number,
+    },
+    serviceResultDoorLocks: {
+        type: mongoose_1.Schema.Types.Number,
+    },
+    serviceResultEntry: {
+        type: mongoose_1.Schema.Types.Number,
+    },
+    serviceResultFirstAttemptDate: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultFirstTimeOfService: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultFloor: {
+        type: mongoose_1.Schema.Types.Number,
+    },
+    serviceResultHair: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultHeight: {
+        type: mongoose_1.Schema.Types.Number,
+    },
+    serviceResultJobNo: {
+        type: mongoose_1.Schema.Types.Number,
+    },
+    serviceResultLock: {
+        type: mongoose_1.Schema.Types.Number,
+    },
+    serviceResultlTNotServed: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultlTServed: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultOtherDescription: {
+        type: mongoose_1.Schema.Types.Boolean,
+    },
+    serviceResultOtherFeatures: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultSubstitudeDeliveredTo: {
+        type: mongoose_1.Schema.Types.String
+    },
+    serviceResultRecipient: {
+        type: mongoose_1.Schema.Types.String
+    },
+    serviceResultRecipientTitle: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultResults: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultScvType: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultSecondAttemptDate: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultSecondTimeOfService: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultServerId: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Server",
+        required: false
+    },
+    serviceResultSex: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultSkinColor: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultThirdAttemptDate: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultThirdTimeOfService: {
+        type: mongoose_1.Schema.Types.String,
+    },
+    serviceResultWall: {
+        type: mongoose_1.Schema.Types.Number,
+    },
+    serviceResultWeight: {
+        type: mongoose_1.Schema.Types.Number,
+    },
+    serviceResultTimeOfService: {
+        type: mongoose_1.Schema.Types.String
     }
 }, {
     timestamps: true

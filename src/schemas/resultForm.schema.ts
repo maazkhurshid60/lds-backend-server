@@ -46,4 +46,5 @@ export const createResultFormSchema = z.object({
     serviceResultOtherFeatures: z.string().optional(),
     serviceResultDateOfMailing: z.string().optional(),
     serviceResultDateOfNotary: z.string().optional(),
+    serviceResultTimeOfService: z.string().optional(),
 });
