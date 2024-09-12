@@ -5,7 +5,8 @@ import {
     createNewServiceForm,
     updateServiceForm,
     deleteServiceForm,
-    getAllServiceForm
+    getAllServiceForm,
+    getDateRangeServiceForms
 } from "../controllers/serviceForm.controller";
 
 //Importing all the middlewares
@@ -24,5 +25,6 @@ router.route('/create').post(verifyJWT, checkRoles(['Admin', 'User']), validateD
 router.route('/update').patch(verifyJWT, checkRoles(['Admin', 'User']), updateServiceForm);
 router.route('/delete').delete(verifyJWT, checkRoles(['Admin','User']), deleteServiceForm);
 router.route('/all-service-forms').get(verifyJWT, checkRoles(['Admin', 'User']), getAllServiceForm);
+router.route('/all-service-forms-range').get(verifyJWT, checkRoles(['Admin', 'User']), getDateRangeServiceForms);
 
 export default router;
