@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSingleServiceForm = exports.getAllServiceForm = exports.deleteServiceForm = exports.updateServiceForm = exports.createNewServiceForm = void 0;
+exports.getDateRangeServiceForms = exports.getSingleServiceForm = exports.getAllServiceForm = exports.deleteServiceForm = exports.updateServiceForm = exports.createNewServiceForm = void 0;
 const AsyncHandler_1 = require("../utils/AsyncHandler");
 const ApiError_1 = require("../utils/ApiError");
 const http_status_codes_1 = require("http-status-codes");
@@ -185,6 +185,20 @@ const getSingleServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
         .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, singleServiceForm, "Service form is found"));
 });
 exports.getSingleServiceForm = getSingleServiceForm;
+const getDateRangeServiceForms = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
+    const { startDate, endDate } = req.body;
+    const startD = new Date(startDate);
+    const endD = new Date(endDate)
+        .setHours(23, 59, 59);
+    const allServiceForms = await serviceForm_model_1.ServiceForm.find({ "createdAt": { "$gte": new Date(startD), "$lte": new Date(endD) } }).sort({ dataField: -1 });
+    if (!allServiceForms) {
+        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
+    }
+    return res
+        .status(http_status_codes_1.StatusCodes.OK)
+        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, allServiceForms, "All service forms fetched successfully."));
+});
+exports.getDateRangeServiceForms = getDateRangeServiceForms;
 const getAllServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { jobNo, inputDate, clientId, serviceType, } = req.body;
     // if(jobNo !== 0 || !inputDate || !clientId || !serviceType) {
