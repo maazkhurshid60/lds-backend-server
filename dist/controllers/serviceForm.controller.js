@@ -229,7 +229,7 @@ const getAllServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     //     );
     // } 
     const allServiceForms = await serviceForm_model_1.ServiceForm.find({})
-        .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy']);
+        .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'serviceResultServerId']);
     if (!allServiceForms) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
     }

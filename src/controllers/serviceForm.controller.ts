@@ -12,10 +12,10 @@ import { ICustomRequest } from "../middlewares/auth.middleware";
 import { IUserDocument } from "../models/user.model";
 import { ApiResponse } from "../utils/ApiResponse";
 
-const createNewServiceForm = asyncHandler( async (req: Request, res: Response) => {
+const createNewServiceForm = asyncHandler(async (req: Request, res: Response) => {
 
     const user: IUserDocument = (req as ICustomRequest).user as IUserDocument;
-    
+
     const {
         jobNo,
         inputDate,
@@ -47,7 +47,7 @@ const createNewServiceForm = asyncHandler( async (req: Request, res: Response) =
 
     const alreadyServiceExists: IServiceFormDocument = await ServiceForm.findOne({ jobNo }) as IServiceFormDocument;
 
-    if(alreadyServiceExists) {
+    if (alreadyServiceExists) {
         throw new ApiError(StatusCodes.BAD_REQUEST, `Service Form with this Job no (${jobNo}) already exists`);
     }
 
@@ -59,11 +59,11 @@ const createNewServiceForm = asyncHandler( async (req: Request, res: Response) =
     const newServiceForm: IServiceFormDocument = await ServiceForm.create({
         jobNo,
         inputDate,
-        clientId: client?._id ,
-        serviceType: serviceTypeDoc?._id ,
+        clientId: client?._id,
+        serviceType: serviceTypeDoc?._id,
         caseNo,
         caption,
-        lTServiceType: ltServiceTypeDoc?._id ,
+        lTServiceType: ltServiceTypeDoc?._id,
         oLTIndexNo,
         oLTDescription,
         lTSFirstName,
@@ -76,36 +76,36 @@ const createNewServiceForm = asyncHandler( async (req: Request, res: Response) =
         lTSDescription,
         noOfAddLMailings,
         mailingAddresses,
-        standardServiceType: standardServiceTypeDoc?._id ,
+        standardServiceType: standardServiceTypeDoc?._id,
         oSSTIndexNo,
         oSSTDescription,
         sSDCourt,
         sSDDefendants,
         sSDPlaintiff,
         sSDCountry,
-        serviceFormCreatedBy: user._id ,
+        serviceFormCreatedBy: user._id,
         lastUpdatedBy: user._id,
 
     }) as IServiceFormDocument;
 
-    console.log("line passed 118",newServiceForm)
+    console.log("line passed 118", newServiceForm)
 
-    if(!newServiceForm) {
+    if (!newServiceForm) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating a new service form");
     }
 
     return res
-    .status(StatusCodes.CREATED)
-    .json(
-        new ApiResponse(StatusCodes.CREATED, newServiceForm, "New service form has been created")
-    );
+        .status(StatusCodes.CREATED)
+        .json(
+            new ApiResponse(StatusCodes.CREATED, newServiceForm, "New service form has been created")
+        );
 
 });
 
-const updateServiceForm = asyncHandler( async (req: Request, res: Response) => {
+const updateServiceForm = asyncHandler(async (req: Request, res: Response) => {
 
     const user: IUserDocument = (req as ICustomRequest).user as IUserDocument;
-    
+
     const {
         serviceFormId,
         jobNo,
@@ -178,14 +178,14 @@ const updateServiceForm = asyncHandler( async (req: Request, res: Response) => {
         serviceResultDateOfMailing,
         serviceResultDateOfNotary,
         serviceResultTimeOfService
-        
+
     }: IUpdateServiceForm = req.body;
 
-    if(!serviceFormId) {
+    if (!serviceFormId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Service form id is required.")
     }
 
-    if(!jobNo || !inputDate || !clientId) {
+    if (!jobNo || !inputDate || !clientId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Required fields are missing.")
     }
 
@@ -223,8 +223,8 @@ const updateServiceForm = asyncHandler( async (req: Request, res: Response) => {
                 sSDCourt,
                 sSDDefendants,
                 sSDPlaintiff,
-                sSDCountry,                
-                serviceFormCreatedBy: user._id ,
+                sSDCountry,
+                serviceFormCreatedBy: user._id,
                 lastUpdatedBy: user._id,
 
                 //Result Form Attributes
@@ -277,90 +277,90 @@ const updateServiceForm = asyncHandler( async (req: Request, res: Response) => {
         }
     ) as IServiceFormDocument;
 
-    if(!updatedServiceForm) {
+    if (!updatedServiceForm) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while updating service form.")
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, updatedServiceForm, "Service form has been updated")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, updatedServiceForm, "Service form has been updated")
+        );
 
 });
 
-const deleteServiceForm = asyncHandler( async (req: Request, res: Response) => {
+const deleteServiceForm = asyncHandler(async (req: Request, res: Response) => {
 
-    const { serviceFormId } : { serviceFormId: string } = req.body;
+    const { serviceFormId }: { serviceFormId: string } = req.body;
 
-    if(!serviceFormId) {
+    if (!serviceFormId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Service form id is required");
     }
 
-    await ServiceForm.findByIdAndDelete( serviceFormId );
+    await ServiceForm.findByIdAndDelete(serviceFormId);
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, {}, "Service form has been deleted successfully.")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, {}, "Service form has been deleted successfully.")
+        );
 
 });
 
-const getSingleServiceForm = asyncHandler( async (req: Request, res: Response) => {
+const getSingleServiceForm = asyncHandler(async (req: Request, res: Response) => {
 
-    const { serviceFormId } : { serviceFormId: string } = req.body;
+    const { serviceFormId }: { serviceFormId: string } = req.body;
 
-    if(!serviceFormId) {
+    if (!serviceFormId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Service form id is required");
     }
 
-    const singleServiceForm: IServiceFormDocument = await ServiceForm.findById( serviceFormId ) as IServiceFormDocument;
+    const singleServiceForm: IServiceFormDocument = await ServiceForm.findById(serviceFormId) as IServiceFormDocument;
 
-    if(!singleServiceForm) {
+    if (!singleServiceForm) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Service form not found");
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, singleServiceForm, "Service form is found")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, singleServiceForm, "Service form is found")
+        );
 
 });
 
-const getDateRangeServiceForms = asyncHandler( async (req: Request, res: Response) => {
+const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response) => {
 
-    const { startDate, endDate } : { startDate: string, endDate: string } = req.body;
+    const { startDate, endDate }: { startDate: string, endDate: string } = req.body;
 
     const startD = new Date(startDate);
     const endD = new Date(endDate)
-                     .setHours(23, 59, 59);
-    
-    const allServiceForms: IServiceFormDocument[] = await ServiceForm.find({"createdAt": {"$gte": new Date(startD), "$lte": new Date(endD)}}).sort({dataField: -1}) as IServiceFormDocument[];
+        .setHours(23, 59, 59);
 
-    if(!allServiceForms) {
+    const allServiceForms: IServiceFormDocument[] = await ServiceForm.find({ "createdAt": { "$gte": new Date(startD), "$lte": new Date(endD) } }).sort({ dataField: -1 }) as IServiceFormDocument[];
+
+    if (!allServiceForms) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, allServiceForms, "All service forms fetched successfully.")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, allServiceForms, "All service forms fetched successfully.")
+        );
 
 
 });
 
 
-const getAllServiceForm = asyncHandler( async (req: Request, res: Response) => {
+const getAllServiceForm = asyncHandler(async (req: Request, res: Response) => {
 
-    const { 
+    const {
         jobNo,
         inputDate,
         clientId,
-        serviceType, 
-    } : {
+        serviceType,
+    }: {
         jobNo: number,
         inputDate: string,
         clientId: string,
@@ -390,28 +390,28 @@ const getAllServiceForm = asyncHandler( async (req: Request, res: Response) => {
     //     if(!allServiceForms) {
     //         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
     //     }
-    
+
     //     return res
     //     .status(StatusCodes.OK)
     //     .json(
     //         new ApiResponse(StatusCodes.OK, allServiceForms, "All service forms fetched successfully (Searched).")
     //     );
-    
+
 
     // } 
 
     const allServiceForms: IServiceFormDocument[] = await ServiceForm.find({})
-    .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy']) as IServiceFormDocument[];
+        .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'serviceResultServerId']) as IServiceFormDocument[];
 
-    if(!allServiceForms) {
+    if (!allServiceForms) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, allServiceForms, "All service forms fetched successfully.")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, allServiceForms, "All service forms fetched successfully.")
+        );
 
 });
 
