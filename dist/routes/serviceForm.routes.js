@@ -16,5 +16,5 @@ router.route('/create').post(auth_middleware_1.verifyJWT, (0, roleChecker_middle
 router.route('/update').patch(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin', 'User']), serviceForm_controller_1.updateServiceForm);
 router.route('/delete').delete(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin', 'User']), serviceForm_controller_1.deleteServiceForm);
 router.route('/all-service-forms').get(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin', 'User']), serviceForm_controller_1.getAllServiceForm);
-router.route('/all-service-forms-range').get(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin', 'User']), serviceForm_controller_1.getDateRangeServiceForms);
+router.route('/all-service-forms-range').post(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin', 'User']), serviceForm_controller_1.getDateRangeServiceForms);
 exports.default = router;
