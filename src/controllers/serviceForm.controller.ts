@@ -337,7 +337,7 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
     const endD = new Date(endDate)
         .setHours(23, 59, 59);
 
-    const allServiceForms: IServiceFormDocument[] = await ServiceForm.find({ "createdAt": { "$gte": new Date(startD), "$lte": new Date(endD) } }).sort({ dataField: -1 }) as IServiceFormDocument[];
+    const allServiceForms: IServiceFormDocument[] = await ServiceForm.find({ "createdAt": { "$gte": new Date(startD), "$lte": new Date(endD) } }).sort({ dataField: -1 }).populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'serviceResultServerId']) as IServiceFormDocument[];
 
     if (!allServiceForms) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
