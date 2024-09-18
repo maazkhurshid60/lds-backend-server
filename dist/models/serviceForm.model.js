@@ -273,6 +273,12 @@ const serviceFormSchema = new mongoose_1.Schema({
     },
     serviceResultTimeOfService: {
         type: mongoose_1.Schema.Types.String
+    },
+    substituteDeliveredTo: {
+        type: mongoose_1.Schema.Types.String
+    },
+    corporateRecipient: {
+        type: mongoose_1.Schema.Types.String
     }
 }, {
     timestamps: true

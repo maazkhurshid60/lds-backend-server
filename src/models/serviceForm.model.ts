@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export interface IServiceFormDocument extends mongoose.Document {
     jobNo: number,
@@ -28,8 +28,8 @@ export interface IServiceFormDocument extends mongoose.Document {
     sSDPlaintiff: string,
     sSDCountry: string,
     serviceFormCreatedBy: any,
-    lastUpdatedBy:any,
-    
+    lastUpdatedBy: any,
+
     //Result Form Attributes
     queryInformationLTFullName: string,
     queryInformationLTIndexNo: number,
@@ -73,11 +73,13 @@ export interface IServiceFormDocument extends mongoose.Document {
     serviceResultDateOfMailing: string,
     serviceResultDateOfNotary: string,
     serviceResultTimeOfService: string,
+    substituteDeliveredTo: string,
+    corporateRecipient: string,
 }
 
 const serviceFormSchema = new Schema(
     {
-        jobNo : {
+        jobNo: {
             type: Number,
             required: [true, "Job no is required"],
         },
@@ -191,7 +193,7 @@ const serviceFormSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User"
         },
-        
+
         //Result Form Attributes
         queryInformationLTFullName: {
             type: Schema.Types.String,
@@ -326,10 +328,16 @@ const serviceFormSchema = new Schema(
         },
         serviceResultTimeOfService: {
             type: Schema.Types.String
+        },
+        substituteDeliveredTo: {
+            type: Schema.Types.String
+        },
+        corporateRecipient: {
+            type: Schema.Types.String
         }
-        
+
     },
-    
+
     {
         timestamps: true
     }

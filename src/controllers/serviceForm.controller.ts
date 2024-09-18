@@ -329,27 +329,118 @@ const getSingleServiceForm = asyncHandler(async (req: Request, res: Response) =>
 
 });
 
+// const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response) => {
+
+//     const { startDate, endDate ,jobNo}: { startDate: string, endDate: string } = req.body;
+
+//     const startD = new Date(startDate);
+//     const endD = new Date(endDate)
+//         .setHours(23, 59, 59);
+
+//     const allServiceForms: IServiceFormDocument[] = await ServiceForm.find({ "createdAt": { "$gte": new Date(startD), "$lte": new Date(endD) } }).sort({ dataField: -1 }).populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'serviceResultServerId']) as IServiceFormDocument[];
+
+//     if (!allServiceForms) {
+//         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
+//     }
+
+//     return res
+//         .status(StatusCodes.OK)
+//         .json(
+//             new ApiResponse(StatusCodes.OK, allServiceForms, "All service forms fetched successfully.")
+//         );
+
+
+// });
+
 const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response) => {
+    const { startDate, endDate, jobNo, clientId, caseNo, inputDate, serviceType, lTSFirstName, lTSBusinessName,
+        lTSAddress,
+        lTSApt,
+        lTSCity,
+        lTSZip,
+        oLTDescription } = req.body;
 
-    const { startDate, endDate }: { startDate: string, endDate: string } = req.body;
+    // Build query object
+    let query: any = {};
 
-    const startD = new Date(startDate);
-    const endD = new Date(endDate)
-        .setHours(23, 59, 59);
+    if (startDate || endDate) {
+        const startD = startDate ? new Date(startDate) : new Date(0); // Default to start of time if no startDate
+        const endD = endDate ? new Date(endDate).setHours(23, 59, 59) : new Date(); // Default to end of time if no endDate
 
-    const allServiceForms: IServiceFormDocument[] = await ServiceForm.find({ "createdAt": { "$gte": new Date(startD), "$lte": new Date(endD) } }).sort({ dataField: -1 }).populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'serviceResultServerId']) as IServiceFormDocument[];
-
-    if (!allServiceForms) {
-        throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all service forms");
+        query.createdAt = {
+            $gte: new Date(startD),
+            $lte: new Date(endD)
+        };
     }
 
-    return res
-        .status(StatusCodes.OK)
-        .json(
-            new ApiResponse(StatusCodes.OK, allServiceForms, "All service forms fetched successfully.")
-        );
+    if (jobNo) {
+        query.jobNo = jobNo; // Adjust field name according to your schema
+    }
+
+    if (clientId) {
+        query.clientId = clientId; // Adjust field name according to your schema
+    }
+
+    if (caseNo) {
+        query.caseNo = caseNo; // Adjust field name according to your schema
+    }
+
+    if (inputDate) {
+        query.inputDate = new Date(inputDate); // Assuming inputDate is a single date; adjust if it's a range
+    }
+
+    if (serviceType) {
+        query.serviceType = serviceType; // Adjust field name according to your schema
+    }
+    if (lTSFirstName) {
+        query.lTSFirstName = lTSFirstName;
+    }
+    if (lTSBusinessName) {
+        query.lTSBusinessName = lTSBusinessName;
+    }
+    if (lTSAddress) {
+        query.lTSAddress = lTSAddress;
+    }
+    if (lTSApt) {
+        query.lTSApt = lTSApt;
+    }
+    if (lTSCity) {
+        query.lTSCity = lTSCity;
+    }
+    if (lTSZip) {
+        query.lTSZip = lTSZip;
+    }
+    if (oLTDescription) {
+        query.oLTDescription = oLTDescription;
+    }
 
 
+
+
+
+
+
+
+    try {
+        // Fetch data based on the query
+        const allServiceForms: any[] = await ServiceForm.find(query)
+            .sort({ dataField: -1 })
+            .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'serviceResultServerId'])
+            .exec();
+
+        // Check if data was fetched
+        if (!allServiceForms) {
+            throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching service forms");
+        }
+
+        return res
+            .status(StatusCodes.OK)
+            .json(new ApiResponse(StatusCodes.OK, allServiceForms, "Service forms fetched successfully."));
+    } catch (error) {
+        // Handle errors
+        console.error(error);
+        throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "An error occurred while fetching service forms.");
+    }
 });
 
 
