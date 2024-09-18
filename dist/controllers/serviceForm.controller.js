@@ -201,7 +201,7 @@ exports.getSingleServiceForm = getSingleServiceForm;
 //         );
 // });
 const getDateRangeServiceForms = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
-    const { startDate, endDate, jobNo, clientId, caseNo, inputDate, serviceType, lTSFirstName, lTSBusinessName, lTSAddress, lTSApt, lTSCity, lTSZip, oLTDescription } = req.body;
+    const { startDate, endDate, jobNo, clientId, caseNo, serviceType, lTSFirstName, lTSBusinessName, lTSAddress, lTSApt, lTSCity, lTSZip, oLTDescription } = req.body;
     // Build query object
     let query = {};
     if (startDate || endDate) {
@@ -213,19 +213,16 @@ const getDateRangeServiceForms = (0, AsyncHandler_1.asyncHandler)(async (req, re
         };
     }
     if (jobNo) {
-        query.jobNo = jobNo; // Adjust field name according to your schema
+        query.jobNo = jobNo;
     }
     if (clientId) {
-        query.clientId = clientId; // Adjust field name according to your schema
+        query.clientId = clientId;
     }
     if (caseNo) {
-        query.caseNo = caseNo; // Adjust field name according to your schema
-    }
-    if (inputDate) {
-        query.inputDate = new Date(inputDate); // Assuming inputDate is a single date; adjust if it's a range
+        query.caseNo = caseNo;
     }
     if (serviceType) {
-        query.serviceType = serviceType; // Adjust field name according to your schema
+        query.serviceType = serviceType;
     }
     if (lTSFirstName) {
         query.lTSFirstName = lTSFirstName;
@@ -255,8 +252,10 @@ const getDateRangeServiceForms = (0, AsyncHandler_1.asyncHandler)(async (req, re
             .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'serviceResultServerId'])
             .exec();
         // Check if data was fetched
-        if (!allServiceForms) {
-            throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching service forms");
+        if (!allServiceForms || allServiceForms.length === 0) {
+            return res
+                .status(http_status_codes_1.StatusCodes.NOT_FOUND)
+                .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.NOT_FOUND, [], "No service forms found matching the criteria."));
         }
         return res
             .status(http_status_codes_1.StatusCodes.OK)
