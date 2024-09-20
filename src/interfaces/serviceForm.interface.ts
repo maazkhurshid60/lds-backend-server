@@ -72,6 +72,7 @@ export interface ICreateServiceForm {
     serviceResultTimeOfService?: string | null | undefined,
     substituteDeliveredTo?: string | null | undefined,
     corporateRecipient?: string | null | undefined,
+    timeTrip?: any
 
 }
 

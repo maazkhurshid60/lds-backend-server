@@ -64,7 +64,7 @@ const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const user = req.user;
     const { serviceFormId, jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, oLTIndexNo, oLTDescription, lTSFirstName, lTSBusinessName, lTSZip, lTSState, lTSCity, lTSApt, lTSAddress, lTSDescription, noOfAddLMailings, mailingAddresses, standardServiceType, oSSTIndexNo, oSSTDescription, sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry, 
     //Result Form Attributes
-    queryInformationLTFullName, queryInformationLTIndexNo, queryInformationLTAddress, queryInformationLTBusinessName, queryInformationLTInputDate, queryInformationStandardServeTo, queryInformationStandardDefendants, serviceResultInputDate, serviceResultScvType, serviceResultClientId, serviceResultJobNo, serviceResultServerId, serviceResultResults, serviceResultDateOfService, serviceResultFirstTimeOfService, serviceResultFirstAttemptDate, serviceResultSecondTimeOfService, serviceResultSecondAttemptDate, serviceResultThirdTimeOfService, serviceResultThirdAttemptDate, serviceResultlTServed, serviceResultlTNotServed, serviceResultSubstitudeDeliveredTo, serviceResultRecipientTitle, serviceResultRecipient, serviceResultDoor, serviceResultDoorLocks, serviceResultEntry, serviceResultWall, serviceResultFloor, serviceResultLock, serviceResultOtherDescription, serviceResultSex, serviceResultSkinColor, serviceResultHair, serviceResultAge, serviceResultHeight, serviceResultWeight, serviceResultOtherFeatures, serviceResultDateOfMailing, serviceResultDateOfNotary, serviceResultTimeOfService } = req.body;
+    queryInformationLTFullName, queryInformationLTIndexNo, queryInformationLTAddress, queryInformationLTBusinessName, queryInformationLTInputDate, queryInformationStandardServeTo, queryInformationStandardDefendants, serviceResultInputDate, serviceResultScvType, serviceResultClientId, serviceResultJobNo, serviceResultServerId, serviceResultResults, serviceResultDateOfService, serviceResultFirstTimeOfService, serviceResultFirstAttemptDate, serviceResultSecondTimeOfService, serviceResultSecondAttemptDate, serviceResultThirdTimeOfService, serviceResultThirdAttemptDate, serviceResultlTServed, serviceResultlTNotServed, serviceResultSubstitudeDeliveredTo, serviceResultRecipientTitle, serviceResultRecipient, serviceResultDoor, serviceResultDoorLocks, serviceResultEntry, serviceResultWall, serviceResultFloor, serviceResultLock, serviceResultOtherDescription, serviceResultSex, serviceResultSkinColor, serviceResultHair, serviceResultAge, serviceResultHeight, serviceResultWeight, serviceResultOtherFeatures, serviceResultDateOfMailing, serviceResultDateOfNotary, serviceResultTimeOfService, timeTrip, } = req.body;
     if (!serviceFormId) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Service form id is required.");
     }
@@ -147,7 +147,8 @@ const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
             serviceResultOtherFeatures,
             serviceResultDateOfMailing,
             serviceResultDateOfNotary,
-            serviceResultTimeOfService
+            serviceResultTimeOfService,
+            timeTrip
         }
     }, {
         new: true
@@ -201,7 +202,7 @@ exports.getSingleServiceForm = getSingleServiceForm;
 //         );
 // });
 const getDateRangeServiceForms = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
-    const { startDate, endDate, jobNo, clientId, caseNo, serviceType, lTSFirstName, lTSBusinessName, lTSAddress, lTSApt, lTSCity, lTSZip, oLTDescription } = req.body;
+    const { startDate, endDate, jobNo, clientId, caseNo, serviceType, lTSFirstName, lTSBusinessName, lTSAddress, lTSApt, lTSCity, lTSZip, oLTDescription, serviceResultDateOfService, serviceResultFirstAttemptDate, serviceResultSecondAttemptDate, serviceResultThirdAttemptDate, serviceResultDateOfMailing, serviceResultRecipientTitle, substituteDeliveredTo, corporateRecipient, sSDDefendants, sSDPlaintiff, oSSTDescription, oSSTIndexNo, sSDCourt } = req.body;
     // Build query object
     let query = {};
     if (startDate || endDate) {
@@ -244,6 +245,45 @@ const getDateRangeServiceForms = (0, AsyncHandler_1.asyncHandler)(async (req, re
     }
     if (oLTDescription) {
         query.oLTDescription = oLTDescription;
+    }
+    if (serviceResultDateOfService) {
+        query.serviceResultDateOfService = serviceResultDateOfService;
+    }
+    if (serviceResultFirstAttemptDate) {
+        query.serviceResultFirstAttemptDate = serviceResultFirstAttemptDate;
+    }
+    if (serviceResultSecondAttemptDate) {
+        query.serviceResultSecondAttemptDate = serviceResultSecondAttemptDate;
+    }
+    if (serviceResultThirdAttemptDate) {
+        query.serviceResultThirdAttemptDate = serviceResultThirdAttemptDate;
+    }
+    if (serviceResultDateOfMailing) {
+        query.serviceResultDateOfMailing = serviceResultDateOfMailing;
+    }
+    if (serviceResultRecipientTitle) {
+        query.serviceResultRecipientTitle = serviceResultRecipientTitle;
+    }
+    if (substituteDeliveredTo) {
+        query.substituteDeliveredTo = substituteDeliveredTo;
+    }
+    if (corporateRecipient) {
+        query.corporateRecipient = corporateRecipient;
+    }
+    if (sSDDefendants) {
+        query.sSDDefendants = sSDDefendants;
+    }
+    if (sSDPlaintiff) {
+        query.sSDPlaintiff = sSDPlaintiff;
+    }
+    if (oSSTDescription) {
+        query.oSSTDescription = oSSTDescription;
+    }
+    if (oSSTIndexNo) {
+        query.oSSTIndexNo = oSSTIndexNo;
+    }
+    if (sSDCourt) {
+        query.sSDCourt = sSDCourt;
     }
     try {
         // Fetch data based on the query

@@ -200,6 +200,9 @@ const serviceFormSchema = new mongoose_1.Schema({
     serviceResultFirstTimeOfService: {
         type: mongoose_1.Schema.Types.String,
     },
+    timeTrip: {
+        type: mongoose_1.Schema.Types.Mixed,
+    },
     serviceResultFloor: {
         type: mongoose_1.Schema.Types.Number,
     },

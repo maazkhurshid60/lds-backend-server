@@ -177,7 +177,8 @@ const updateServiceForm = asyncHandler(async (req: Request, res: Response) => {
         serviceResultOtherFeatures,
         serviceResultDateOfMailing,
         serviceResultDateOfNotary,
-        serviceResultTimeOfService
+        serviceResultTimeOfService,
+        timeTrip,
 
     }: IUpdateServiceForm = req.body;
 
@@ -269,7 +270,8 @@ const updateServiceForm = asyncHandler(async (req: Request, res: Response) => {
                 serviceResultOtherFeatures,
                 serviceResultDateOfMailing,
                 serviceResultDateOfNotary,
-                serviceResultTimeOfService
+                serviceResultTimeOfService,
+                timeTrip
             }
         },
         {
@@ -358,7 +360,19 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
         lTSApt,
         lTSCity,
         lTSZip,
-        oLTDescription } = req.body;
+        oLTDescription,
+        serviceResultDateOfService,
+        serviceResultFirstAttemptDate,
+        serviceResultSecondAttemptDate,
+        serviceResultThirdAttemptDate,
+        serviceResultDateOfMailing,
+        serviceResultRecipientTitle,
+        substituteDeliveredTo,
+        corporateRecipient,
+        sSDDefendants,
+        sSDPlaintiff,
+        oSSTDescription, oSSTIndexNo,
+        sSDCourt } = req.body;
 
     // Build query object
     let query: any = {};
@@ -410,6 +424,49 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
     if (oLTDescription) {
         query.oLTDescription = oLTDescription;
     }
+    if (serviceResultDateOfService) {
+        query.serviceResultDateOfService = serviceResultDateOfService;
+    }
+
+    if (serviceResultFirstAttemptDate) {
+        query.serviceResultFirstAttemptDate = serviceResultFirstAttemptDate;
+    }
+    if (serviceResultSecondAttemptDate) {
+        query.serviceResultSecondAttemptDate = serviceResultSecondAttemptDate;
+    }
+    if (serviceResultThirdAttemptDate) {
+        query.serviceResultThirdAttemptDate = serviceResultThirdAttemptDate;
+    }
+
+    if (serviceResultDateOfMailing) {
+        query.serviceResultDateOfMailing = serviceResultDateOfMailing;
+    }
+    if (serviceResultRecipientTitle) {
+        query.serviceResultRecipientTitle = serviceResultRecipientTitle;
+    }
+    if (substituteDeliveredTo) {
+        query.substituteDeliveredTo = substituteDeliveredTo;
+    }
+    if (corporateRecipient) {
+        query.corporateRecipient = corporateRecipient;
+    }
+    if (sSDDefendants) {
+        query.sSDDefendants = sSDDefendants;
+    }
+    if (sSDPlaintiff) {
+        query.sSDPlaintiff = sSDPlaintiff;
+    }
+    if (oSSTDescription) {
+        query.oSSTDescription = oSSTDescription;
+    }
+
+    if (oSSTIndexNo) {
+        query.oSSTIndexNo = oSSTIndexNo;
+    }
+    if (sSDCourt) {
+        query.sSDCourt = sSDCourt;
+    }
+
     try {
         // Fetch data based on the query
         const allServiceForms: any[] = await ServiceForm.find(query)
