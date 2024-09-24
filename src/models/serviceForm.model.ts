@@ -5,7 +5,7 @@ export interface IServiceFormDocument extends mongoose.Document {
     inputDate: string,
     clientId: any,
     serviceType: any,
-    caseNo: number,
+    caseNo: any,
     caption: string,
     lTServiceType: any,
     oLTIndexNo: any,

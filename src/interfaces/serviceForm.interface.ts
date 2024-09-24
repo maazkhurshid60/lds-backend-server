@@ -4,7 +4,7 @@ export interface ICreateServiceForm {
     inputDate: string,
     clientId: string,
     serviceType?: string,
-    caseNo: number,
+    caseNo: any,
     caption?: string,
     lTServiceType?: string,
     oLTIndexNo?: any,
