@@ -291,6 +291,7 @@ const getDateRangeServiceForms = (0, AsyncHandler_1.asyncHandler)(async (req, re
     if (sSDCourt) {
         query.sSDCourt = sSDCourt;
     }
+    console.log("dsakhjhkjsadf", oLTIndexNo);
     try {
         // Fetch data based on the query
         const allServiceForms = await serviceForm_model_1.ServiceForm.find(query)

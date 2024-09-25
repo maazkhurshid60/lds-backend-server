@@ -44,7 +44,7 @@ const serviceFormSchema = new mongoose_1.Schema({
         ref: "ServiceType",
     },
     caseNo: {
-        type: Number,
+        type: mongoose_1.default.Schema.Types.Mixed,
     },
     caption: {
         type: String,
