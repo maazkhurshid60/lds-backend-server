@@ -32,6 +32,7 @@ const createNewClient = asyncHandler(async (req: Request, res: Response) => {
             city,
             state,
             phone,
+
         ].some((field: string) => field?.trim() === "")
     ) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
@@ -53,7 +54,7 @@ const createNewClient = asyncHandler(async (req: Request, res: Response) => {
         phone,
         fax,
         apt,
-        // isActive,
+        isActive,
     }) as IClientDocument;
 
     if (!newCreatedClient) {
