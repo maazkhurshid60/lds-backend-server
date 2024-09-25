@@ -286,7 +286,7 @@ const updateServiceForm = asyncHandler(async (req: Request, res: Response) => {
     return res
         .status(StatusCodes.OK)
         .json(
-            new ApiResponse(StatusCodes.OK, updatedServiceForm, "Service form has been updated")
+            new ApiResponse(StatusCodes.OK, updatedServiceForm, "Form has been updated")
         );
 
 });

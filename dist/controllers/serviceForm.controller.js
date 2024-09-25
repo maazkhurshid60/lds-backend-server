@@ -158,7 +158,7 @@ const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     }
     return res
         .status(http_status_codes_1.StatusCodes.OK)
-        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, updatedServiceForm, "Service form has been updated"));
+        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, updatedServiceForm, "Form has been updated"));
 });
 exports.updateServiceForm = updateServiceForm;
 const deleteServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
