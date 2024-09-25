@@ -12,7 +12,7 @@ const role_schema_1 = require("../schemas/role.schema");
 //Defining Router Object
 const router = (0, express_1.Router)();
 //Authenticated + Authorized Routes
-router.route('/create').post(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin']), (0, schemaValidation_middleware_1.validateData)(role_schema_1.createRoleSchema), role_controller_1.createRole);
+router.route('/create').post((0, schemaValidation_middleware_1.validateData)(role_schema_1.createRoleSchema), role_controller_1.createRole);
 router.route('/update').patch(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin']), (0, schemaValidation_middleware_1.validateData)(role_schema_1.createRoleSchema), role_controller_1.updateRole);
 router.route('/delete').delete(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin']), role_controller_1.deleteRole);
 router.route('/search').get(auth_middleware_1.verifyJWT, (0, roleChecker_middleware_1.checkRoles)(['Admin', 'User']), role_controller_1.searchRole);

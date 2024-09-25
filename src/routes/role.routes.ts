@@ -21,7 +21,7 @@ import { createRoleSchema } from "../schemas/role.schema";
 const router = Router();
 
 //Authenticated + Authorized Routes
-router.route('/create').post(verifyJWT, checkRoles(['Admin']), validateData(createRoleSchema), createRole);
+router.route('/create').post(validateData(createRoleSchema), createRole);
 router.route('/update').patch(verifyJWT, checkRoles(['Admin']), validateData(createRoleSchema), updateRole);
 router.route('/delete').delete(verifyJWT, checkRoles(['Admin']), deleteRole);
 router.route('/search').get(verifyJWT, checkRoles(['Admin', 'User']), searchRole);
