@@ -8,7 +8,7 @@ export interface ICreateClient {
     address2: string,
     city: string,
     state: string,
-    zip: number,
+    zip: string,
     phone: string,
     fax: string,
     apt: string,

@@ -8,7 +8,7 @@ export const createClientSchema = z.object({
     address2: z.string(),
     city: z.string(),
     state: z.string(),
-    zip: z.number(),
+    zip: z.string(),
     phone: z.string(),
     fax: z.string(),
     apt: z.string(),

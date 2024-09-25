@@ -58,7 +58,7 @@ const serverSchema = new mongoose_1.Schema({
         type: String
     },
     zip: {
-        type: Number,
+        type: String,
     },
     phone: {
         type: String,

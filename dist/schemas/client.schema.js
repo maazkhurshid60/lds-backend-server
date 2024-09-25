@@ -10,7 +10,7 @@ exports.createClientSchema = zod_1.z.object({
     address2: zod_1.z.string(),
     city: zod_1.z.string(),
     state: zod_1.z.string(),
-    zip: zod_1.z.number(),
+    zip: zod_1.z.string(),
     phone: zod_1.z.string(),
     fax: zod_1.z.string(),
     apt: zod_1.z.string(),

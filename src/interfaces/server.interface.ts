@@ -9,7 +9,7 @@ export interface ICreateServer {
     address2: string,
     country: string,
     state: string,
-    zip: number,
+    zip: string,
     phone: string,
     fax: string,
     apt: string,

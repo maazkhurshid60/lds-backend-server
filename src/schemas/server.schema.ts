@@ -10,7 +10,7 @@ export const createServerSchema = z.object({
     address2: z.string().nullable(),
     country: z.string().min(2),
     state: z.string().min(2),
-    zip: z.number().min(2),
+    zip: z.string(),
     phone: z.string().min(7),
     fax: z.string().min(2),
     apt: z.string().min(2),

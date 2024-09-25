@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export interface IClientDocument extends mongoose.Document {
     code: string,
@@ -8,7 +8,7 @@ export interface IClientDocument extends mongoose.Document {
     address2: string,
     city: string,
     state: string,
-    zip: number,
+    zip: string,
     phone: string,
     fax: string,
     apt: string,
@@ -17,7 +17,7 @@ export interface IClientDocument extends mongoose.Document {
 
 const clientSchema: Schema<IClientDocument> = new Schema(
     {
-        code : {
+        code: {
             type: String,
             required: [true, "Server code is required"],
             trim: true,
@@ -43,7 +43,7 @@ const clientSchema: Schema<IClientDocument> = new Schema(
             type: String
         },
         zip: {
-            type: Number,
+            type: String,
         },
         phone: {
             type: String,

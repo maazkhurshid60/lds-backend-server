@@ -12,7 +12,7 @@ exports.createServerSchema = zod_1.z.object({
     address2: zod_1.z.string().nullable(),
     country: zod_1.z.string().min(2),
     state: zod_1.z.string().min(2),
-    zip: zod_1.z.number().min(2),
+    zip: zod_1.z.string(),
     phone: zod_1.z.string().min(7),
     fax: zod_1.z.string().min(2),
     apt: zod_1.z.string().min(2),
