@@ -202,7 +202,7 @@ exports.getSingleServiceForm = getSingleServiceForm;
 //         );
 // });
 const getDateRangeServiceForms = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
-    const { startDate, endDate, jobNo, clientId, caseNo, serviceType, lTSFirstName, lTSBusinessName, lTSAddress, lTSApt, lTSCity, lTSZip, oLTDescription, serviceResultDateOfService, serviceResultFirstAttemptDate, serviceResultSecondAttemptDate, serviceResultThirdAttemptDate, serviceResultDateOfMailing, serviceResultRecipientTitle, substituteDeliveredTo, corporateRecipient, sSDDefendants, sSDPlaintiff, oSSTDescription, oSSTIndexNo, sSDCourt } = req.body;
+    const { startDate, endDate, jobNo, clientId, caseNo, serviceType, lTSFirstName, lTSBusinessName, lTSAddress, lTSApt, lTSCity, lTSZip, oLTDescription, lTSDescription, serviceResultDateOfService, serviceResultFirstAttemptDate, serviceResultSecondAttemptDate, serviceResultThirdAttemptDate, serviceResultDateOfMailing, serviceResultRecipientTitle, substituteDeliveredTo, corporateRecipient, sSDDefendants, sSDPlaintiff, oSSTDescription, oSSTIndexNo, sSDCourt } = req.body;
     // Build query object
     let query = {};
     if (startDate || endDate) {
@@ -245,6 +245,9 @@ const getDateRangeServiceForms = (0, AsyncHandler_1.asyncHandler)(async (req, re
     }
     if (oLTDescription) {
         query.oLTDescription = oLTDescription;
+    }
+    if (lTSDescription) {
+        query.lTSDescription = lTSDescription;
     }
     if (serviceResultDateOfService) {
         query.serviceResultDateOfService = serviceResultDateOfService;

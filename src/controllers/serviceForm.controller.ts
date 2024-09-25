@@ -361,6 +361,7 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
         lTSCity,
         lTSZip,
         oLTDescription,
+        lTSDescription,
         serviceResultDateOfService,
         serviceResultFirstAttemptDate,
         serviceResultSecondAttemptDate,
@@ -424,6 +425,10 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
     if (oLTDescription) {
         query.oLTDescription = oLTDescription;
     }
+    if (lTSDescription) {
+        query.lTSDescription = lTSDescription;
+    }
+
     if (serviceResultDateOfService) {
         query.serviceResultDateOfService = serviceResultDateOfService;
     }
