@@ -20,7 +20,7 @@ exports.createServiceFormSchema = zod_1.z.object({
     inputDate: zod_1.z.string().optional(),
     clientId: zod_1.z.any().optional(),
     serviceType: zod_1.z.any().optional(),
-    caseNo: zod_1.z.number().optional(),
+    caseNo: zod_1.z.any().optional(),
     caption: zod_1.z.string().optional(),
     lTServiceType: zod_1.z.any().optional(),
     oLTIndexNo: zod_1.z.any().optional(),
