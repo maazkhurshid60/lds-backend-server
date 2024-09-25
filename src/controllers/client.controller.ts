@@ -7,9 +7,9 @@ import { Client, IClientDocument } from "../models/client.model";
 import { ApiResponse } from "../utils/ApiResponse";
 import { IPagination } from "../interfaces/pagination.interface";
 
-const createNewClient = asyncHandler( async (req: Request, res: Response) => {
+const createNewClient = asyncHandler(async (req: Request, res: Response) => {
 
-    const { 
+    const {
         code,
         fullName,
         mi,
@@ -22,9 +22,9 @@ const createNewClient = asyncHandler( async (req: Request, res: Response) => {
         fax,
         apt,
         isActive,
-     } : ICreateClient = req.body;
+    }: ICreateClient = req.body;
 
-     if(
+    if (
         [
             code,
             fullName,
@@ -32,17 +32,16 @@ const createNewClient = asyncHandler( async (req: Request, res: Response) => {
             city,
             state,
             phone,
-            apt,    
         ].some((field: string) => field?.trim() === "")
-     ) {
+    ) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-     }
+    }
 
-     if(!zip || isActive === undefined || typeof isActive !== "boolean") {
+    if (!zip || isActive === undefined || typeof isActive !== "boolean") {
         throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-     }
+    }
 
-     const newCreatedClient: IClientDocument = await Client.create({
+    const newCreatedClient: IClientDocument = await Client.create({
         code,
         fullName,
         mi,
@@ -55,23 +54,23 @@ const createNewClient = asyncHandler( async (req: Request, res: Response) => {
         fax,
         apt,
         isActive,
-     }) as IClientDocument;
+    }) as IClientDocument;
 
-     if(!newCreatedClient) {
+    if (!newCreatedClient) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating new client");
-     }
+    }
 
-     return res
-     .status(StatusCodes.CREATED)
-     .json(
-        new ApiResponse(StatusCodes.CREATED, newCreatedClient, "New client has been created.")
-     );
-    
+    return res
+        .status(StatusCodes.CREATED)
+        .json(
+            new ApiResponse(StatusCodes.CREATED, newCreatedClient, "New client has been created.")
+        );
+
 });
 
-const updateClient = asyncHandler( async (req: Request, res: Response) => {
+const updateClient = asyncHandler(async (req: Request, res: Response) => {
 
-    const { 
+    const {
         clientId,
         code,
         fullName,
@@ -85,9 +84,9 @@ const updateClient = asyncHandler( async (req: Request, res: Response) => {
         fax,
         apt,
         isActive,
-     } : IUpdateClient = req.body;
+    }: IUpdateClient = req.body;
 
-     if(
+    if (
         [
             clientId,
             code,
@@ -96,17 +95,17 @@ const updateClient = asyncHandler( async (req: Request, res: Response) => {
             city,
             state,
             phone,
-            apt,    
+            apt,
         ].some((field: string) => field?.trim() === "")
-     ) {
+    ) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-     }
+    }
 
-     if(!zip || isActive === undefined || typeof isActive !== "boolean") {
+    if (!zip || isActive === undefined || typeof isActive !== "boolean") {
         throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-     }
+    }
 
-     const updatedClient: IClientDocument = await Client.findByIdAndUpdate(
+    const updatedClient: IClientDocument = await Client.findByIdAndUpdate(
         clientId,
         {
             $set: {
@@ -127,39 +126,39 @@ const updateClient = asyncHandler( async (req: Request, res: Response) => {
         {
             new: true,
         }
-     ) as IClientDocument;
+    ) as IClientDocument;
 
-     if(!updatedClient) {
+    if (!updatedClient) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while updating Client");
-     }
+    }
 
-     return res
-     .status(StatusCodes.OK)
-     .json(
-        new ApiResponse(StatusCodes.OK, updatedClient, "Client has been updated")
-     );
+    return res
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, updatedClient, "Client has been updated")
+        );
 
 });
 
-const deleteClient = asyncHandler( async (req: Request, res: Response) => {
+const deleteClient = asyncHandler(async (req: Request, res: Response) => {
 
-    const { clientId } : { clientId: string } = req.body;
+    const { clientId }: { clientId: string } = req.body;
 
-    if(!clientId) {
+    if (!clientId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Client id is required.");
     }
 
-    await Client.findByIdAndDelete( clientId );
+    await Client.findByIdAndDelete(clientId);
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, {}, "Client has been deleted")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, {}, "Client has been deleted")
+        );
 
 });
 
-const getAllClients = asyncHandler( async (req: Request, res: Response) => {
+const getAllClients = asyncHandler(async (req: Request, res: Response) => {
 
     // const { currentPageNumber, noOfDocsEachPage } : IPagination = req.body;
 
@@ -188,41 +187,43 @@ const getAllClients = asyncHandler( async (req: Request, res: Response) => {
     // };
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, totalClients, "Fetched all clients successfully.")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, totalClients, "Fetched all clients successfully.")
+        );
 
 });
 
 
-const searchClient = asyncHandler( async (req: Request, res: Response) => {
+const searchClient = asyncHandler(async (req: Request, res: Response) => {
 
-    const { searchQuery } : { searchQuery: string } = req.body;
+    const { searchQuery }: { searchQuery: string } = req.body;
 
-    if(!searchQuery) {
+    if (!searchQuery) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "No search query");
     }
 
     const searchedDocs: IClientDocument[] = await Client.find(
         {
             $or: [
-                {code: {
-                    $regex: searchQuery.toUpperCase()
-                }}
+                {
+                    code: {
+                        $regex: searchQuery.toUpperCase()
+                    }
+                }
             ]
         }
     ) as IClientDocument[];
 
-    if(!searchedDocs || searchedDocs.length === 0) {
+    if (!searchedDocs || searchedDocs.length === 0) {
         throw new ApiError(StatusCodes.NOT_FOUND, "No clients found")
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, searchedDocs, "Records found successfully")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, searchedDocs, "Records found successfully")
+        );
 
 });
 

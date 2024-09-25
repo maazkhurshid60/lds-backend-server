@@ -15,7 +15,6 @@ const createNewClient = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
         city,
         state,
         phone,
-        apt,
     ].some((field) => field?.trim() === "")) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
     }
@@ -130,9 +129,11 @@ const searchClient = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     }
     const searchedDocs = await client_model_1.Client.find({
         $or: [
-            { code: {
+            {
+                code: {
                     $regex: searchQuery.toUpperCase()
-                } }
+                }
+            }
         ]
     });
     if (!searchedDocs || searchedDocs.length === 0) {
