@@ -372,7 +372,7 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
         corporateRecipient,
         sSDDefendants,
         sSDPlaintiff,
-        oSSTDescription, oSSTIndexNo,
+        oSSTDescription, oSSTIndexNo, oLTIndexNo,
         sSDCourt } = req.body;
 
     // Build query object
@@ -398,6 +398,9 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
 
     if (caseNo) {
         query.caseNo = caseNo;
+    }
+    if (oLTIndexNo) {
+        query.oLTIndexNo = oLTIndexNo;
     }
 
 
