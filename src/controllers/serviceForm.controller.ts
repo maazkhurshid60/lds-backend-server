@@ -372,7 +372,7 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
         corporateRecipient,
         sSDDefendants,
         sSDPlaintiff,
-        oSSTDescription, oSSTIndexNo, oLTIndexNo,
+        oSSTDescription, oSSTIndexNo, oLTIndexNo, lTSState,
         sSDCourt } = req.body;
 
     // Build query object
@@ -401,6 +401,9 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
     }
     if (oLTIndexNo) {
         query.oLTIndexNo = oLTIndexNo;
+    }
+    if (lTSState) {
+        query.lTSState = lTSState;
     }
 
 
@@ -474,7 +477,6 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
     if (sSDCourt) {
         query.sSDCourt = sSDCourt;
     }
-    console.log("dsakhjhkjsadf", oLTIndexNo)
     try {
         // Fetch data based on the query
         const allServiceForms: any[] = await ServiceForm.find(query)
