@@ -2,17 +2,17 @@ import { z } from "zod";
 
 export const createServerSchema = z.object({
     serverCode: z.string().min(2),
-    firstName: z.string().min(1),
-    lastName: z.string().min(1),
-    deviceCode: z.string().min(1),
-    licenseNo: z.number().min(1),
-    address1: z.string().min(1),
+    firstName: z.string().optional(),
+    lastName: z.string().optional(),
+    deviceCode: z.string().optional(),
+    licenseNo: z.any(),
+    address1: z.string().optional(),
     address2: z.string().nullable(),
-    country: z.string().min(2),
-    state: z.string().min(2),
+    country: z.string().optional(),
+    state: z.string().optional(),
     zip: z.string(),
-    phone: z.string().min(7),
-    fax: z.string().min(2),
-    apt: z.string().min(2),
+    phone: z.string().optional(),
+    fax: z.any(),
+    apt: z.string().optional(),
     isActive: z.boolean()
 });

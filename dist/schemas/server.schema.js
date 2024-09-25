@@ -4,17 +4,17 @@ exports.createServerSchema = void 0;
 const zod_1 = require("zod");
 exports.createServerSchema = zod_1.z.object({
     serverCode: zod_1.z.string().min(2),
-    firstName: zod_1.z.string().min(1),
-    lastName: zod_1.z.string().min(1),
-    deviceCode: zod_1.z.string().min(1),
-    licenseNo: zod_1.z.number().min(1),
-    address1: zod_1.z.string().min(1),
+    firstName: zod_1.z.string().optional(),
+    lastName: zod_1.z.string().optional(),
+    deviceCode: zod_1.z.string().optional(),
+    licenseNo: zod_1.z.any(),
+    address1: zod_1.z.string().optional(),
     address2: zod_1.z.string().nullable(),
-    country: zod_1.z.string().min(2),
-    state: zod_1.z.string().min(2),
+    country: zod_1.z.string().optional(),
+    state: zod_1.z.string().optional(),
     zip: zod_1.z.string(),
-    phone: zod_1.z.string().min(7),
-    fax: zod_1.z.string().min(2),
-    apt: zod_1.z.string().min(2),
+    phone: zod_1.z.string().optional(),
+    fax: zod_1.z.any(),
+    apt: zod_1.z.string().optional(),
     isActive: zod_1.z.boolean()
 });
