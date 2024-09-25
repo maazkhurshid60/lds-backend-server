@@ -56,6 +56,7 @@ const clientSchema: Schema<IClientDocument> = new Schema(
         },
         isActive: {
             type: Boolean,
+            default: true,
         },
     },
     {

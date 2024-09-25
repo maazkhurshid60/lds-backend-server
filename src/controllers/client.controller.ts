@@ -53,7 +53,7 @@ const createNewClient = asyncHandler(async (req: Request, res: Response) => {
         phone,
         fax,
         apt,
-        isActive,
+        // isActive,
     }) as IClientDocument;
 
     if (!newCreatedClient) {

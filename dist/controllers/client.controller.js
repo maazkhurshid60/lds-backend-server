@@ -33,7 +33,7 @@ const createNewClient = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
         phone,
         fax,
         apt,
-        isActive,
+        // isActive,
     });
     if (!newCreatedClient) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating new client");

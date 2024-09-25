@@ -65,6 +65,7 @@ const clientSchema = new mongoose_1.Schema({
     },
     isActive: {
         type: Boolean,
+        default: true,
     },
 }, {
     timestamps: true
