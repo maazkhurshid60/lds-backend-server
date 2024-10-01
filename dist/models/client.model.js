@@ -28,7 +28,7 @@ const mongoose_1 = __importStar(require("mongoose"));
 const clientSchema = new mongoose_1.Schema({
     code: {
         type: String,
-        required: [true, "Server code is required"],
+        // required: [true, "Server code is required"],
         trim: true,
     },
     fullName: {

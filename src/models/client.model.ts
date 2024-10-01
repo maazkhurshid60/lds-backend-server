@@ -19,7 +19,7 @@ const clientSchema: Schema<IClientDocument> = new Schema(
     {
         code: {
             type: String,
-            required: [true, "Server code is required"],
+            // required: [true, "Server code is required"],
             trim: true,
         },
         fullName: {
