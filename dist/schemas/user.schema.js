@@ -6,7 +6,7 @@ exports.userRegistrationSchema = zod_1.z.object({
     userName: zod_1.z.string(),
     firstName: zod_1.z.string().optional(),
     lastName: zod_1.z.string().optional(),
-    email: zod_1.z.string().email(),
+    email: zod_1.z.string().optional(),
     password: zod_1.z.string(),
 });
 exports.userLoginSchema = zod_1.z.object({
