@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export interface IDeviceDocument extends mongoose.Document {
     deviceId: string,
@@ -10,13 +10,13 @@ export interface IDeviceDocument extends mongoose.Document {
 
 const deviceSchema: Schema<IDeviceDocument> = new Schema(
     {
-        deviceId : {
+        deviceId: {
             type: String,
-            required: [true, "Device Id is required"],
+            // required: [true, "Device Id is required"],
         },
         deviceCode: {
             type: String,
-            required: true,
+            // required: true,
         },
         deviceName: {
             type: String,

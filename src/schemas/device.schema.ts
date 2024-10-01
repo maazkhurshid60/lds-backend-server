@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const createDeviceSchema = z.object({
-    deviceCode: z.string().min(3),
-    deviceName: z.string().min(3),
-    productType: z.string(),
-    isActive: z.boolean()
+    deviceCode: z.string().optional(),
+    deviceName: z.string().optional(),
+    productType: z.string().optional(),
+    isActive: z.boolean().optional()
 });

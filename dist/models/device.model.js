@@ -28,11 +28,11 @@ const mongoose_1 = __importStar(require("mongoose"));
 const deviceSchema = new mongoose_1.Schema({
     deviceId: {
         type: String,
-        required: [true, "Device Id is required"],
+        // required: [true, "Device Id is required"],
     },
     deviceCode: {
         type: String,
-        required: true,
+        // required: true,
     },
     deviceName: {
         type: String,
