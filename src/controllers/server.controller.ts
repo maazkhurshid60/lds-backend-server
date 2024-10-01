@@ -8,7 +8,7 @@ import { ApiResponse } from "../utils/ApiResponse";
 import { IPagination } from "../interfaces/pagination.interface";
 
 
-const createNewServer = asyncHandler( async (req: Request, res: Response) => {
+const createNewServer = asyncHandler(async (req: Request, res: Response) => {
 
     const {
         serverCode,
@@ -25,14 +25,14 @@ const createNewServer = asyncHandler( async (req: Request, res: Response) => {
         fax,
         apt,
         isActive
-    } : ICreateServer = req.body;
+    }: ICreateServer = req.body;
 
 
     const isServerCodeAlreadyExists: IServerDocument = await Server.findOne({
         serverCode
     }) as IServerDocument;
 
-    if(isServerCodeAlreadyExists) {
+    if (isServerCodeAlreadyExists) {
         throw new ApiError(StatusCodes.CONFLICT, "This Server code already exists.");
     }
 
@@ -55,20 +55,20 @@ const createNewServer = asyncHandler( async (req: Request, res: Response) => {
         }
     ) as IServerDocument;
 
-    if(!createdServer) {
+    if (!createdServer) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating a new server.");
     }
 
     return res
-    .status(StatusCodes.CREATED)
-    .json(
-        new ApiResponse(StatusCodes.CREATED, createdServer, "New server is successfully created.")
-    );
+        .status(StatusCodes.CREATED)
+        .json(
+            new ApiResponse(StatusCodes.CREATED, createdServer, "New server is successfully created.")
+        );
 
 });
 
 
-const updateServer = asyncHandler( async (req: Request, res: Response) => {
+const updateServer = asyncHandler(async (req: Request, res: Response) => {
 
     const {
         serverId,
@@ -86,9 +86,9 @@ const updateServer = asyncHandler( async (req: Request, res: Response) => {
         fax,
         apt,
         isActive
-    } : IUpdateServer = req.body;
+    }: IUpdateServer = req.body;
 
-    if(!serverId) {
+    if (!serverId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Server id is required");
     }
 
@@ -117,23 +117,23 @@ const updateServer = asyncHandler( async (req: Request, res: Response) => {
         }
     ) as IServerDocument;
 
-    if(!updatedServer) {
+    if (!updatedServer) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while updating the server.");
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, updatedServer, "Server has been updated successfully.")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, updatedServer, "Server has been updated successfully.")
+        );
 
 });
 
-const deleteServer = asyncHandler( async (req: Request, res: Response) => {
+const deleteServer = asyncHandler(async (req: Request, res: Response) => {
 
-    const { serverId } : { serverId: string } = req.body;
+    const { serverId }: { serverId: string } = req.body;
 
-    if(!serverId) {
+    if (!serverId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Server id is required");
     }
 
@@ -142,17 +142,17 @@ const deleteServer = asyncHandler( async (req: Request, res: Response) => {
     );
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, {}, "Server has been deleted successfully")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, {}, "Server has been deleted successfully")
+        );
 
 });
 
-const getAllServers = asyncHandler( async(req: Request, res: Response) => {
+const getAllServers = asyncHandler(async (req: Request, res: Response) => {
 
     // const { noOfDocsEachPage, currentPageNumber } : IPagination = req.body
-    
+
     // if(noOfDocsEachPage === undefined || currentPageNumber === undefined) {
     //     throw new ApiError(StatusCodes.BAD_REQUEST, "Pagination variables are missing.");
     // }
@@ -163,7 +163,7 @@ const getAllServers = asyncHandler( async(req: Request, res: Response) => {
 
     // const totalServers: number = await Server.find({}).countDocuments() as number;
 
-    const totalServers: IServerDocument[] = await Server.find({}) as IServerDocument[];
+    const totalServers: IServerDocument[] = await Server.find({}).populate(['deviceCode']) as IServerDocument[];
 
     // const allServers: IServerDocument[] = await Server.find({})
     // .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
@@ -179,71 +179,93 @@ const getAllServers = asyncHandler( async(req: Request, res: Response) => {
 
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, totalServers, "Fetched all servers successfully.")
-    );
-    
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, totalServers, "Fetched all servers successfully.")
+        );
+
 });
 
-const searchServer = asyncHandler( async (req: Request, res: Response) => {
+const searchServer = asyncHandler(async (req: Request, res: Response) => {
 
-    const { searchQuery } : { searchQuery: string } = req.body;
+    const { searchQuery }: { searchQuery: string } = req.body;
 
-    if(!searchQuery) {
+    if (!searchQuery) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "No search query");
     }
 
     const searchedDocs: IServerDocument[] = await Server.find(
         {
             $or: [
-                {serverCode: {
-                    $regex: searchQuery.toUpperCase()
-                }},
-                {firstName: {
-                    $regex: searchQuery
-                }},
-                {lastName: {
-                    $regex: searchQuery
-                }},
-                {deviceCode: {
-                    $regex: searchQuery.toUpperCase()
-                }},
-                {licenseNo: {
-                    $regex: searchQuery
-                }},
-                {country: {
-                    $regex: searchQuery
-                }},
-                {state: {
-                    $regex: searchQuery
-                }},
-                {zip: {
-                    $regex: searchQuery
-                }},
-                {phone: {
-                    $regex: searchQuery
-                }},
-                {fax: {
-                    $regex: searchQuery
-                }},
-                {apt: {
-                    $regex: searchQuery
-                }},
+                {
+                    serverCode: {
+                        $regex: searchQuery.toUpperCase()
+                    }
+                },
+                {
+                    firstName: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    lastName: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    deviceCode: {
+                        $regex: searchQuery.toUpperCase()
+                    }
+                },
+                {
+                    licenseNo: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    country: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    state: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    zip: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    phone: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    fax: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    apt: {
+                        $regex: searchQuery
+                    }
+                },
 
             ]
         }
     ) as IServerDocument[];
 
-    if(!searchedDocs || searchedDocs.length === 0) {
+    if (!searchedDocs || searchedDocs.length === 0) {
         throw new ApiError(StatusCodes.NOT_FOUND, "No Server found")
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, searchedDocs, "Records found successfully")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, searchedDocs, "Records found successfully")
+        );
 
 });
 

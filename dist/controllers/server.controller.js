@@ -91,7 +91,7 @@ const getAllServers = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data provided."); 
     // }
     // const totalServers: number = await Server.find({}).countDocuments() as number;
-    const totalServers = await server_model_1.Server.find({});
+    const totalServers = await server_model_1.Server.find({}).populate(['deviceCode']);
     // const allServers: IServerDocument[] = await Server.find({})
     // .skip(noOfDocsEachPage * (currentPageNumber === 1 ? 0 : currentPageNumber))
     // .limit(noOfDocsEachPage) as IServerDocument[];
@@ -114,39 +114,61 @@ const searchServer = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     }
     const searchedDocs = await server_model_1.Server.find({
         $or: [
-            { serverCode: {
+            {
+                serverCode: {
                     $regex: searchQuery.toUpperCase()
-                } },
-            { firstName: {
+                }
+            },
+            {
+                firstName: {
                     $regex: searchQuery
-                } },
-            { lastName: {
+                }
+            },
+            {
+                lastName: {
                     $regex: searchQuery
-                } },
-            { deviceCode: {
+                }
+            },
+            {
+                deviceCode: {
                     $regex: searchQuery.toUpperCase()
-                } },
-            { licenseNo: {
+                }
+            },
+            {
+                licenseNo: {
                     $regex: searchQuery
-                } },
-            { country: {
+                }
+            },
+            {
+                country: {
                     $regex: searchQuery
-                } },
-            { state: {
+                }
+            },
+            {
+                state: {
                     $regex: searchQuery
-                } },
-            { zip: {
+                }
+            },
+            {
+                zip: {
                     $regex: searchQuery
-                } },
-            { phone: {
+                }
+            },
+            {
+                phone: {
                     $regex: searchQuery
-                } },
-            { fax: {
+                }
+            },
+            {
+                fax: {
                     $regex: searchQuery
-                } },
-            { apt: {
+                }
+            },
+            {
+                apt: {
                     $regex: searchQuery
-                } },
+                }
+            },
         ]
     });
     if (!searchedDocs || searchedDocs.length === 0) {

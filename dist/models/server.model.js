@@ -41,6 +41,7 @@ const serverSchema = new mongoose_1.Schema({
     },
     deviceCode: {
         type: String,
+        ref: "Device",
     },
     licenseNo: {
         type: Number,

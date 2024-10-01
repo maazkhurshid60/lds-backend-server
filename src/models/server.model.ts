@@ -34,6 +34,8 @@ const serverSchema: Schema<IServerDocument> = new Schema(
         },
         deviceCode: {
             type: String,
+            ref: "Device",
+
         },
         licenseNo: {
             type: Number,
