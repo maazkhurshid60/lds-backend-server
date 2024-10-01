@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createServerSchema = z.object({
-    serverCode: z.string().min(2),
+    serverCode: z.string().optional(),
     firstName: z.string().optional(),
     lastName: z.string().optional(),
     deviceCode: z.string().optional(),
@@ -10,9 +10,9 @@ export const createServerSchema = z.object({
     address2: z.string().nullable(),
     country: z.string().optional(),
     state: z.string().optional(),
-    zip: z.string(),
+    zip: z.string().optional(),
     phone: z.string().optional(),
     fax: z.any(),
     apt: z.string().optional(),
-    isActive: z.boolean()
+    isActive: z.boolean().optional()
 });

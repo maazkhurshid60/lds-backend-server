@@ -21,7 +21,7 @@ const serverSchema: Schema<IServerDocument> = new Schema(
     {
         serverCode: {
             type: String,
-            required: [true, "Server code is required"],
+            // required: [true, "Server code is required"],
             trim: true,
         },
         firstName: {
