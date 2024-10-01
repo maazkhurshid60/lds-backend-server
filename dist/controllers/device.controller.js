@@ -9,12 +9,14 @@ const ApiResponse_1 = require("../utils/ApiResponse");
 const uuid_1 = require("uuid");
 const createNewDevice = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { deviceCode, deviceName, productType, isActive } = req.body;
-    if ([deviceCode, deviceName].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    if (isActive === undefined || typeof isActive !== "boolean") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if(
+    //     [deviceCode, deviceName].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+    // if(isActive === undefined || typeof isActive !== "boolean") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
     const deviceId = (0, uuid_1.v4)();
     const newDevice = await device_model_1.Device.create({
         deviceId,
@@ -33,12 +35,14 @@ const createNewDevice = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
 exports.createNewDevice = createNewDevice;
 const updateDevice = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { id, deviceId, deviceCode, deviceName, productType, isActive } = req.body;
-    if ([id, deviceId, deviceCode, deviceName].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    if (isActive === undefined || typeof isActive !== "boolean") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if (
+    //     [id, deviceId, deviceCode, deviceName].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+    // if (isActive === undefined || typeof isActive !== "boolean") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
     const updatedDevice = await device_model_1.Device.findByIdAndUpdate(id, {
         $set: {
             deviceId,
@@ -101,12 +105,16 @@ const searchDevice = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     }
     const searchedDocs = await device_model_1.Device.find({
         $or: [
-            { deviceCode: {
+            {
+                deviceCode: {
                     $regex: searchQuery.toUpperCase()
-                } },
-            { deviceName: {
+                }
+            },
+            {
+                deviceName: {
                     $regex: searchQuery
-                } }
+                }
+            }
         ]
     });
     if (!searchedDocs || searchedDocs.length === 0) {

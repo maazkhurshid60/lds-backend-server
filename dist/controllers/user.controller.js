@@ -30,13 +30,14 @@ const healthCheck = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
 exports.healthCheck = healthCheck;
 const registerNewUser = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { userName, firstName, lastName, email, password, roles } = req.body;
-    if ([userName, email, password].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    ;
-    if (roles.length === 0) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Roles are empty");
-    }
+    // if (
+    //     [userName, email, password].some((field) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // };
+    // if (roles.length === 0) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Roles are empty");
+    // }
     if (!roles.every((role) => typeof role === "string")) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid Roles Type");
     }
@@ -124,9 +125,11 @@ const logoutUser = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
 exports.logoutUser = logoutUser;
 const updateUserDetails = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { userId, userName, firstName, lastName, email } = req.body;
-    if ([userId, userName, email].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if(
+    //     [userId, userName,  email].some((field) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
     const updatedUser = await user_model_1.User.findByIdAndUpdate(userId, {
         $set: {
             ...req.body
@@ -229,18 +232,26 @@ const searchUser = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     }
     const searchedDocs = await user_model_1.User.find({
         $or: [
-            { userName: {
+            {
+                userName: {
                     $regex: searchQuery
-                } },
-            { firstName: {
+                }
+            },
+            {
+                firstName: {
                     $regex: searchQuery
-                } },
-            { lastName: {
+                }
+            },
+            {
+                lastName: {
                     $regex: searchQuery
-                } },
-            { email: {
+                }
+            },
+            {
+                email: {
                     $regex: searchQuery
-                } },
+                }
+            },
         ]
     });
     if (!searchedDocs || searchedDocs.length === 0) {

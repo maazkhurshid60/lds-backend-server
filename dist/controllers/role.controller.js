@@ -8,12 +8,14 @@ const http_status_codes_1 = require("http-status-codes");
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createRole = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { name, description, isActive } = req.body;
-    if ([name, description].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Name and Description are required fields");
-    }
-    if (typeof isActive !== "boolean") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid isActive type");
-    }
+    // if(
+    //     [name, description].some((field) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Name and Description are required fields");
+    // }
+    // if(typeof isActive !== "boolean") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid isActive type");
+    // }
     const createdRole = await role_model_1.Role.create({
         name,
         description,
@@ -29,12 +31,14 @@ const createRole = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
 exports.createRole = createRole;
 const updateRole = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { roleId, name, description, isActive } = req.body;
-    if ([roleId, name, description].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Name and Description are required fields");
-    }
-    if (typeof isActive !== "boolean") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid isActive type");
-    }
+    // if (
+    //     [roleId, name, description].some((field) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Name and Description are required fields");
+    // }
+    // if (typeof isActive !== "boolean") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid isActive type");
+    // }
     const updatedRole = await role_model_1.Role.findByIdAndUpdate(roleId, {
         $set: {
             name,
@@ -80,9 +84,11 @@ const searchRole = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     }
     const searchedDocs = await role_model_1.Role.find({
         $or: [
-            { name: {
+            {
+                name: {
                     $regex: searchQuery
-                } },
+                }
+            },
         ]
     });
     if (!searchedDocs || searchedDocs.length === 0) {

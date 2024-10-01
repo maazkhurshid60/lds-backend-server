@@ -9,19 +9,19 @@ import { IPagination } from "../interfaces/pagination.interface";
 import { v4 as uuidv4 } from "uuid";
 
 
-const createNewDevice = asyncHandler( async (req: Request, res: Response) => {
+const createNewDevice = asyncHandler(async (req: Request, res: Response) => {
 
-    const { deviceCode, deviceName, productType, isActive } : ICreateDevice = req.body;
+    const { deviceCode, deviceName, productType, isActive }: ICreateDevice = req.body;
 
-    if(
-        [deviceCode, deviceName].some((field: string) => field?.trim() === "")
-    ) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if(
+    //     [deviceCode, deviceName].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
 
-    if(isActive === undefined || typeof isActive !== "boolean") {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if(isActive === undefined || typeof isActive !== "boolean") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
 
     const deviceId = uuidv4();
 
@@ -33,32 +33,32 @@ const createNewDevice = asyncHandler( async (req: Request, res: Response) => {
         isActive
     }) as IDeviceDocument;
 
-    if(!newDevice) {
+    if (!newDevice) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating a new device");
     }
 
     return res
-    .status(StatusCodes.CREATED)
-    .json(
-        new ApiResponse(StatusCodes.CREATED, newDevice, "New device created successfully")
-    );
+        .status(StatusCodes.CREATED)
+        .json(
+            new ApiResponse(StatusCodes.CREATED, newDevice, "New device created successfully")
+        );
 
 });
 
 
-const updateDevice = asyncHandler( async (req: Request, res: Response) => {
+const updateDevice = asyncHandler(async (req: Request, res: Response) => {
 
-    const { id, deviceId, deviceCode, deviceName, productType , isActive } : IUpdateDevice = req.body;
+    const { id, deviceId, deviceCode, deviceName, productType, isActive }: IUpdateDevice = req.body;
 
-    if(
-        [id, deviceId, deviceCode, deviceName].some((field: string) => field?.trim() === "")
-    ) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if (
+    //     [id, deviceId, deviceCode, deviceName].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
 
-    if(isActive === undefined || typeof isActive !== "boolean") {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if (isActive === undefined || typeof isActive !== "boolean") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
 
     const updatedDevice: IDeviceDocument = await Device.findByIdAndUpdate(
         id,
@@ -76,37 +76,37 @@ const updateDevice = asyncHandler( async (req: Request, res: Response) => {
         }
     ) as IDeviceDocument;
 
-    if(!updatedDevice) {
+    if (!updatedDevice) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while updating the device.");
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, updatedDevice, "Device updated successfully.")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, updatedDevice, "Device updated successfully.")
+        );
 
 });
 
-const deleteDevice = asyncHandler( async (req: Request, res: Response) => {
+const deleteDevice = asyncHandler(async (req: Request, res: Response) => {
 
-    const { id } : { id: string } = req.body;
+    const { id }: { id: string } = req.body;
 
-    if(!id) {
+    if (!id) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Device id is required.");
     }
 
     await Device.findByIdAndDelete(id);
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, {}, "Device has been deleted successfully.")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, {}, "Device has been deleted successfully.")
+        );
 
 });
 
-const getAllDevices = asyncHandler( async (req: Request, res: Response) => {
+const getAllDevices = asyncHandler(async (req: Request, res: Response) => {
 
     // const { noOfDocsEachPage, currentPageNumber } : IPagination = req.body;
 
@@ -135,43 +135,47 @@ const getAllDevices = asyncHandler( async (req: Request, res: Response) => {
     // };
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, totalDevices, "Fetched all devices successfully.")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, totalDevices, "Fetched all devices successfully.")
+        );
 
 });
 
-const searchDevice = asyncHandler( async (req: Request, res: Response) => {
+const searchDevice = asyncHandler(async (req: Request, res: Response) => {
 
-    const { searchQuery } : { searchQuery: string } = req.body;
+    const { searchQuery }: { searchQuery: string } = req.body;
 
-    if(!searchQuery) {
+    if (!searchQuery) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "No search query");
     }
 
     const searchedDocs: IDeviceDocument[] = await Device.find(
         {
             $or: [
-                {deviceCode: {
-                    $regex: searchQuery.toUpperCase()
-                }},
-                {deviceName: {
-                    $regex: searchQuery
-                }}
+                {
+                    deviceCode: {
+                        $regex: searchQuery.toUpperCase()
+                    }
+                },
+                {
+                    deviceName: {
+                        $regex: searchQuery
+                    }
+                }
             ]
         }
     ) as IDeviceDocument[];
 
-    if(!searchedDocs || searchedDocs.length === 0) {
+    if (!searchedDocs || searchedDocs.length === 0) {
         throw new ApiError(StatusCodes.NOT_FOUND, "No Devices found")
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, searchedDocs, "Records found successfully")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, searchedDocs, "Records found successfully")
+        );
 
 });
 

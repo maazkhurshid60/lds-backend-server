@@ -8,6 +8,6 @@ exports.createMailingAddressSchema = zod_1.z.object({
     apt: zod_1.z.string(),
     city: zod_1.z.string(),
     state: zod_1.z.string(),
-    zip: zod_1.z.number(),
-    rRR: zod_1.z.boolean(),
+    zip: zod_1.z.string(),
+    // rRR: z.boolean(),
 });

@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export interface IMailingAddressDocument extends mongoose.Document {
     firstName: string,
@@ -6,13 +6,13 @@ export interface IMailingAddressDocument extends mongoose.Document {
     apt: string,
     city: string,
     state: string,
-    zip: number,
-    rRR: boolean,
+    zip: string,
+    // rRR: boolean,
 }
 
 const mailingAddressSchema: Schema<IMailingAddressDocument> = new Schema(
     {
-        firstName : {
+        firstName: {
             type: String,
             required: [true, "First name is required"],
             trim: true,
@@ -31,11 +31,12 @@ const mailingAddressSchema: Schema<IMailingAddressDocument> = new Schema(
             type: String,
         },
         zip: {
-            type: Number,
-        },
-        rRR: {
-            type: Boolean
-        },
+            type: String,
+        }
+        // ,
+        // rRR: {
+        //     type: Boolean
+        // },
     },
     {
         timestamps: true

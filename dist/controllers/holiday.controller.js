@@ -8,12 +8,14 @@ const http_status_codes_1 = require("http-status-codes");
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createNewHoliday = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { holidayYear, holidayDate, holidayDescription } = req.body;
-    if (!holidayYear) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    if ([holidayDate, holidayDescription].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if(!holidayYear) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+    // if(
+    //     [holidayDate, holidayDescription].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
     const newCreatedHoliday = await holidays_model_1.Holiday.create({
         holidayYear,
         holidayDate,
@@ -32,12 +34,14 @@ const updateHoliday = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     if (!holidayId) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Holiday Id is required");
     }
-    if (!holidayYear) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    if ([holidayDate, holidayDescription].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if(!holidayYear) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+    // if(
+    //     [holidayDate, holidayDescription].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
     const updatedHoliday = await holidays_model_1.Holiday.findByIdAndUpdate(holidayId, {
         $set: {
             holidayYear,
@@ -83,12 +87,16 @@ const searchHoliday = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     }
     const searchedDocs = await holidays_model_1.Holiday.find({
         $or: [
-            { holidayYear: {
+            {
+                holidayYear: {
                     $regex: searchQuery
-                } },
-            { holidayDate: {
+                }
+            },
+            {
+                holidayDate: {
                     $regex: searchQuery
-                } }
+                }
+            }
         ]
     });
     if (!searchedDocs || searchedDocs.length === 0) {

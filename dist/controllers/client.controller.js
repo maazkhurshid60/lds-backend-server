@@ -8,19 +8,21 @@ const client_model_1 = require("../models/client.model");
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createNewClient = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { code, fullName, mi, address1, address2, city, state, zip, phone, fax, apt, isActive, } = req.body;
-    if ([
-        code,
-        fullName,
-        address1,
-        city,
-        state,
-        phone,
-    ].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    if (!zip || isActive === undefined || typeof isActive !== "boolean") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if (
+    //     [
+    //         code,
+    //         fullName,
+    //         address1,
+    //         city,
+    //         state,
+    //         phone,
+    //     ].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+    // if (!zip || isActive === undefined || typeof isActive !== "boolean") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
     const newCreatedClient = await client_model_1.Client.create({
         code,
         fullName,
@@ -45,21 +47,23 @@ const createNewClient = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
 exports.createNewClient = createNewClient;
 const updateClient = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { clientId, code, fullName, mi, address1, address2, city, state, zip, phone, fax, apt, isActive, } = req.body;
-    if ([
-        clientId,
-        code,
-        fullName,
-        address1,
-        city,
-        state,
-        phone,
-        apt,
-    ].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    if (!zip || isActive === undefined || typeof isActive !== "boolean") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if (
+    //     [
+    //         clientId,
+    //         code,
+    //         fullName,
+    //         address1,
+    //         city,
+    //         state,
+    //         phone,
+    //         apt,
+    //     ].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+    // if (!zip || isActive === undefined || typeof isActive !== "boolean") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
     const updatedClient = await client_model_1.Client.findByIdAndUpdate(clientId, {
         $set: {
             code,

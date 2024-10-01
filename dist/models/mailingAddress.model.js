@@ -45,11 +45,12 @@ const mailingAddressSchema = new mongoose_1.Schema({
         type: String,
     },
     zip: {
-        type: Number,
-    },
-    rRR: {
-        type: Boolean
-    },
+        type: String,
+    }
+    // ,
+    // rRR: {
+    //     type: Boolean
+    // },
 }, {
     timestamps: true
 });

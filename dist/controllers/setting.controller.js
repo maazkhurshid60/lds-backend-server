@@ -8,15 +8,15 @@ const setting_model_1 = require("../models/setting.model");
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createNewSetting = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { label, value } = req.body;
-    if (!label) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Label is required.");
-    }
-    if (typeof value !== "boolean" && !value) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Value is required.");
-    }
-    if (value === undefined) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Value is required.");
-    }
+    // if(!label) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Label is required.");
+    // }
+    // if(typeof value !== "boolean" && !value) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Value is required.");
+    // }
+    // if(value === undefined) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Value is required.");
+    // }
     const newSetting = await setting_model_1.Setting.create({
         label,
         value
@@ -65,9 +65,11 @@ const searchSetting = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     }
     const searchedDocs = await setting_model_1.Setting.find({
         $or: [
-            { label: {
+            {
+                label: {
                     $regex: searchQuery
-                } },
+                }
+            },
         ]
     });
     if (!searchedDocs || searchedDocs.length === 0) {

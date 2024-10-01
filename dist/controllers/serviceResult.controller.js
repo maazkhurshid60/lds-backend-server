@@ -8,12 +8,12 @@ const serviceResults_model_1 = require("../models/serviceResults.model");
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createServiceResult = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { serviceResultCode, serviceResultDescription } = req.body;
-    if (!serviceResultCode || !serviceResultDescription) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    if (typeof serviceResultCode !== "string" || typeof serviceResultDescription !== "string") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid data types");
-    }
+    // if(!serviceResultCode || !serviceResultDescription) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+    // if(typeof serviceResultCode !== "string" || typeof serviceResultDescription !== "string") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
+    // }
     const newCreatedServiceResult = await serviceResults_model_1.ServiceResult.create({
         serviceResultCode,
         serviceResultDescription
@@ -39,12 +39,16 @@ const deleteServiceResult = (0, AsyncHandler_1.asyncHandler)(async (req, res) =>
 exports.deleteServiceResult = deleteServiceResult;
 const updateServiceResult = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { serviceResultId, serviceResultCode, serviceResultDescription } = req.body;
-    if ([serviceResultId, serviceResultCode, serviceResultDescription].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    if ([serviceResultId, serviceResultCode, serviceResultDescription].some((field) => typeof field !== "string")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "invalid data provided");
-    }
+    // if (
+    //     [serviceResultId, serviceResultCode, serviceResultDescription].some((field) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+    // if (
+    //     [serviceResultId, serviceResultCode, serviceResultDescription].some((field) => typeof field !== "string")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "invalid data provided");
+    // }
     const updatedServiceResult = await serviceResults_model_1.ServiceResult.findByIdAndUpdate(serviceResultId, {
         $set: {
             serviceResultCode,
@@ -78,9 +82,11 @@ const searchServiceResult = (0, AsyncHandler_1.asyncHandler)(async (req, res) =>
     }
     const searchedDocs = await serviceResults_model_1.ServiceResult.find({
         $or: [
-            { serviceResultCode: {
+            {
+                serviceResultCode: {
                     $regex: searchQuery
-                } },
+                }
+            },
         ]
     });
     if (!searchedDocs || searchedDocs.length === 0) {

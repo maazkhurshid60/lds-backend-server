@@ -6,6 +6,6 @@ export const createMailingAddressSchema = z.object({
     apt: z.string(),
     city: z.string(),
     state: z.string(),
-    zip: z.number(),
-    rRR: z.boolean(),
+    zip: z.string(),
+    // rRR: z.boolean(),
 });

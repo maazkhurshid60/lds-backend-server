@@ -8,12 +8,12 @@ const serviceType_model_1 = require("../models/serviceType.model");
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createServiceType = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { serviceTypeCode, serviceTypeDescription } = req.body;
-    if (!serviceTypeCode || !serviceTypeDescription) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    if (typeof serviceTypeCode !== "string" || typeof serviceTypeDescription !== "string") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid data types");
-    }
+    // if(!serviceTypeCode || !serviceTypeDescription) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+    // if(typeof serviceTypeCode !== "string" || typeof serviceTypeDescription !== "string") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid data types");
+    // }
     const newCreatedServiceType = await serviceType_model_1.ServiceType.create({
         serviceTypeCode,
         serviceTypeDescription
@@ -39,12 +39,16 @@ const deleteServiceType = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
 exports.deleteServiceType = deleteServiceType;
 const updateServiceType = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { serviceTypeId, serviceTypeCode, serviceTypeDescription } = req.body;
-    if ([serviceTypeId, serviceTypeCode, serviceTypeDescription].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    if ([serviceTypeId, serviceTypeCode, serviceTypeDescription].some((field) => typeof field !== "string")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "invalid data provided");
-    }
+    // if (
+    //     [serviceTypeId, serviceTypeCode, serviceTypeDescription].some((field) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+    // if (
+    //     [serviceTypeId, serviceTypeCode, serviceTypeDescription].some((field) => typeof field !== "string")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "invalid data provided");
+    // }
     const updatedServiceType = await serviceType_model_1.ServiceType.findByIdAndUpdate(serviceTypeId, {
         $set: {
             serviceTypeCode,
@@ -78,9 +82,11 @@ const searchServiceType = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     }
     const searchedDocs = await serviceType_model_1.ServiceType.find({
         $or: [
-            { serviceTypeCode: {
+            {
+                serviceTypeCode: {
                     $regex: searchQuery
-                } },
+                }
+            },
         ]
     });
     if (!searchedDocs || searchedDocs.length === 0) {

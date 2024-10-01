@@ -8,9 +8,9 @@ const standardServiceType_model_1 = require("../models/standardServiceType.model
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createNewStandardServiceType = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { name, isActive } = req.body;
-    if (!name || name?.trim() === "") {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Name is required");
-    }
+    // if(!name || name?.trim() === "") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Name is required");
+    // }
     const alreadyExistedName = await standardServiceType_model_1.StandardServiceType.findOne({ name });
     if (alreadyExistedName) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, `This standard service type already exists`);
@@ -29,12 +29,14 @@ const createNewStandardServiceType = (0, AsyncHandler_1.asyncHandler)(async (req
 exports.createNewStandardServiceType = createNewStandardServiceType;
 const updateStandardServiceType = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const { standardServiceTypeId, name } = req.body;
-    if (!standardServiceTypeId || !name) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
-    if ([standardServiceTypeId, name].some((field) => field?.trim() === "")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if (!standardServiceTypeId || !name) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+    // if (
+    //     [standardServiceTypeId, name].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
     const updatedStandardServiceType = await standardServiceType_model_1.StandardServiceType.findByIdAndUpdate(standardServiceTypeId, {
         $set: {
             name
@@ -47,7 +49,7 @@ const updateStandardServiceType = (0, AsyncHandler_1.asyncHandler)(async (req, r
     }
     return res
         .status(http_status_codes_1.StatusCodes.OK)
-        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, updatedStandardServiceType, "Standard service type has been created"));
+        .json(new ApiResponse_1.ApiResponse(http_status_codes_1.StatusCodes.OK, updatedStandardServiceType, "Standard service type has been updated"));
 });
 exports.updateStandardServiceType = updateStandardServiceType;
 const deleteStandardServiceType = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
@@ -78,9 +80,11 @@ const searchStandardServiceType = (0, AsyncHandler_1.asyncHandler)(async (req, r
     }
     const searchedDocs = await standardServiceType_model_1.StandardServiceType.find({
         $or: [
-            { name: {
+            {
+                name: {
                     $regex: searchQuery
-                } },
+                }
+            },
         ]
     });
     if (!searchedDocs || searchedDocs.length === 0) {

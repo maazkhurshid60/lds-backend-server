@@ -24,23 +24,23 @@ const createNewClient = asyncHandler(async (req: Request, res: Response) => {
         isActive,
     }: ICreateClient = req.body;
 
-    if (
-        [
-            code,
-            fullName,
-            address1,
-            city,
-            state,
-            phone,
+    // if (
+    //     [
+    //         code,
+    //         fullName,
+    //         address1,
+    //         city,
+    //         state,
+    //         phone,
 
-        ].some((field: string) => field?.trim() === "")
-    ) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    //     ].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
 
-    if (!zip || isActive === undefined || typeof isActive !== "boolean") {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if (!zip || isActive === undefined || typeof isActive !== "boolean") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
 
     const newCreatedClient: IClientDocument = await Client.create({
         code,
@@ -87,24 +87,24 @@ const updateClient = asyncHandler(async (req: Request, res: Response) => {
         isActive,
     }: IUpdateClient = req.body;
 
-    if (
-        [
-            clientId,
-            code,
-            fullName,
-            address1,
-            city,
-            state,
-            phone,
-            apt,
-        ].some((field: string) => field?.trim() === "")
-    ) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if (
+    //     [
+    //         clientId,
+    //         code,
+    //         fullName,
+    //         address1,
+    //         city,
+    //         state,
+    //         phone,
+    //         apt,
+    //     ].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
 
-    if (!zip || isActive === undefined || typeof isActive !== "boolean") {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if (!zip || isActive === undefined || typeof isActive !== "boolean") {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
 
     const updatedClient: IClientDocument = await Client.findByIdAndUpdate(
         clientId,

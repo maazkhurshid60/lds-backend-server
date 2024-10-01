@@ -7,19 +7,22 @@ import { IMailingAddressDocument, MailingAddress } from "../models/mailingAddres
 import { ApiResponse } from "../utils/ApiResponse";
 
 
-const createNewMailingAddress = asyncHandler( async (req: Request, res: Response) => {
+const createNewMailingAddress = asyncHandler(async (req: Request, res: Response) => {
 
-    const { firstName, address, apt, city, state, zip, rRR } : ICreateMailingAddress = req.body;
+    const { firstName, address, apt, city, state, zip
+        // , rRR
 
-    if(
-        [firstName, address, apt, city, state].some((field: string) => field?.trim() === "")
-    ) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    }: ICreateMailingAddress = req.body;
 
-    if(!zip || rRR === undefined) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if(
+    //     [firstName, address, apt, city, state].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+
+    // if(!zip || rRR === undefined) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
 
     const newMailingAddress: IMailingAddressDocument = await MailingAddress.create({
         firstName,
@@ -28,40 +31,44 @@ const createNewMailingAddress = asyncHandler( async (req: Request, res: Response
         city,
         state,
         zip,
-        rRR
+        // rRR
     }) as IMailingAddressDocument;
 
-    if(!newMailingAddress) {
+    if (!newMailingAddress) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while creating new mailing address.");
     }
 
     return res
-    .status(StatusCodes.CREATED)
-    .json(
-        new ApiResponse(StatusCodes.CREATED, newMailingAddress, "New mailing address created successfully.")
-    );
+        .status(StatusCodes.CREATED)
+        .json(
+            new ApiResponse(StatusCodes.CREATED, newMailingAddress, "New mailing address created successfully.")
+        );
 
 });
 
-const updateMailingAddress = asyncHandler( async (req: Request, res: Response) => {
+const updateMailingAddress = asyncHandler(async (req: Request, res: Response) => {
 
-    const { mailingAddressId, firstName, address, apt, city, state, zip, rRR } : IUpdateMailingAddress = req.body;
+    const { mailingAddressId, firstName, address, apt, city, state, zip
+        // , rRR
 
-    if(
-        [mailingAddressId, firstName, address, apt, city, state].some((field: string) => field?.trim() === "")
-    ) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    }: IUpdateMailingAddress = req.body;
 
-    if(!zip || rRR === undefined) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
-    }
+    // if (
+    //     [mailingAddressId, firstName, address, apt, city, state].some((field: string) => field?.trim() === "")
+    // ) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
+
+    // if (!zip || rRR === undefined) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "All fields are required");
+    // }
 
     const updatedMailingAddress: IMailingAddressDocument = await MailingAddress.findByIdAndUpdate(
         mailingAddressId,
         {
             $set: {
-                firstName, address, apt, city, state, zip, rRR
+                firstName, address, apt, city, state, zip
+                //, rRR
             }
         },
         {
@@ -69,91 +76,101 @@ const updateMailingAddress = asyncHandler( async (req: Request, res: Response) =
         }
     ) as IMailingAddressDocument;
 
-    if(!updatedMailingAddress) {
+    if (!updatedMailingAddress) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while updating mailing address.");
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, updatedMailingAddress, "Mailing address updated successfully.")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, updatedMailingAddress, "Mailing address updated successfully.")
+        );
 
 });
 
-const deleteMailingAddress = asyncHandler( async (req: Request, res: Response) => {
+const deleteMailingAddress = asyncHandler(async (req: Request, res: Response) => {
 
-    const { mailingAddressId } : { mailingAddressId: string } = req.body;
+    const { mailingAddressId }: { mailingAddressId: string } = req.body;
 
-    if(!mailingAddressId) {
+    if (!mailingAddressId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Mailing address id is required");
     }
 
     await MailingAddress.findByIdAndDelete(mailingAddressId);
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, {}, "Mailing address deleted successfully.")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, {}, "Mailing address deleted successfully.")
+        );
 
 });
 
-const getAllMailingAddress = asyncHandler( async (req: Request, res: Response) => {
+const getAllMailingAddress = asyncHandler(async (req: Request, res: Response) => {
 
     const allMailingAddress: IMailingAddressDocument[] = await MailingAddress.find({}) as IMailingAddressDocument[];
 
-    if(!allMailingAddress) {
+    if (!allMailingAddress) {
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Something went wrong while fetching all mailing address");
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, allMailingAddress, "All mailing addresses fetched successfully.")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, allMailingAddress, "All mailing addresses fetched successfully.")
+        );
 
 });
 
-const searchMailingAddress = asyncHandler( async (req: Request, res: Response) => {
+const searchMailingAddress = asyncHandler(async (req: Request, res: Response) => {
 
-    const { searchQuery } : { searchQuery: string } = req.body;
+    const { searchQuery }: { searchQuery: string } = req.body;
 
-    if(!searchQuery) {
+    if (!searchQuery) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "No search query");
     }
 
     const searchedDocs: IMailingAddressDocument[] = await MailingAddress.find(
         {
             $or: [
-                {firstName: {
-                    $regex: searchQuery
-                }},
-                {address: {
-                    $regex: searchQuery
-                }},
-                {city: {
-                    $regex: searchQuery
-                }},
-                {state: {
-                    $regex: searchQuery
-                }},
-                {zip: {
-                    $regex: searchQuery
-                }},
+                {
+                    firstName: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    address: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    city: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    state: {
+                        $regex: searchQuery
+                    }
+                },
+                {
+                    zip: {
+                        $regex: searchQuery
+                    }
+                },
             ]
         }
     ) as IMailingAddressDocument[];
 
-    if(!searchedDocs || searchedDocs.length === 0) {
+    if (!searchedDocs || searchedDocs.length === 0) {
         throw new ApiError(StatusCodes.NOT_FOUND, "No Mailing address found")
     }
 
     return res
-    .status(StatusCodes.OK)
-    .json(
-        new ApiResponse(StatusCodes.OK, searchedDocs, "Records found successfully")
-    );
+        .status(StatusCodes.OK)
+        .json(
+            new ApiResponse(StatusCodes.OK, searchedDocs, "Records found successfully")
+        );
 
 });
 

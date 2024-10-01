@@ -5,8 +5,8 @@ export interface ICreateMailingAddress {
     apt: string,
     city: string,
     state: string,
-    zip: number,
-    rRR: boolean,
+    zip: string,
+    // rRR: boolean,
 }
 
 
