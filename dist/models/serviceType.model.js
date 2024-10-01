@@ -28,12 +28,12 @@ const mongoose_1 = __importStar(require("mongoose"));
 const serviceTypeSchema = new mongoose_1.Schema({
     serviceTypeCode: {
         type: String,
-        required: [true, "Service type code is required"],
+        // required: [true, "Service type code is required"],
         trim: true,
     },
     serviceTypeDescription: {
         type: String,
-        required: true,
+        // required: true,
     },
 }, {
     timestamps: true
