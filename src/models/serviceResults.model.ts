@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export interface IServiceResultDocument extends mongoose.Document {
     serviceResultCode: string,
@@ -7,14 +7,14 @@ export interface IServiceResultDocument extends mongoose.Document {
 
 const serviceResultSchema: Schema<IServiceResultDocument> = new Schema(
     {
-        serviceResultCode : {
+        serviceResultCode: {
             type: String,
-            required: [true, "Service result code is required"],
+            // required: [true, "Service result code is required"],
             trim: true,
         },
         serviceResultDescription: {
             type: String,
-            required: true,
+            // required: true,
         },
     },
     {

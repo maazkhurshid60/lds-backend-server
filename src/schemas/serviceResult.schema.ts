@@ -1,6 +1,6 @@
 import { z } from "zod";
 
 export const createServiceResultSchema = z.object({
-    serviceResultCode: z.string(),
-    serviceResultDescription: z.string(),
+    serviceResultCode: z.string().optional(),
+    serviceResultDescription: z.string().optional(),
 });
