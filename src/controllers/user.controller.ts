@@ -55,9 +55,9 @@ const registerNewUser = asyncHandler(async (req: Request, res: Response) => {
     //     throw new ApiError(StatusCodes.BAD_REQUEST, "Roles are empty");
     // }
 
-    if (!roles.every((role) => typeof role === "string")) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid Roles Type");
-    }
+    // if (!roles.every((role) => typeof role === "string")) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid Roles Type");
+    // }
 
     const existingUserWithEmail = await User.findOne({
         $or: [{ email }, { userName }]
@@ -83,9 +83,9 @@ const registerNewUser = asyncHandler(async (req: Request, res: Response) => {
 
     }
 
-    if (rolesList.length === 0) {
-        throw new ApiError(StatusCodes.CONFLICT, "Invalid Roles Assign");
-    }
+    // if (rolesList.length === 0) {
+    //     throw new ApiError(StatusCodes.CONFLICT, "Invalid Roles Assign");
+    // }
 
     //Hashing user password
     const hashedPassword = await bcrypt.hash(password, 10);

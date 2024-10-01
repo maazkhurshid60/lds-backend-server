@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface IUserDocument extends mongoose.Document {
@@ -13,9 +13,9 @@ export interface IUserDocument extends mongoose.Document {
 
 const userSchema: Schema<IUserDocument> = new Schema(
     {
-        userName : {
+        userName: {
             type: String,
-            required: [true, "Username is required"],
+            // required: [true, "Username is required"],
             trim: true,
         },
         firstName: {
@@ -29,17 +29,17 @@ const userSchema: Schema<IUserDocument> = new Schema(
         email: {
             type: String,
             trim: true,
-            lowercase: true
+            // lowercase: true
         },
         password: {
             type: String,
-            required: true,
+            // required: true,
         },
         roles: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "Role",
-                required: true
+                // required: true
             }
         ],
         isActive: {
@@ -53,7 +53,7 @@ const userSchema: Schema<IUserDocument> = new Schema(
     }
 );
 
-userSchema.methods.isPasswordCorrect = async function(password: string) {
+userSchema.methods.isPasswordCorrect = async function (password: string) {
     return await bcrypt.compare(password, this.password);
 }
 

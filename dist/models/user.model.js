@@ -32,7 +32,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const userSchema = new mongoose_1.Schema({
     userName: {
         type: String,
-        required: [true, "Username is required"],
+        // required: [true, "Username is required"],
         trim: true,
     },
     firstName: {
@@ -46,17 +46,17 @@ const userSchema = new mongoose_1.Schema({
     email: {
         type: String,
         trim: true,
-        lowercase: true
+        // lowercase: true
     },
     password: {
         type: String,
-        required: true,
+        // required: true,
     },
     roles: [
         {
             type: mongoose_1.Schema.Types.ObjectId,
             ref: "Role",
-            required: true
+            // required: true
         }
     ],
     isActive: {

@@ -38,9 +38,9 @@ const registerNewUser = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     // if (roles.length === 0) {
     //     throw new ApiError(StatusCodes.BAD_REQUEST, "Roles are empty");
     // }
-    if (!roles.every((role) => typeof role === "string")) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, "Invalid Roles Type");
-    }
+    // if (!roles.every((role) => typeof role === "string")) {
+    //     throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid Roles Type");
+    // }
     const existingUserWithEmail = await user_model_1.User.findOne({
         $or: [{ email }, { userName }]
     });
@@ -58,9 +58,9 @@ const registerNewUser = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
             rolesList.push(roleInDb._id);
         }
     }
-    if (rolesList.length === 0) {
-        throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.CONFLICT, "Invalid Roles Assign");
-    }
+    // if (rolesList.length === 0) {
+    //     throw new ApiError(StatusCodes.CONFLICT, "Invalid Roles Assign");
+    // }
     //Hashing user password
     const hashedPassword = await bcrypt_1.default.hash(password, 10);
     const user = await user_model_1.User.create({
