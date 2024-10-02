@@ -282,6 +282,9 @@ const serviceFormSchema = new mongoose_1.Schema({
     },
     corporateRecipient: {
         type: mongoose_1.Schema.Types.String
+    },
+    datePairs: {
+        type: mongoose_1.Schema.Types.Mixed
     }
 }, {
     timestamps: true

@@ -75,7 +75,8 @@ export interface IServiceFormDocument extends mongoose.Document {
     serviceResultTimeOfService: string,
     substituteDeliveredTo: string,
     corporateRecipient: string,
-    timeTrip: any
+    timeTrip: any,
+    datePairs: any
 }
 
 const serviceFormSchema = new Schema(
@@ -339,6 +340,10 @@ const serviceFormSchema = new Schema(
         },
         corporateRecipient: {
             type: Schema.Types.String
+        },
+
+        datePairs: {
+            type: Schema.Types.Mixed
         }
 
     },

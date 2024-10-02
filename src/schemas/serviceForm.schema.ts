@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { any, z } from "zod";
 
 const mailingAddressSchema = z.object({
   address: z.string().optional(),
@@ -43,6 +43,7 @@ export const createServiceFormSchema = z.object({
   sSDCountry: z.string().optional(),
 
   //Result Form Attributes
+  datePairs: z.any().optional(),
   queryInformationLTFullName: z.string().optional(),
   queryInformationLTIndexNo: z.number().optional(),
   queryInformationLTAddress: z.string().optional(),

@@ -12,7 +12,7 @@ const standardServiceType_model_1 = require("../models/standardServiceType.model
 const ApiResponse_1 = require("../utils/ApiResponse");
 const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const user = req.user;
-    const { jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, oLTIndexNo, oLTDescription, lTSFirstName, lTSBusinessName, lTSZip, lTSState, lTSCity, lTSApt, lTSAddress, lTSDescription, noOfAddLMailings, mailingAddresses, standardServiceType, oSSTIndexNo, oSSTDescription, sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry, } = req.body;
+    const { jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, oLTIndexNo, oLTDescription, lTSFirstName, lTSBusinessName, lTSZip, lTSState, lTSCity, lTSApt, lTSAddress, lTSDescription, noOfAddLMailings, mailingAddresses, standardServiceType, oSSTIndexNo, oSSTDescription, sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry, datePairs } = req.body;
     const alreadyServiceExists = await serviceForm_model_1.ServiceForm.findOne({ jobNo });
     if (alreadyServiceExists) {
         throw new ApiError_1.ApiError(http_status_codes_1.StatusCodes.BAD_REQUEST, `Service Form with this Job no (${jobNo}) already exists`);
@@ -50,6 +50,7 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
         sSDCountry,
         serviceFormCreatedBy: user._id,
         lastUpdatedBy: user._id,
+        datePairs
     });
     console.log("line passed 118", newServiceForm);
     if (!newServiceForm) {
@@ -62,7 +63,7 @@ const createNewServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) =
 exports.createNewServiceForm = createNewServiceForm;
 const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
     const user = req.user;
-    const { serviceFormId, jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, oLTIndexNo, oLTDescription, lTSFirstName, lTSBusinessName, lTSZip, lTSState, lTSCity, lTSApt, lTSAddress, lTSDescription, noOfAddLMailings, mailingAddresses, standardServiceType, oSSTIndexNo, oSSTDescription, sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry, 
+    const { serviceFormId, jobNo, inputDate, clientId, serviceType, caseNo, caption, lTServiceType, oLTIndexNo, oLTDescription, lTSFirstName, lTSBusinessName, lTSZip, lTSState, lTSCity, lTSApt, lTSAddress, lTSDescription, noOfAddLMailings, mailingAddresses, standardServiceType, oSSTIndexNo, oSSTDescription, sSDCourt, sSDDefendants, sSDPlaintiff, sSDCountry, datePairs, 
     //Result Form Attributes
     queryInformationLTFullName, queryInformationLTIndexNo, queryInformationLTAddress, queryInformationLTBusinessName, queryInformationLTInputDate, queryInformationStandardServeTo, queryInformationStandardDefendants, serviceResultInputDate, serviceResultScvType, serviceResultClientId, serviceResultJobNo, serviceResultServerId, serviceResultResults, serviceResultDateOfService, serviceResultFirstTimeOfService, serviceResultFirstAttemptDate, serviceResultSecondTimeOfService, serviceResultSecondAttemptDate, serviceResultThirdTimeOfService, serviceResultThirdAttemptDate, serviceResultlTServed, serviceResultlTNotServed, serviceResultSubstitudeDeliveredTo, serviceResultRecipientTitle, serviceResultRecipient, serviceResultDoor, serviceResultDoorLocks, serviceResultEntry, serviceResultWall, serviceResultFloor, serviceResultLock, serviceResultOtherDescription, serviceResultSex, serviceResultSkinColor, serviceResultHair, serviceResultAge, serviceResultHeight, serviceResultWeight, serviceResultOtherFeatures, serviceResultDateOfMailing, serviceResultDateOfNotary, serviceResultTimeOfService, timeTrip, } = req.body;
     if (!serviceFormId) {
@@ -105,6 +106,7 @@ const updateServiceForm = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
             sSDCountry,
             serviceFormCreatedBy: user._id,
             lastUpdatedBy: user._id,
+            datePairs,
             //Result Form Attributes
             queryInformationLTFullName,
             queryInformationLTIndexNo,

@@ -43,6 +43,7 @@ exports.createServiceFormSchema = zod_1.z.object({
     sSDPlaintiff: zod_1.z.string().optional(),
     sSDCountry: zod_1.z.string().optional(),
     //Result Form Attributes
+    datePairs: zod_1.z.any().optional(),
     queryInformationLTFullName: zod_1.z.string().optional(),
     queryInformationLTIndexNo: zod_1.z.number().optional(),
     queryInformationLTAddress: zod_1.z.string().optional(),

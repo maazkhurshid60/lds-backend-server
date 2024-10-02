@@ -43,6 +43,7 @@ const createNewServiceForm = asyncHandler(async (req: Request, res: Response) =>
         sSDDefendants,
         sSDPlaintiff,
         sSDCountry,
+        datePairs
     }: ICreateServiceForm = req.body;
 
     const alreadyServiceExists: IServiceFormDocument = await ServiceForm.findOne({ jobNo }) as IServiceFormDocument;
@@ -85,6 +86,7 @@ const createNewServiceForm = asyncHandler(async (req: Request, res: Response) =>
         sSDCountry,
         serviceFormCreatedBy: user._id,
         lastUpdatedBy: user._id,
+        datePairs
 
     }) as IServiceFormDocument;
 
@@ -134,6 +136,7 @@ const updateServiceForm = asyncHandler(async (req: Request, res: Response) => {
         sSDDefendants,
         sSDPlaintiff,
         sSDCountry,
+        datePairs,
 
         //Result Form Attributes
         queryInformationLTFullName,
@@ -227,6 +230,7 @@ const updateServiceForm = asyncHandler(async (req: Request, res: Response) => {
                 sSDCountry,
                 serviceFormCreatedBy: user._id,
                 lastUpdatedBy: user._id,
+                datePairs,
 
                 //Result Form Attributes
                 queryInformationLTFullName,

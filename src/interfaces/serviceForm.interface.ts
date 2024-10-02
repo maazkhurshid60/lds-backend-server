@@ -26,7 +26,7 @@ export interface ICreateServiceForm {
     sSDDefendants?: string,
     sSDPlaintiff?: string,
     sSDCountry?: string,
-
+    datePairs?: any,
     //Result Form Attributes
     queryInformationLTFullName?: string | null | undefined,
     queryInformationLTIndexNo?: number | null | undefined,
