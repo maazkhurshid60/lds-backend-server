@@ -358,30 +358,164 @@ const getSingleServiceForm = asyncHandler(async (req: Request, res: Response) =>
 
 // });
 
+// const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response) => {
+//     const { startDate, endDate, jobNo, clientId, caseNo, serviceType, lTSFirstName, lTSBusinessName,
+//         lTSAddress,
+//         lTSApt,
+//         lTSCity,
+//         lTSZip,
+//         oLTDescription,
+//         lTSDescription,
+//         serviceResultDateOfService,
+//         serviceResultFirstAttemptDate,
+//         serviceResultSecondAttemptDate,
+//         serviceResultThirdAttemptDate,
+//         serviceResultDateOfMailing,
+//         serviceResultRecipientTitle,
+//         substituteDeliveredTo,
+//         corporateRecipient,
+//         sSDDefendants,
+//         sSDPlaintiff,
+//         oSSTDescription, oSSTIndexNo, oLTIndexNo, lTSState,
+//         sSDCourt } = req.body;
+
+//     // Build query object
+//     let query: any = {};
+
+//     if (startDate || endDate) {
+//         const startD = startDate ? new Date(startDate) : new Date(0); // Default to start of time if no startDate
+//         const endD = endDate ? new Date(endDate).setHours(23, 59, 59) : new Date(); // Default to end of time if no endDate
+
+//         query.createdAt = {
+//             $gte: new Date(startD),
+//             $lte: new Date(endD)
+//         };
+//     }
+
+//     if (jobNo) {
+//         query.jobNo = jobNo;
+//     }
+
+//     if (clientId) {
+//         query.clientId = clientId;
+//     }
+
+//     if (caseNo) {
+//         query.caseNo = caseNo;
+//     }
+//     if (oLTIndexNo) {
+//         query.oLTIndexNo = oLTIndexNo;
+//     }
+//     if (lTSState) {
+//         query.lTSState = lTSState;
+//     }
+
+
+//     if (serviceType) {
+//         query.serviceType = serviceType;
+//     }
+//     if (lTSFirstName) {
+//         query.lTSFirstName = lTSFirstName;
+//     }
+//     if (lTSBusinessName) {
+//         query.lTSBusinessName = lTSBusinessName;
+//     }
+//     if (lTSAddress) {
+//         query.lTSAddress = lTSAddress;
+//     }
+//     if (lTSApt) {
+//         query.lTSApt = lTSApt;
+//     }
+//     if (lTSCity) {
+//         query.lTSCity = lTSCity;
+//     }
+//     if (lTSZip) {
+//         query.lTSZip = lTSZip;
+//     }
+//     if (oLTDescription) {
+//         query.oLTDescription = oLTDescription;
+//     }
+//     if (lTSDescription) {
+//         query.lTSDescription = lTSDescription;
+//     }
+
+//     if (serviceResultDateOfService) {
+//         query.serviceResultDateOfService = serviceResultDateOfService;
+//     }
+
+//     if (serviceResultFirstAttemptDate) {
+//         query.serviceResultFirstAttemptDate = serviceResultFirstAttemptDate;
+//     }
+//     if (serviceResultSecondAttemptDate) {
+//         query.serviceResultSecondAttemptDate = serviceResultSecondAttemptDate;
+//     }
+//     if (serviceResultThirdAttemptDate) {
+//         query.serviceResultThirdAttemptDate = serviceResultThirdAttemptDate;
+//     }
+
+//     if (serviceResultDateOfMailing) {
+//         query.serviceResultDateOfMailing = serviceResultDateOfMailing;
+//     }
+//     if (serviceResultRecipientTitle) {
+//         query.serviceResultRecipientTitle = serviceResultRecipientTitle;
+//     }
+//     if (substituteDeliveredTo) {
+//         query.substituteDeliveredTo = substituteDeliveredTo;
+//     }
+//     if (corporateRecipient) {
+//         query.corporateRecipient = corporateRecipient;
+//     }
+//     if (sSDDefendants) {
+//         query.sSDDefendants = sSDDefendants;
+//     }
+//     if (sSDPlaintiff) {
+//         query.sSDPlaintiff = sSDPlaintiff;
+//     }
+//     if (oSSTDescription) {
+//         query.oSSTDescription = oSSTDescription;
+//     }
+
+//     if (oSSTIndexNo) {
+//         query.oSSTIndexNo = oSSTIndexNo;
+//     }
+//     if (sSDCourt) {
+//         query.sSDCourt = sSDCourt;
+//     }
+//     try {
+//         // Fetch data based on the query
+//         const allServiceForms: any[] = await ServiceForm.find(query)
+//             .sort({ dataField: -1 })
+//             .populate(['clientId', 'serviceType', 'lTServiceType', 'standardServiceType', 'serviceFormCreatedBy', 'lastUpdatedBy', 'serviceResultServerId'])
+//             .exec();
+
+//         // Check if data was fetched
+//         if (!allServiceForms || allServiceForms.length === 0) {
+//             return res
+//                 .status(StatusCodes.NOT_FOUND)
+//                 .json(new ApiResponse(StatusCodes.NOT_FOUND, [], "No service forms found matching the criteria."));
+//         }
+
+//         return res
+//             .status(StatusCodes.OK)
+//             .json(new ApiResponse(StatusCodes.OK, allServiceForms, "Service forms fetched successfully."));
+//     } catch (error) {
+//         // Handle errors
+//         console.error(error);
+//         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "An error occurred while fetching service forms.");
+//     }
+// });
+
 const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response) => {
     const { startDate, endDate, jobNo, clientId, caseNo, serviceType, lTSFirstName, lTSBusinessName,
-        lTSAddress,
-        lTSApt,
-        lTSCity,
-        lTSZip,
-        oLTDescription,
-        lTSDescription,
-        serviceResultDateOfService,
-        serviceResultFirstAttemptDate,
-        serviceResultSecondAttemptDate,
-        serviceResultThirdAttemptDate,
-        serviceResultDateOfMailing,
-        serviceResultRecipientTitle,
-        substituteDeliveredTo,
-        corporateRecipient,
-        sSDDefendants,
-        sSDPlaintiff,
-        oSSTDescription, oSSTIndexNo, oLTIndexNo, lTSState,
-        sSDCourt } = req.body;
+        lTSAddress, lTSApt, lTSCity, lTSZip, oLTDescription, lTSDescription, serviceResultDateOfService,
+        serviceResultFirstAttemptDate, serviceResultSecondAttemptDate, serviceResultThirdAttemptDate,
+        serviceResultDateOfMailing, serviceResultRecipientTitle, substituteDeliveredTo, corporateRecipient,
+        sSDDefendants, sSDPlaintiff, oSSTDescription, oSSTIndexNo, oLTIndexNo, lTSState, sSDCourt } = req.body;
 
     // Build query object
     let query: any = {};
 
+    // Handle date range filters
     if (startDate || endDate) {
         const startD = startDate ? new Date(startDate) : new Date(0); // Default to start of time if no startDate
         const endD = endDate ? new Date(endDate).setHours(23, 59, 59) : new Date(); // Default to end of time if no endDate
@@ -392,95 +526,23 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
         };
     }
 
-    if (jobNo) {
-        query.jobNo = jobNo;
-    }
+    // Handle partial matching for all fields dynamically
+    const fields = [
+        "jobNo", "clientId", "caseNo", "oLTIndexNo", "lTSState", "serviceType", "lTSFirstName",
+        "lTSBusinessName", "lTSAddress", "lTSApt", "lTSCity", "lTSZip", "oLTDescription", "lTSDescription",
+        "serviceResultDateOfService", "serviceResultFirstAttemptDate", "serviceResultSecondAttemptDate",
+        "serviceResultThirdAttemptDate", "serviceResultDateOfMailing", "serviceResultRecipientTitle",
+        "substituteDeliveredTo", "corporateRecipient", "sSDDefendants", "sSDPlaintiff", "oSSTDescription",
+        "oSSTIndexNo", "sSDCourt"
+    ];
 
-    if (clientId) {
-        query.clientId = clientId;
-    }
+    // Loop over all fields and apply regex matching if a value is provided
+    fields.forEach((field) => {
+        if (req.body[field]) {
+            query[field] = { $regex: req.body[field], $options: 'i' }; // Apply regex and make it case-insensitive
+        }
+    });
 
-    if (caseNo) {
-        query.caseNo = caseNo;
-    }
-    if (oLTIndexNo) {
-        query.oLTIndexNo = oLTIndexNo;
-    }
-    if (lTSState) {
-        query.lTSState = lTSState;
-    }
-
-
-    if (serviceType) {
-        query.serviceType = serviceType;
-    }
-    if (lTSFirstName) {
-        query.lTSFirstName = lTSFirstName;
-    }
-    if (lTSBusinessName) {
-        query.lTSBusinessName = lTSBusinessName;
-    }
-    if (lTSAddress) {
-        query.lTSAddress = lTSAddress;
-    }
-    if (lTSApt) {
-        query.lTSApt = lTSApt;
-    }
-    if (lTSCity) {
-        query.lTSCity = lTSCity;
-    }
-    if (lTSZip) {
-        query.lTSZip = lTSZip;
-    }
-    if (oLTDescription) {
-        query.oLTDescription = oLTDescription;
-    }
-    if (lTSDescription) {
-        query.lTSDescription = lTSDescription;
-    }
-
-    if (serviceResultDateOfService) {
-        query.serviceResultDateOfService = serviceResultDateOfService;
-    }
-
-    if (serviceResultFirstAttemptDate) {
-        query.serviceResultFirstAttemptDate = serviceResultFirstAttemptDate;
-    }
-    if (serviceResultSecondAttemptDate) {
-        query.serviceResultSecondAttemptDate = serviceResultSecondAttemptDate;
-    }
-    if (serviceResultThirdAttemptDate) {
-        query.serviceResultThirdAttemptDate = serviceResultThirdAttemptDate;
-    }
-
-    if (serviceResultDateOfMailing) {
-        query.serviceResultDateOfMailing = serviceResultDateOfMailing;
-    }
-    if (serviceResultRecipientTitle) {
-        query.serviceResultRecipientTitle = serviceResultRecipientTitle;
-    }
-    if (substituteDeliveredTo) {
-        query.substituteDeliveredTo = substituteDeliveredTo;
-    }
-    if (corporateRecipient) {
-        query.corporateRecipient = corporateRecipient;
-    }
-    if (sSDDefendants) {
-        query.sSDDefendants = sSDDefendants;
-    }
-    if (sSDPlaintiff) {
-        query.sSDPlaintiff = sSDPlaintiff;
-    }
-    if (oSSTDescription) {
-        query.oSSTDescription = oSSTDescription;
-    }
-
-    if (oSSTIndexNo) {
-        query.oSSTIndexNo = oSSTIndexNo;
-    }
-    if (sSDCourt) {
-        query.sSDCourt = sSDCourt;
-    }
     try {
         // Fetch data based on the query
         const allServiceForms: any[] = await ServiceForm.find(query)
@@ -504,6 +566,7 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "An error occurred while fetching service forms.");
     }
 });
+
 
 
 const getAllServiceForm = asyncHandler(async (req: Request, res: Response) => {
