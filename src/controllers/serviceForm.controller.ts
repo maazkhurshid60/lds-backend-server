@@ -528,18 +528,38 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
 
     // Handle partial matching for all fields dynamically
     const fields = [
-        "jobNo", "clientId", "caseNo", "oLTIndexNo", "lTSState", "serviceType", "lTSFirstName",
+        "caseNo", "oLTIndexNo", "lTSState", "lTSFirstName",
         "lTSBusinessName", "lTSAddress", "lTSApt", "lTSCity", "lTSZip", "oLTDescription", "lTSDescription",
         "serviceResultDateOfService", "serviceResultFirstAttemptDate", "serviceResultSecondAttemptDate",
         "serviceResultThirdAttemptDate", "serviceResultDateOfMailing", "serviceResultRecipientTitle",
         "substituteDeliveredTo", "corporateRecipient", "sSDDefendants", "sSDPlaintiff", "oSSTDescription",
         "oSSTIndexNo", "sSDCourt"
     ];
+    if (jobNo) {
+        query.jobNo = jobNo;
+    }
 
-    // Loop over all fields and apply regex matching if a value is provided
+    if (clientId) {
+        query.clientId = clientId;
+    }
+    if (serviceType) {
+        query.serviceType = serviceType;
+    }
+
+    // Loop over all fields and apply regex or exact match based on field type
     fields.forEach((field) => {
         if (req.body[field]) {
-            query[field] = { $regex: req.body[field], $options: 'i' }; // Apply regex and make it case-insensitive
+            if (field === 'jobNo') {
+                // jobNo is a number but we want partial matching, so treat it as a string
+                const jobNoValue = req.body[field].toString();  // Convert to string for regex matching
+                query[field] = { $regex: jobNoValue, $options: 'i' }; // Case-insensitive partial match
+            } else if (typeof req.body[field] === 'string') {
+                // Apply regex for string fields
+                query[field] = { $regex: req.body[field], $options: 'i' }; // Case-insensitive partial match
+            } else if (typeof req.body[field] === 'number') {
+                // Exact match for numeric fields
+                query[field] = req.body[field];
+            }
         }
     });
 
@@ -566,6 +586,9 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
         throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "An error occurred while fetching service forms.");
     }
 });
+
+
+
 
 
 
