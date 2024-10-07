@@ -528,7 +528,7 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
 
     // Handle partial matching for all fields dynamically
     const fields = [
-        "caseNo", "oLTIndexNo", "lTSState", "lTSFirstName",
+        "oLTIndexNo", "lTSState", "lTSFirstName",
         "lTSBusinessName", "lTSAddress", "lTSApt", "lTSCity", "lTSZip", "oLTDescription", "lTSDescription",
         "serviceResultDateOfService", "serviceResultFirstAttemptDate", "serviceResultSecondAttemptDate",
         "serviceResultThirdAttemptDate", "serviceResultDateOfMailing", "serviceResultRecipientTitle",
@@ -544,6 +544,9 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
     }
     if (serviceType) {
         query.serviceType = serviceType;
+    }
+    if (caseNo) {
+        query.caseNo = caseNo;
     }
 
     // Loop over all fields and apply regex or exact match based on field type

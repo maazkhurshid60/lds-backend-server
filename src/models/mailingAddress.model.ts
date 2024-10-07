@@ -1,13 +1,13 @@
 import mongoose, { Schema } from "mongoose";
 
 export interface IMailingAddressDocument extends mongoose.Document {
-    firstName: string,
-    address: string,
-    apt: string,
-    city: string,
-    state: string,
-    zip: string,
-    // rRR: boolean,
+    firstName?: string,
+    address?: string,
+    apt?: string,
+    city?: string,
+    state?: string,
+    zip?: string,
+    // rRR?: boolean,
 }
 
 const mailingAddressSchema: Schema<IMailingAddressDocument> = new Schema(
