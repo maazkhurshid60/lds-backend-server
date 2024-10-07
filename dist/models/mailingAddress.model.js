@@ -28,12 +28,10 @@ const mongoose_1 = __importStar(require("mongoose"));
 const mailingAddressSchema = new mongoose_1.Schema({
     firstName: {
         type: String,
-        required: [true, "First name is required"],
         trim: true,
     },
     address: {
         type: String,
-        required: true,
     },
     apt: {
         type: String,

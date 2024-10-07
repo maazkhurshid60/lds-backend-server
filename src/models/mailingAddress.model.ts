@@ -14,12 +14,10 @@ const mailingAddressSchema: Schema<IMailingAddressDocument> = new Schema(
     {
         firstName: {
             type: String,
-            required: [true, "First name is required"],
             trim: true,
         },
         address: {
             type: String,
-            required: true,
         },
         apt: {
             type: String,

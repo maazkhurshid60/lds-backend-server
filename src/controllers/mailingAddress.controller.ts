@@ -13,7 +13,6 @@ const createNewMailingAddress = asyncHandler(async (req: Request, res: Response)
         // , rRR
 
     }: ICreateMailingAddress = req.body;
-
     // if(
     //     [firstName, address, apt, city, state].some((field: string) => field?.trim() === "")
     // ) {
