@@ -183,6 +183,7 @@ const updateServiceForm = asyncHandler(async (req: Request, res: Response) => {
         serviceResultTimeOfService,
         timeTrip,
 
+
     }: IUpdateServiceForm = req.body;
 
     if (!serviceFormId) {
@@ -509,7 +510,7 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
     const { startDate, endDate, jobNo, clientId, caseNo, serviceType, lTSFirstName, lTSBusinessName,
         lTSAddress, lTSApt, lTSCity, lTSZip, oLTDescription, lTSDescription, serviceResultDateOfService,
         serviceResultFirstAttemptDate, serviceResultSecondAttemptDate, serviceResultThirdAttemptDate,
-        serviceResultDateOfMailing, serviceResultRecipientTitle, substituteDeliveredTo, corporateRecipient,
+        serviceResultDateOfMailing, serviceResultRecipientTitle, serviceResultSubstitudeDeliveredTo, serviceResultRecipient,
         sSDDefendants, sSDPlaintiff, oSSTDescription, oSSTIndexNo, oLTIndexNo, lTSState, sSDCourt } = req.body;
 
     // Build query object
@@ -532,7 +533,7 @@ const getDateRangeServiceForms = asyncHandler(async (req: Request, res: Response
         "lTSBusinessName", "lTSAddress", "lTSApt", "lTSCity", "lTSZip", "oLTDescription", "lTSDescription",
         "serviceResultDateOfService", "serviceResultFirstAttemptDate", "serviceResultSecondAttemptDate",
         "serviceResultThirdAttemptDate", "serviceResultDateOfMailing", "serviceResultRecipientTitle",
-        "substituteDeliveredTo", "corporateRecipient", "sSDDefendants", "sSDPlaintiff", "oSSTDescription",
+        "serviceResultSubstitudeDeliveredTo", "serviceResultRecipient", "sSDDefendants", "sSDPlaintiff", "oSSTDescription",
         "oSSTIndexNo", "sSDCourt"
     ];
     if (jobNo) {

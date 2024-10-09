@@ -336,7 +336,7 @@ exports.getSingleServiceForm = getSingleServiceForm;
 //     }
 // });
 const getDateRangeServiceForms = (0, AsyncHandler_1.asyncHandler)(async (req, res) => {
-    const { startDate, endDate, jobNo, clientId, caseNo, serviceType, lTSFirstName, lTSBusinessName, lTSAddress, lTSApt, lTSCity, lTSZip, oLTDescription, lTSDescription, serviceResultDateOfService, serviceResultFirstAttemptDate, serviceResultSecondAttemptDate, serviceResultThirdAttemptDate, serviceResultDateOfMailing, serviceResultRecipientTitle, substituteDeliveredTo, corporateRecipient, sSDDefendants, sSDPlaintiff, oSSTDescription, oSSTIndexNo, oLTIndexNo, lTSState, sSDCourt } = req.body;
+    const { startDate, endDate, jobNo, clientId, caseNo, serviceType, lTSFirstName, lTSBusinessName, lTSAddress, lTSApt, lTSCity, lTSZip, oLTDescription, lTSDescription, serviceResultDateOfService, serviceResultFirstAttemptDate, serviceResultSecondAttemptDate, serviceResultThirdAttemptDate, serviceResultDateOfMailing, serviceResultRecipientTitle, serviceResultSubstitudeDeliveredTo, serviceResultRecipient, sSDDefendants, sSDPlaintiff, oSSTDescription, oSSTIndexNo, oLTIndexNo, lTSState, sSDCourt } = req.body;
     // Build query object
     let query = {};
     // Handle date range filters
@@ -354,7 +354,7 @@ const getDateRangeServiceForms = (0, AsyncHandler_1.asyncHandler)(async (req, re
         "lTSBusinessName", "lTSAddress", "lTSApt", "lTSCity", "lTSZip", "oLTDescription", "lTSDescription",
         "serviceResultDateOfService", "serviceResultFirstAttemptDate", "serviceResultSecondAttemptDate",
         "serviceResultThirdAttemptDate", "serviceResultDateOfMailing", "serviceResultRecipientTitle",
-        "substituteDeliveredTo", "corporateRecipient", "sSDDefendants", "sSDPlaintiff", "oSSTDescription",
+        "serviceResultSubstitudeDeliveredTo", "serviceResultRecipient", "sSDDefendants", "sSDPlaintiff", "oSSTDescription",
         "oSSTIndexNo", "sSDCourt"
     ];
     if (jobNo) {
