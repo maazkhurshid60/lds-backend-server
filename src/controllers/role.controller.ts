@@ -11,6 +11,8 @@ const createRole = asyncHandler(async (req: Request, res: Response) => {
 
     const { name, description, isActive }: ICreateRole = req.body;
 
+
+
     // if(
     //     [name, description].some((field) => field?.trim() === "")
     // ) {
