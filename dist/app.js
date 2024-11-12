@@ -42,7 +42,7 @@ app.use((0, cors_1.default)({
 }));
 // Middleware to check if the server is down
 app.use((req, res, next) => {
-    if (serverDown && req.originalUrl !== `${Constants_1.baseURL}/server/control`) {
+    if (serverDown && req.originalUrl !== `${Constants_1.baseURL}/internal-server/control`) {
         return res.status(503).send('Server is temporarily down'); // Block access to all routes except /server/control
     }
     next(); // Proceed to the next middleware if the server is up
