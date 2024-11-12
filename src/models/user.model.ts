@@ -13,6 +13,7 @@ export interface IUserDocument extends mongoose.Document {
 
 const userSchema: Schema<IUserDocument> = new Schema(
     {
+
         userName: {
             type: String,
             // required: [true, "Username is required"],

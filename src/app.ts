@@ -2,23 +2,32 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { baseURL } from "./utils/Constants";
+import { Request, Response } from 'express';
 
-//Defining Express App Object
 const app = express();
 
-//Applying CORS policy
+let serverDown = false; // Flag to track whether the server should be down
+
+// Apply CORS policy
 app.use(cors({
     origin: process.env.CORS_ORIGIN_POLICY,
     credentials: true,
 }));
 
-//Applying Middlewares on Express App
-app.use(express.json({limit: "20kb"}));
-app.use(express.urlencoded({extended: true, limit: "20kb"}));
-app.use(express.static("public"));
+// Middleware to check if the server is down
+app.use((req, res, next) => {
+    if (serverDown && req.originalUrl !== `${baseURL}/server/control`) {
+        return res.status(503).send('Server is temporarily down'); // Block access to all routes except /server/control
+    }
+    next(); // Proceed to the next middleware if the server is up
+});
+
+// Middlewares
+app.use(express.json({ limit: "20kb" }));
+app.use(express.urlencoded({ extended: true, limit: "20kb" }));
 app.use(cookieParser());
 
-//Importing all the Routes
+// Import Routes
 import userRouter from "./routes/user.routes";
 import roleRouter from "./routes/role.routes";
 import serviceResultRouter from "./routes/serviceResult.routes";
@@ -35,6 +44,7 @@ import serviceFormRouter from "./routes/serviceForm.routes";
 import resultFormRouter from "./routes/resultForm.routes";
 import legalDeliveryRouter from "./routes/legalDelivery.routes";
 
+// Use Routes
 app.use(`${baseURL}/user`, userRouter);
 app.use(`${baseURL}/role`, roleRouter);
 app.use(`${baseURL}/service-result`, serviceResultRouter);
@@ -50,5 +60,23 @@ app.use(`${baseURL}/standard-service-type`, standardServiceTypeRouter);
 app.use(`${baseURL}/service-form`, serviceFormRouter);
 app.use(`${baseURL}/result-form`, resultFormRouter);
 app.use(`${baseURL}/legal-delivery`, legalDeliveryRouter);
+
+// API to control server state
+app.post(`${baseURL}/server/control`, (req: Request, res: Response) => {
+    const { status } = req.body; // Expecting a boolean 'status'
+
+    if (status === true) {
+        serverDown = true; // Set the flag to down (disable routes)
+        console.log('Server has been set to down');
+        res.status(200).send('Server is temporarily down');
+    } else if (status === false) {
+        serverDown = false; // Set the flag to up (enable routes)
+        console.log('Server has been set back online');
+        res.status(200).send('Server is back online');
+    } else {
+        res.status(400).send('Invalid status value');
+    }
+});
+
 
 export { app };
