@@ -11,7 +11,7 @@ let serverDown = false; // Flag to track whether the server should be down
 
 // Apply CORS policy
 app.use(cors({
-    origin: "*",
+    origin: process.env.CORS_ORIGIN_POLICY,
     credentials: true,
 }));
 
@@ -22,8 +22,6 @@ app.use((req, res, next) => {
     }
     next(); // Proceed to the next middleware if the server is up
 });
-
-
 
 // Middlewares
 app.use(express.json({ limit: "20kb" }));

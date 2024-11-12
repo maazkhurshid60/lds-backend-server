@@ -13,7 +13,7 @@ exports.app = app;
 let serverDown = false; // Flag to track whether the server should be down
 // Apply CORS policy
 app.use((0, cors_1.default)({
-    origin: "*",
+    origin: process.env.CORS_ORIGIN_POLICY,
     credentials: true,
 }));
 // Middleware to check if the server is down
