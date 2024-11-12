@@ -2,7 +2,7 @@ declare global {
     namespace NodeJS {
         interface ProcessEnv {
             PORT: string,
-            CORS_ORIGIN_POLICY: string,
+            CORS_ORIGIN_POLICY: any,
             MONGODB_DATABASE_NAME: string,
             MONGODB_STAGING_CONNECTION_URL: string,
             MONGODB_PRODUCTION_CONNECTION_URL: string,
