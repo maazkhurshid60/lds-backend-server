@@ -36,13 +36,14 @@ exports.app = app;
 let serverDown = false; // Flag to track whether the server should be down
 // Apply CORS policy
 app.use((0, cors_1.default)({
-    // origin: process.env.CORS_ORIGIN_POLICY,
     origin: ['https://gesilds.com', 'http://localhost:5173'],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add all allowed methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Include any headers that are expected in requests
 }));
 // Middleware to check if the server is down
 app.use((req, res, next) => {
-    if (serverDown && req.originalUrl !== `${Constants_1.baseURL}/internal-server/control`) {
+    if (serverDown && req.originalUrl !== `${Constants_1.baseURL}/internal-server`) {
         return res.status(503).send('Server is temporarily down'); // Block access to all routes except /server/control
     }
     next(); // Proceed to the next middleware if the server is up
@@ -87,18 +88,20 @@ app.use(`${Constants_1.baseURL}/legal-delivery`, legalDelivery_routes_1.default)
 // API to control server state
 app.use(`${Constants_1.baseURL}/internal-server`, internalServerRouter);
 internalServerRouter.post('/control', (req, res) => {
-    const { status } = req.body; // Expecting a boolean 'status'
+    const { status } = req.body;
+    res.setHeader('Access-Control-Allow-Origin', 'https://gesilds.com');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
     if (status === true) {
-        serverDown = true; // Set the flag to down (disable routes)
+        serverDown = true;
         console.log('Server has been set to down');
-        res.status(200).send('Server is temporarily down');
+        return res.status(200).send('Server is temporarily down');
     }
     else if (status === false) {
-        serverDown = false; // Set the flag to up (enable routes)
+        serverDown = false;
         console.log('Server has been set back online');
-        res.status(200).send('Server is back online');
+        return res.status(200).send('Server is back online');
     }
     else {
-        res.status(400).send('Invalid status value');
+        return res.status(400).send('Invalid status value');
     }
 });
