@@ -23,6 +23,8 @@ app.use((req, res, next) => {
     next(); // Proceed to the next middleware if the server is up
 });
 
+
+
 // Middlewares
 app.use(express.json({ limit: "20kb" }));
 app.use(express.urlencoded({ extended: true, limit: "20kb" }));
