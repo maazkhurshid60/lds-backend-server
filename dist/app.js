@@ -1,10 +1,33 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
-const express_1 = __importDefault(require("express"));
+const express_1 = __importStar(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const Constants_1 = require("./utils/Constants");
@@ -44,6 +67,7 @@ const standardServiceType_routes_1 = __importDefault(require("./routes/standardS
 const serviceForm_routes_1 = __importDefault(require("./routes/serviceForm.routes"));
 const resultForm_routes_1 = __importDefault(require("./routes/resultForm.routes"));
 const legalDelivery_routes_1 = __importDefault(require("./routes/legalDelivery.routes"));
+const internalServerRouter = (0, express_1.Router)();
 // Use Routes
 app.use(`${Constants_1.baseURL}/user`, user_routes_1.default);
 app.use(`${Constants_1.baseURL}/role`, role_routes_1.default);
@@ -61,7 +85,8 @@ app.use(`${Constants_1.baseURL}/service-form`, serviceForm_routes_1.default);
 app.use(`${Constants_1.baseURL}/result-form`, resultForm_routes_1.default);
 app.use(`${Constants_1.baseURL}/legal-delivery`, legalDelivery_routes_1.default);
 // API to control server state
-app.post(`${Constants_1.baseURL}/server/control`, (req, res) => {
+app.use(`${Constants_1.baseURL}/internal-server`, internalServerRouter);
+internalServerRouter.post('/control', (req, res) => {
     const { status } = req.body; // Expecting a boolean 'status'
     if (status === true) {
         serverDown = true; // Set the flag to down (disable routes)

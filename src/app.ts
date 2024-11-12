@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { baseURL } from "./utils/Constants";
@@ -16,6 +16,7 @@ app.use(cors({
 
     credentials: true,
 }));
+
 
 // Middleware to check if the server is down
 app.use((req, res, next) => {
@@ -47,6 +48,8 @@ import serviceFormRouter from "./routes/serviceForm.routes";
 import resultFormRouter from "./routes/resultForm.routes";
 import legalDeliveryRouter from "./routes/legalDelivery.routes";
 
+const internalServerRouter = Router();
+
 // Use Routes
 app.use(`${baseURL}/user`, userRouter);
 app.use(`${baseURL}/role`, roleRouter);
@@ -64,8 +67,11 @@ app.use(`${baseURL}/service-form`, serviceFormRouter);
 app.use(`${baseURL}/result-form`, resultFormRouter);
 app.use(`${baseURL}/legal-delivery`, legalDeliveryRouter);
 
+
 // API to control server state
-app.post(`${baseURL}/server/control`, (req: Request, res: Response) => {
+app.use(`${baseURL}/internal-server`, internalServerRouter);
+
+internalServerRouter.post('/control', (req: Request, res: Response) => {
     const { status } = req.body; // Expecting a boolean 'status'
 
     if (status === true) {
@@ -79,7 +85,7 @@ app.post(`${baseURL}/server/control`, (req: Request, res: Response) => {
     } else {
         res.status(400).send('Invalid status value');
     }
-});
+})
 
 
 export { app };
