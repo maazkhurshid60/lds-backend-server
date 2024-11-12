@@ -11,7 +11,9 @@ let serverDown = false; // Flag to track whether the server should be down
 
 // Apply CORS policy
 app.use(cors({
-    origin: process.env.CORS_ORIGIN_POLICY,
+    // origin: process.env.CORS_ORIGIN_POLICY,
+    origin: "*",
+
     credentials: true,
 }));
 
