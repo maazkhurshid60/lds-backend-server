@@ -6,6 +6,7 @@ import { Request, Response } from 'express';
 
 const app = express();
 
+
 let serverDown = false; // Flag to track whether the server should be down
 
 // Apply CORS policy
