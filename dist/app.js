@@ -33,6 +33,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const Constants_1 = require("./utils/Constants");
 const app = (0, express_1.default)();
 exports.app = app;
+let serverDown = false; // Flag to track whether the server should be down
 // Apply CORS policy
 app.use((0, cors_1.default)({
     origin: ['https://gesilds.com', 'http://localhost:5173'],
@@ -40,6 +41,13 @@ app.use((0, cors_1.default)({
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add all allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Include any headers that are expected in requests
 }));
+// Middleware to check if the server is down
+app.use((req, res, next) => {
+    if (serverDown && req.originalUrl !== `${Constants_1.baseURL}/internal-server/control`) {
+        return serverDown; // Block access to all routes except /server/control
+    }
+    next(); // Proceed to the next middleware if the server is up
+});
 // Middlewares
 app.use(express_1.default.json({ limit: "20kb" }));
 app.use(express_1.default.urlencoded({ extended: true, limit: "20kb" }));
@@ -60,7 +68,6 @@ const standardServiceType_routes_1 = __importDefault(require("./routes/standardS
 const serviceForm_routes_1 = __importDefault(require("./routes/serviceForm.routes"));
 const resultForm_routes_1 = __importDefault(require("./routes/resultForm.routes"));
 const legalDelivery_routes_1 = __importDefault(require("./routes/legalDelivery.routes"));
-const serverDown_routes_1 = __importDefault(require("./routes/serverDown.routes"));
 const internalServerRouter = (0, express_1.Router)();
 // Use Routes
 app.use(`${Constants_1.baseURL}/user`, user_routes_1.default);
@@ -78,4 +85,17 @@ app.use(`${Constants_1.baseURL}/standard-service-type`, standardServiceType_rout
 app.use(`${Constants_1.baseURL}/service-form`, serviceForm_routes_1.default);
 app.use(`${Constants_1.baseURL}/result-form`, resultForm_routes_1.default);
 app.use(`${Constants_1.baseURL}/legal-delivery`, legalDelivery_routes_1.default);
-app.use(`${Constants_1.baseURL}/server-down`, serverDown_routes_1.default);
+app.use(`${Constants_1.baseURL}/server-down`, legalDelivery_routes_1.default);
+// API to control server state
+app.use(`${Constants_1.baseURL}/internal-server`, internalServerRouter);
+internalServerRouter.post('/control', (req, res) => {
+    const { status } = req.body;
+    if (status === true) {
+        serverDown = true;
+    }
+    else {
+        serverDown = false;
+    }
+    // Send a response with the current server status
+    res.json({ serverDown });
+});

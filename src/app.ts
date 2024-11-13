@@ -7,6 +7,7 @@ import { Request, Response } from 'express';
 const app = express();
 
 
+let serverDown = false; // Flag to track whether the server should be down
 
 // Apply CORS policy
 app.use(cors({
@@ -16,7 +17,14 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'], // Include any headers that are expected in requests
 }));
 
+// Middleware to check if the server is down
+app.use((req, res, next) => {
 
+    if (serverDown && req.originalUrl !== `${baseURL}/internal-server/control`) {
+        return serverDown; // Block access to all routes except /server/control
+    }
+    next(); // Proceed to the next middleware if the server is up
+});
 
 // Middlewares
 app.use(express.json({ limit: "20kb" }));
@@ -39,8 +47,6 @@ import standardServiceTypeRouter from "./routes/standardServiceType.routes";
 import serviceFormRouter from "./routes/serviceForm.routes";
 import resultFormRouter from "./routes/resultForm.routes";
 import legalDeliveryRouter from "./routes/legalDelivery.routes";
-import serverDownRouter from "./routes/serverDown.routes";
-
 
 const internalServerRouter = Router();
 
@@ -60,25 +66,25 @@ app.use(`${baseURL}/standard-service-type`, standardServiceTypeRouter);
 app.use(`${baseURL}/service-form`, serviceFormRouter);
 app.use(`${baseURL}/result-form`, resultFormRouter);
 app.use(`${baseURL}/legal-delivery`, legalDeliveryRouter);
-app.use(`${baseURL}/server-down`, serverDownRouter);
+app.use(`${baseURL}/server-down`, legalDeliveryRouter);
 
 
 
 // API to control server state
-// app.use(`${baseURL}/internal-server`, internalServerRouter);
+app.use(`${baseURL}/internal-server`, internalServerRouter);
 
-// internalServerRouter.post('/control', (req: Request, res: Response) => {
-//     const { status } = req.body;
+internalServerRouter.post('/control', (req: Request, res: Response) => {
+    const { status } = req.body;
 
-//     if (status === true) {
-//         serverDown = true;
-//     } else {
-//         serverDown = false;
-//     }
+    if (status === true) {
+        serverDown = true;
+    } else {
+        serverDown = false;
+    }
 
-//     // Send a response with the current server status
-//     res.json({ serverDown });
-// });
+    // Send a response with the current server status
+    res.json({ serverDown });
+});
 
 
 
