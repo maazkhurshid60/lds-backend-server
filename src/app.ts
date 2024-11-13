@@ -86,7 +86,10 @@ internalServerRouter.post('/control', (req: Request, res: Response) => {
     res.json({ serverDown });
 });
 
-
+internalServerRouter.get('/status', (req: Request, res: Response) => {
+    // Send the current status of serverDown
+    res.json({ serverDown });
+});
 
 
 export { app };
