@@ -36,7 +36,7 @@ exports.app = app;
 let serverDown = false; // Flag to track whether the server should be down
 // Apply CORS policy
 app.use((0, cors_1.default)({
-    origin: ['https://gesilds.com', 'http://localhost:5173'],
+    origin: "*",
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add all allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Include any headers that are expected in requests
