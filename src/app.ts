@@ -2,7 +2,6 @@ import express, { Router } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { baseURL } from "./utils/Constants";
-import { Request, Response } from 'express';
 
 const app = express();
 
@@ -12,8 +11,8 @@ const app = express();
 app.use(cors({
     origin: ['https://gesilds.com', 'http://localhost:5173'],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add all allowed methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Include any headers that are expected in requests
+    // methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add all allowed methods
+    // allowedHeaders: ['Content-Type', 'Authorization'], // Include any headers that are expected in requests
 }));
 
 
