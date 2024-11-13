@@ -33,21 +33,13 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const Constants_1 = require("./utils/Constants");
 const app = (0, express_1.default)();
 exports.app = app;
-let serverDown = false; // Flag to track whether the server should be down
 // Apply CORS policy
 app.use((0, cors_1.default)({
-    origin: "*",
+    origin: ['https://gesilds.com', 'http://localhost:5173'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add all allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Include any headers that are expected in requests
 }));
-// Middleware to check if the server is down
-app.use((req, res, next) => {
-    if (serverDown && req.originalUrl !== `${Constants_1.baseURL}/internal-server/control`) {
-        return res.status(503).send('Server is temporarily down'); // Block access to all routes except /server/control
-    }
-    next(); // Proceed to the next middleware if the server is up
-});
 // Middlewares
 app.use(express_1.default.json({ limit: "20kb" }));
 app.use(express_1.default.urlencoded({ extended: true, limit: "20kb" }));
@@ -68,6 +60,7 @@ const standardServiceType_routes_1 = __importDefault(require("./routes/standardS
 const serviceForm_routes_1 = __importDefault(require("./routes/serviceForm.routes"));
 const resultForm_routes_1 = __importDefault(require("./routes/resultForm.routes"));
 const legalDelivery_routes_1 = __importDefault(require("./routes/legalDelivery.routes"));
+const serverDown_routes_1 = __importDefault(require("./routes/serverDown.routes"));
 const internalServerRouter = (0, express_1.Router)();
 // Use Routes
 app.use(`${Constants_1.baseURL}/user`, user_routes_1.default);
@@ -85,23 +78,4 @@ app.use(`${Constants_1.baseURL}/standard-service-type`, standardServiceType_rout
 app.use(`${Constants_1.baseURL}/service-form`, serviceForm_routes_1.default);
 app.use(`${Constants_1.baseURL}/result-form`, resultForm_routes_1.default);
 app.use(`${Constants_1.baseURL}/legal-delivery`, legalDelivery_routes_1.default);
-// API to control server state
-app.use(`${Constants_1.baseURL}/internal-server`, internalServerRouter);
-internalServerRouter.post('/control', (req, res) => {
-    const { status } = req.body;
-    res.setHeader('Access-Control-Allow-Origin', 'https://gesilds.com');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    if (status === true) {
-        serverDown = true;
-        console.log('Server has been set to down');
-        return res.status(200).send('Server is temporarily down');
-    }
-    else if (status === false) {
-        serverDown = false;
-        console.log('Server has been set back online');
-        return res.status(200).send('Server is back online');
-    }
-    else {
-        return res.status(400).send('Invalid status value');
-    }
-});
+app.use(`${Constants_1.baseURL}/server-down`, serverDown_routes_1.default);
