@@ -11,8 +11,16 @@ const Constants_1 = require("./utils/Constants");
 const app = (0, express_1.default)();
 exports.app = app;
 // Apply CORS policy
+const whiteListDomains = ['https://gesilds.com', 'http://localhost:5173', "https://lds-mern-3db4.vercel.app"];
 app.use((0, cors_1.default)({
-    origin: ['https://gesilds.com', 'http://localhost:5173'],
+    origin: function (origin, callback) {
+        if (whiteListDomains.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error('CORS Error'));
+        }
+    },
     credentials: true,
     // methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add all allowed methods
     // allowedHeaders: ['Content-Type', 'Authorization'], // Include any headers that are expected in requests
